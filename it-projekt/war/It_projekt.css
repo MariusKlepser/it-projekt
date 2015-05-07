@@ -6,27 +6,27 @@ h1 {
   font-size: 2em;          /*Schriftgröße*/
   font-weight: bold;       /*Schriftstärke*/
   color: #777777;          /*Schriftfarbe*/   
-  margin: 40px 0px 20px;   /*Ausrichtung*/
+  margin: 40px 0px 20px;   /*Äußerer Rand*/
   text-align: center;      /*Textausrichtung*/
 }
 
-.bankproject-headline {
+.stuecklistenverwaltung-headline {
 	font-size: 12pt;       
 	font-weight: bold;
 	color: #777777;
 	margin: 0px;     
 	margin-top: 10px;      /*Ausrichtung-Oben*/
-	margin-bottom: 10px;   
-	text-align: left;
+	margin-bottom: 10px;   /*Ausrichtung-Unten*/
+	text-align: left;      /*Ausrichtung-links*/
 }
 
-.bankproject-simpletext {
+.stuecklistenverwaltung-simpletext {
 	font-size: 100%;
 	font-weight: normal;
 	padding: 3px;
 }
 
-.bankproject-label {
+.stuecklistenverwaltung-label {
 	font-size: 120%;
 	font-weight: bold;
 	font-style: italic;
@@ -34,21 +34,21 @@ h1 {
 	padding-bottom: 0.5em;
 }
 
-.bankproject-textfield {
+.stuecklistenverwaltung-textfield {
 	font-size: 100%;
 	font-weight: normal;
 	padding: 3px;
 	width: 15em;
 }
 
-.bankproject-menubutton {
+.stuecklistenverwaltung-menubutton {
 	font-size: 100%;
 	font-weight: bold;
 	width: 15em;
 	margin-bottom: 1em;
 }
 
-.bankproject-button {
+.stuecklistenverwaltung-button {
 	font-size: 100%;
 	font-weight: bold;
 }
