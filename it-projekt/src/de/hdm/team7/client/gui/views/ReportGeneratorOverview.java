@@ -11,9 +11,9 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.TreeViewModel;
 import com.google.gwt.view.client.TreeViewModel.NodeInfo;
@@ -21,7 +21,7 @@ import com.google.gwt.view.client.TreeViewModel.NodeInfo;
 import de.hdm.team7.client.cell.CustomCell;
 
 public class ReportGeneratorOverview {
-	public Widget getView(){
+	public Panel getView(){
 		
 		/**
 		   * The model that defines the nodes in the tree.
@@ -171,10 +171,7 @@ public class ReportGeneratorOverview {
 			
 			table.setWidth("100%");		
 			
-			
-			
-		// Prepare content for Widget return
-//		Widget contentWidget = new Widget();
+		
 		return contentWrapper;
 	}
 }

@@ -5,17 +5,17 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 
-public class BauteilOverview {
+public class DefaultView {
 
 	public Panel getView(){
 		// Initiate wrapper Panel
 		Panel panel = new FlowPanel();
 		
 		// Start layout creation here
-		HTML h1 = new HTML("<h1>BauteilOverview</h1>");
+		HTML h1 = new HTML("<h1>DefaultView</h1>");
 		panel.add(h1);
 		
-		Label lbl = new Label("<de.hdm.team7.client.gui.views.BauteilOverview.java>");
+		Label lbl = new Label("<de.hdm.team7.client.gui.views.DefaultView.java>");
 		panel.add(lbl);
 		// End layout creation here
 		
