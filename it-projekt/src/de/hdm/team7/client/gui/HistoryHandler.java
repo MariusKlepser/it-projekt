@@ -16,6 +16,9 @@ public class HistoryHandler {
 				String historyToken = event.getValue();
 				Panel content;
 				
+				// Get Current Token
+				// History.getToken();
+				
 				if (historyToken != null) {
 					// Get view based on historyToken
 					ViewHandler viewHandler = new ViewHandler();
