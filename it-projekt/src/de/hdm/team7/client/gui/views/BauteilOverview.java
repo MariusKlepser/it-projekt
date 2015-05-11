@@ -3,9 +3,12 @@ package de.hdm.team7.client.gui.views;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class BauteilOverview {
 
@@ -13,21 +16,49 @@ public class BauteilOverview {
 		// Initiate wrapper Panel
 		Panel panel = new FlowPanel();
 		
+		
 		// Start layout creation here
 		HTML h1 = new HTML("<h1>Bauteile</h1>");
 		panel.add(h1);
 		
-		HTML h2 = new HTML("<h2>Bauteil anlegen:</h2>");
-		panel.add(h2);
+		VerticalPanel vPanel = new VerticalPanel();
+		
+		//Formular Bauteilname 
+		HorizontalPanel hPanel1 = new HorizontalPanel();
+		vPanel.add(hPanel1);
 		
 		Label name = new Label("Bauteilname:");
-		panel.add(name);
-		TextBox bauteilname = new TextBox();
-		panel.add(bauteilname);
+		TextBox bauteilname = new TextBox();	
+		hPanel1.add(name);
+		hPanel1.add(bauteilname);
+		
+		
+		//Formular Materialbezeichnung
+		HorizontalPanel hPanel2 = new HorizontalPanel();
+		vPanel.add(hPanel2);
+		
+		Label materialbezeichnung = new Label("Materialbezeichnung:");
+		TextBox materialbezeichnungtxt = new TextBox();	
+		hPanel2.add(materialbezeichnung);
+		hPanel2.add(materialbezeichnungtxt);
+		
+		
+		
+		//Formular Beschreibung
+		HorizontalPanel hPanel3 = new HorizontalPanel();
+		//HorizontalPanel hPanel2 = new HorizontalPanel(); 
+		vPanel.add(hPanel3);
+		
+		Label beschreibung = new Label("Beschreibung:");
+		TextArea beschreibungtxt = new TextArea();
+		hPanel3.add(beschreibung);
+		hPanel3.add(beschreibungtxt);
 		
 		Button bauteilanlegenbtn = new Button("anlegen");
-		panel.add(bauteilanlegenbtn);
+		vPanel.add(bauteilanlegenbtn);
 		
+	
+		panel.add(vPanel);
 		// End layout creation here
 		
 		// IMPORTANT: always return a Panel!
