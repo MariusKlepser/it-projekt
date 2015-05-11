@@ -17,6 +17,8 @@ public class BaugruppeOverview {
 		
 		Label lbl = new Label("<de.hdm.team7.client.gui.views.BaugruppeOverview.java>");
 		panel.add(lbl);
+		
+		
 		// End layout creation here
 		
 		// IMPORTANT: always return a Panel!
