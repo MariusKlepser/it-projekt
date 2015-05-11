@@ -26,12 +26,12 @@ public class BauteilOverview {
 		//Formular Bauteilname 
 		HorizontalPanel hPanel1 = new HorizontalPanel();
 		vPanel.add(hPanel1);
-		
+
 		Label name = new Label("Bauteilname:");
 		TextBox bauteilname = new TextBox();	
 		hPanel1.add(name);
 		hPanel1.add(bauteilname);
-		
+		hPanel1.setCellWidth(name,"200px");
 		
 		//Formular Materialbezeichnung
 		HorizontalPanel hPanel2 = new HorizontalPanel();
@@ -41,6 +41,7 @@ public class BauteilOverview {
 		TextBox materialbezeichnungtxt = new TextBox();	
 		hPanel2.add(materialbezeichnung);
 		hPanel2.add(materialbezeichnungtxt);
+		hPanel2.setCellWidth(materialbezeichnung,"200px");
 		
 		
 		
@@ -53,6 +54,8 @@ public class BauteilOverview {
 		TextArea beschreibungtxt = new TextArea();
 		hPanel3.add(beschreibung);
 		hPanel3.add(beschreibungtxt);
+		hPanel3.setCellWidth(beschreibung, "200px");
+		
 		
 		Button bauteilanlegenbtn = new Button("anlegen");
 		vPanel.add(bauteilanlegenbtn);
