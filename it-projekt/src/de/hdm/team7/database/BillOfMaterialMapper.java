@@ -1,5 +1,10 @@
 package de.hdm.team7.database;
 
+import java.sql.*;
+import java.util.ArrayList;
+
+import de.hdm.team7.businessObjects.*;
+
 public class BillOfMaterialMapper {
 
 	private static BillOfMaterialMapper bomMapper = null;
@@ -15,7 +20,35 @@ public class BillOfMaterialMapper {
 	    if (bomMapper == null) {
 	      bomMapper = new BillOfMaterialMapper();
 	    }
-
 	    return bomMapper;
 	  }
+	  
+	  public ArrayList<BillOfMaterial> findAllBOMs() {
+		    Connection con = DBConnection.connection();
+
+		    // Ergebnisvektor vorbereiten
+		    ArrayList<BillOfMaterial> result = new ArrayList<BillOfMaterial>();
+
+		    try {
+		      Statement stmt = con.createStatement();
+
+		      ResultSet rs = stmt.executeQuery("SELECT id, owner FROM accounts "
+		          + " ORDER BY id");
+
+		      // Für jeden Eintrag im Suchergebnis wird nun ein Account-Objekt erstellt.
+		      while (rs.next()) {
+		        BillOfMaterial bom = new BillOfMaterial();
+		        bom.setId(rs.getInt("id"));
+		        bom.setOwnerID(rs.getInt("owner"));
+
+		        // Hinzufügen des neuen Objekts zum Ergebnisvektor
+		        result.add(bom);
+		      }
+		    }
+		    catch (SQLException e2) {
+		      e2.printStackTrace();
+		    }
+		    // Ergebnisvektor zurückgeben
+		    return result;
+		  }
 }

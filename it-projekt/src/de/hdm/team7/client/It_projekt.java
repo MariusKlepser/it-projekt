@@ -32,8 +32,8 @@ public class It_projekt implements EntryPoint {
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
-	private final GreetingServiceAsync greetingService = GWT
-			.create(GreetingService.class);
+//	private final GreetingServiceAsync greetingService = GWT
+//			.create(GreetingService.class);
 
 	/**
 	 * This is the entry point method.
@@ -119,28 +119,28 @@ public class It_projekt implements EntryPoint {
 				sendButton.setEnabled(false);
 				textToServerLabel.setText(textToServer);
 				serverResponseLabel.setText("");
-				greetingService.greetServer(textToServer,
-						new AsyncCallback<String>() {
-							public void onFailure(Throwable caught) {
-								// Show the RPC error message to the user
-								dialogBox
-										.setText("Remote Procedure Call - Failure");
-								serverResponseLabel
-										.addStyleName("serverResponseLabelError");
-								serverResponseLabel.setHTML(SERVER_ERROR);
-								dialogBox.center();
-								closeButton.setFocus(true);
-							}
-
-							public void onSuccess(String result) {
-								dialogBox.setText("Remote Procedure Call");
-								serverResponseLabel
-										.removeStyleName("serverResponseLabelError");
-								serverResponseLabel.setHTML(result);
-								dialogBox.center();
-								closeButton.setFocus(true);
-							}
-						});
+//				greetingService.greetServer(textToServer,
+//						new AsyncCallback<String>() {
+//							public void onFailure(Throwable caught) {
+//								// Show the RPC error message to the user
+//								dialogBox
+//										.setText("Remote Procedure Call - Failure");
+//								serverResponseLabel
+//										.addStyleName("serverResponseLabelError");
+//								serverResponseLabel.setHTML(SERVER_ERROR);
+//								dialogBox.center();
+//								closeButton.setFocus(true);
+//							}
+//
+//							public void onSuccess(String result) {
+//								dialogBox.setText("Remote Procedure Call");
+//								serverResponseLabel
+//										.removeStyleName("serverResponseLabelError");
+//								serverResponseLabel.setHTML(result);
+//								dialogBox.center();
+//								closeButton.setFocus(true);
+//							}
+//						});
 			}
 		}
 
