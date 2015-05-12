@@ -47,7 +47,6 @@ public class BauteilOverview {
 		
 		//Formular Beschreibung
 		HorizontalPanel hPanel3 = new HorizontalPanel();
-		//HorizontalPanel hPanel2 = new HorizontalPanel(); 
 		vPanel.add(hPanel3);
 		
 		Label beschreibung = new Label("Beschreibung:");
@@ -56,7 +55,7 @@ public class BauteilOverview {
 		hPanel3.add(beschreibungtxt);
 		hPanel3.setCellWidth(beschreibung, "200px");
 		
-		
+		//Absenden Button
 		Button bauteilanlegenbtn = new Button("anlegen");
 		vPanel.add(bauteilanlegenbtn);
 		
