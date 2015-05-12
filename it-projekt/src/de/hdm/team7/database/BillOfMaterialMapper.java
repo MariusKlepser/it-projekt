@@ -24,7 +24,7 @@ public class BillOfMaterialMapper {
 	  }
 	  
 	  public ArrayList<BillOfMaterial> findAllBOMs() {
-		    Connection con = DBConnection.connection();
+		    Connection con = DBConnector.openConnection();
 
 		    // Ergebnisvektor vorbereiten
 		    ArrayList<BillOfMaterial> result = new ArrayList<BillOfMaterial>();
@@ -38,8 +38,9 @@ public class BillOfMaterialMapper {
 		      // Für jeden Eintrag im Suchergebnis wird nun ein Account-Objekt erstellt.
 		      while (rs.next()) {
 		        BillOfMaterial bom = new BillOfMaterial();
-		        bom.setId(rs.getInt("id"));
-		        bom.setOwnerID(rs.getInt("owner"));
+		        //TODO: korrekte Methoden aus der Klasse BillOfMaterial ausw�hlen
+//		        bom.setId(rs.getInt("id"));
+//		        bom.setId(rs.getInt("owner"));
 
 		        // Hinzufügen des neuen Objekts zum Ergebnisvektor
 		        result.add(bom);
