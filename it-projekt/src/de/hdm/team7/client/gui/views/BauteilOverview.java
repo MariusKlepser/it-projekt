@@ -1,7 +1,12 @@
 package de.hdm.team7.client.gui.views;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -15,7 +20,7 @@ public class BauteilOverview {
 	public Panel getView(){
 		// Initiate wrapper Panel
 		Panel panel = new FlowPanel();
-		
+		final FormPanel form = new FormPanel(); 
 		
 		// Start layout creation here
 		HTML h1 = new HTML("<h1>Bauteile</h1>");
@@ -55,11 +60,29 @@ public class BauteilOverview {
 		hPanel3.add(beschreibungtxt);
 		hPanel3.setCellWidth(beschreibung, "200px");
 		
-		//Absenden Button
-		Button bauteilanlegenbtn = new Button("anlegen");
-		vPanel.add(bauteilanlegenbtn);
+		panel.add(new Button("Submit", new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				form.submit();
+			}
+		}));
 		
-	
+		form.addSubmitHandler(new FormPanel.SubmitHandler() {
+			public void onSubmit(SubmitEvent event) {
+				//if (tb.getText().length() == 0) {
+					//Window.alert("Es muss etwas eingegeben werden!");
+					//event.cancel();
+				//}
+			}
+
+				
+		
+		});
+		
+		
+		
+		
+		
+		
 		panel.add(vPanel);
 		// End layout creation here
 		
