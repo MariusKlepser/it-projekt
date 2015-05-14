@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -15,9 +15,9 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.team7.server.businessObjects.Component;
+import de.hdm.team7.client.ClientsideSettings;
 
-public class EditView {
+public class EditView extends ClientsideSettings {
 
 	public Panel getView(){
 		// Initiate wrapper Panel
@@ -68,13 +68,13 @@ public class EditView {
 				String name = baugruppenname.getText();
 				String materialBezeichnung = beschreibungtxt.getText();
 				String beschreibung = materialbezeichnungtxt.getText();
-				ArrayList<Component> childrenComponents = null;
+				ArrayList childrenComponents = null;
+				AsyncCallback callback = null; 
 				
-//				createObject();
+				ClientsideSettings css = new ClientsideSettings();
+				css.BOMAdministration.createObject(businessObjectType, name, materialBezeichnung, beschreibung, childrenComponents, callback);
 			}
 		});
-		
-		
 		
 		vPanel.add(bauteilanlegenbtn);
 		

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-import de.hdm.team7.server.businessObjects.Component;
+import de.hdm.team7.shared.businessObjects.Component;
 
 public class ComponentMapper {
 

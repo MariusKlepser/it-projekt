@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.team7.database.*;
-import de.hdm.team7.server.businessObjects.*;
 import de.hdm.team7.shared.BOMAdministration;
+import de.hdm.team7.shared.businessObjects.*;
 
 @SuppressWarnings("serial")
 public class BOMAdministrationImpl extends RemoteServiceServlet implements

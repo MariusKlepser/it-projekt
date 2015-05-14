@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import de.hdm.team7.server.businessObjects.*;
+import de.hdm.team7.shared.businessObjects.*;
 
 @RemoteServiceRelativePath("bomadministration")
 public interface BOMAdministration extends RemoteService {
