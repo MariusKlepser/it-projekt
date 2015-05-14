@@ -2,6 +2,7 @@ package de.hdm.team7.client.gui.views;
 
 import java.util.ArrayList;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -69,10 +70,17 @@ public class EditView extends ClientsideSettings {
 				String materialBezeichnung = beschreibungtxt.getText();
 				String beschreibung = materialbezeichnungtxt.getText();
 				ArrayList childrenComponents = null;
-				AsyncCallback callback = null; 
-				
+//				AsyncCallback callback = null; 
+			
 				ClientsideSettings css = new ClientsideSettings();
-				css.BOMAdministration.createObject(businessObjectType, name, materialBezeichnung, beschreibung, childrenComponents, callback);
+				
+				ClientsideSettings.getLogger().severe("Client: Sending request!");
+//				GWT.log("Client: Sending request!");
+				css.getBOMAdministration().createObject("bauteil", name, materialBezeichnung, beschreibung, childrenComponents, css.getCallback());
+//				GWT.log("Client: Request sent!");
+				ClientsideSettings.getLogger().severe("Client: Request sent!");
+			
+			
 			}
 		});
 		

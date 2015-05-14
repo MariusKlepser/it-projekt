@@ -1,9 +1,13 @@
 package de.hdm.team7.server;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.team7.server.ServersideSettings;
 import de.hdm.team7.database.*;
 import de.hdm.team7.shared.BOMAdministration;
 import de.hdm.team7.shared.businessObjects.*;
@@ -55,11 +59,17 @@ public class BOMAdministrationImpl extends RemoteServiceServlet implements
 			ArrayList<Component> childrenComponents) {
 		if(businessObjectType == "bauteil")
 		{
+			System.out.println("Server: Received Data");
+			GWT.log("Server: Received Data!");
 			Component comp = new Component();
 			comp.setName(name);
 			comp.setMaterialIdentifier(materialBezeichnung);
 			comp.setDescription(beschreibung);
+			GWT.log("Server: Sending Data to Mapper");
+			final Logger rootLogger = Logger.getLogger("");
+			rootLogger.log(Level.SEVERE, "Server");
 			this.compMapper.insert(comp);
+			GWT.log("Server: Data sent to Mapper!");
 		}
 	}
 

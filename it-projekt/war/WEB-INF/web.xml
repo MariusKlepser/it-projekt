@@ -7,9 +7,21 @@
 
   <!-- Servlets -->
   
+  <!-- Example servlet loaded into servlet container -->
+	<servlet>
+	  <servlet-name>BOMAdministration</servlet-name>
+	  <servlet-class>
+	    de.hdm.team7.server.BOMAdministrationImpl
+	  </servlet-class>
+	</servlet>
+	<servlet-mapping>
+	  <servlet-name>BOMAdministration</servlet-name>
+	  <url-pattern>/it_projekt/bomadministration</url-pattern>
+	</servlet-mapping>  
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>It_projekt.html</welcome-file>
-  </welcome-file-list>
+  </welcome-file-list>  
 
 </web-app>

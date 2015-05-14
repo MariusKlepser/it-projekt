@@ -6,7 +6,7 @@ import de.hdm.team7.shared.CommonSettings;
 
 public class ServersideSettings extends CommonSettings {
 	private static final String LOGGER_NAME = "BOMAdministration Server";
-	private static final Logger log = Logger.getLogger(LOGGER_NAME);
+	protected static final Logger log = Logger.getLogger(LOGGER_NAME);
 
 	public static Logger getLogger() {
 		return log;

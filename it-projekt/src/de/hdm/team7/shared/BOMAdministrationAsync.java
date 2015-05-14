@@ -17,7 +17,7 @@ public interface BOMAdministrationAsync {
 			  String beschreibung, ArrayList<Component> childrenComponents, AsyncCallback<BusinessObject> callback);
 	void deleteObject(String businessObjectType, String name, String materialBezeichnung, 
 			  String beschreibung, ArrayList<Component> childrenComponents, AsyncCallback<BusinessObject> callback);
-	void create(BusinessObject bo, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	void create(BusinessObject bo, AsyncCallback<Void> callback);
 	void getBusinessObjectById(String businessObjectType, int id, AsyncCallback<BusinessObject> callback) throws IllegalArgumentException;
 	void getBusinessObjectByName(String businessObjectType, String name, AsyncCallback<BusinessObject> callback) throws IllegalArgumentException;
 	void getAllBusinessObjects(String businessObjectType, AsyncCallback<ArrayList<BusinessObject>> callback) throws IllegalArgumentException;

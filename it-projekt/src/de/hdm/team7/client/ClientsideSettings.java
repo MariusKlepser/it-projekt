@@ -15,11 +15,14 @@ public class ClientsideSettings {
 
 	private AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 		public void onFailure(Throwable caught) {
+			ClientsideSettings.getLogger().severe("Client: AsyncCallback Failure!");
 			// TODO: Do something with errors.
 		}
 
 		@Override
 		public void onSuccess(Void result) {
+			ClientsideSettings.getLogger().severe("Client: AsyncCallback Success!");
+//			ClientsideSettings.getLogger().severe(result);
 			// TODO Auto-generated method stub
 		}
 	};
@@ -28,7 +31,7 @@ public class ClientsideSettings {
 
 	private static final String LOGGER_NAME = "BOMAdministration Client";
 
-	private static final Logger log = Logger.getLogger(LOGGER_NAME);
+	protected static final Logger log = Logger.getLogger(LOGGER_NAME);
 
 	public static Logger getLogger() {
 		return log;
