@@ -70,7 +70,7 @@ public class EditView {
 				String beschreibung = materialbezeichnungtxt.getText();
 				ArrayList<Component> childrenComponents = null;
 				
-				createObject();
+//				createObject();
 			}
 		});
 		
