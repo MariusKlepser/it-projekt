@@ -28,7 +28,7 @@ public interface BOMAdministration extends RemoteService {
 	  // Eine Instanz vom Typ BusinessObject anlegen (alle anderen Gesch�ftsobjekte enthalten); 
 	  // realisiert �ber optionale Parameter bei �bergabe;
 	  // Eine einzige Methode zum Erstellen von Objekten (Bauteil, Baugruppe, etc.)**/
-	  public void createObject(String businessObjectType, String name, String materialBezeichnung, 
+	  public String createObject(String businessObjectType, String name, String materialBezeichnung, 
 			  String beschreibung, ArrayList<Component> childrenComponents);
 	  
 	  public BusinessObject updateObject(String businessObjectType, String name, String materialBezeichnung, 

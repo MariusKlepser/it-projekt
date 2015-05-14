@@ -1,4 +1,4 @@
-package de.hdm.team7.database;
+package de.hdm.team7.server.database;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,6 +11,7 @@ import de.hdm.team7.shared.businessObjects.Component;
 public class ComponentMapper {
 
 	private static ComponentMapper componentMapper = null;
+	private String log;
 
 	  /**
 	   * GeschÃ¼tzter Konstruktor - verhindert die MÃ¶glichkeit, mit <code>new</code>
@@ -25,6 +26,11 @@ public class ComponentMapper {
 	    }
 
 	    return componentMapper;
+	  }
+	  
+	  public String getLog()
+	  {
+		  return log;
 	  }
 	  
 	  /**
@@ -163,17 +169,23 @@ public class ComponentMapper {
 	   *         <code>id</code>.
 	   */
 	  public Component insert(Component u) {
+		  log = "Opening DB Connection; ";
 	    Connection con = DBConnection.connection();
+	    log = log + "DB Connection established; ";
 
 	    try {
+	    	log = log + "creating SQL statement; ";
 	      Statement stmt = con.createStatement();
+	      log = log + "SQL statement created; ";
 
 	      /*
 	       * ZunÃ¤chst schauen wir nach, welches der momentan hÃ¶chste
 	       * PrimÃ¤rschlÃ¼sselwert ist.
 	       */
+	      log = log + "search for current highest ID; ";
 	      ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid "
 	          + "FROM bauteil ");
+	      log = log + "search finished; ";
 
 	      // Wenn wir etwas zurÃ¼ckerhalten, kann dies nur einzeilig sein
 	      if (rs.next()) {
@@ -181,14 +193,18 @@ public class ComponentMapper {
 	         * u erhÃ¤lt den bisher maximalen, nun um 1 inkrementierten
 	         * PrimÃ¤rschlÃ¼ssel.
 	         */
+	    	  log = log + "increment current ID by 1; ";
 	        u.setId(rs.getInt("maxid") + 1);
+	        log = log + "ID incremented; ";
 
 	        stmt = con.createStatement();
 
 	        // Jetzt erst erfolgt die tatsÃ¤chliche EinfÃ¼geoperation
+	        log = log + "executing SQL query for Inserting; ";
 	        stmt.executeUpdate("INSERT INTO bauteil (id, name, beschreibung, aenderungsdatum, materialbezeichnung) "
 	            + "VALUES (" + u.getId() + ",'" + u.getName() + "','" + u.getDescription() + "','" + u.getChangeDate() + "','"
 	            + u.getMaterialIdentifier() + "')");
+	        log = log + "SQL query executed; ";
 	      }
 	    }
 	    catch (SQLException e) {
@@ -204,6 +220,7 @@ public class ComponentMapper {
 	     * explizite RÃ¼ckgabe von c ist eher ein Stilmittel, um zu signalisieren,
 	     * dass sich das Objekt evtl. im Laufe der Methode verÃ¤ndert hat.
 	     */
+	    log = log + "returning Component-Object; ";
 	    return u;
 	  }
 

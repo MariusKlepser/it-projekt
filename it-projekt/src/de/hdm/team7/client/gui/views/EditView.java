@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.team7.client.ClientsideSettings;
+import de.hdm.team7.shared.businessObjects.*;
 
 public class EditView extends ClientsideSettings {
 
@@ -69,14 +70,14 @@ public class EditView extends ClientsideSettings {
 				String name = baugruppenname.getText();
 				String materialBezeichnung = beschreibungtxt.getText();
 				String beschreibung = materialbezeichnungtxt.getText();
-				ArrayList childrenComponents = null;
+				ArrayList<Component> childrenComponents = null;
 //				AsyncCallback callback = null; 
 			
 				ClientsideSettings css = new ClientsideSettings();
 				
 				ClientsideSettings.getLogger().severe("Client: Sending request!");
 //				GWT.log("Client: Sending request!");
-				css.getBOMAdministration().createObject("bauteil", name, materialBezeichnung, beschreibung, childrenComponents, css.getCallback());
+				ClientsideSettings.getBOMAdministration().createObject(businessObjectType, name, materialBezeichnung, beschreibung, childrenComponents, css.getCallback());
 //				GWT.log("Client: Request sent!");
 				ClientsideSettings.getLogger().severe("Client: Request sent!");
 			

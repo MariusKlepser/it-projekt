@@ -1,6 +1,8 @@
 package de.hdm.team7.server;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -8,7 +10,7 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.team7.server.ServersideSettings;
-import de.hdm.team7.database.*;
+import de.hdm.team7.server.database.*;
 import de.hdm.team7.shared.BOMAdministration;
 import de.hdm.team7.shared.businessObjects.*;
 
@@ -54,23 +56,35 @@ public class BOMAdministrationImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public void createObject(String businessObjectType, String name,
+	public String createObject(String businessObjectType, String name,
 			String materialBezeichnung, String beschreibung,
 			ArrayList<Component> childrenComponents) {
-		if(businessObjectType == "bauteil")
-		{
-			System.out.println("Server: Received Data");
-			GWT.log("Server: Received Data!");
+		String message;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		
+		message = "Start createObject(); ";
+//		if(businessObjectType == "bauteil")
+//		{
+//			System.out.println("Server: Received Data");
+//			GWT.log("Server: Received Data!");
 			Component comp = new Component();
+			message = message + "creating Object; ";
 			comp.setName(name);
 			comp.setMaterialIdentifier(materialBezeichnung);
 			comp.setDescription(beschreibung);
-			GWT.log("Server: Sending Data to Mapper");
-			final Logger rootLogger = Logger.getLogger("");
-			rootLogger.log(Level.SEVERE, "Server");
+			comp.setChangeDate(sdf.format(date));
+			message = message + sdf.format(new Date()) + "; ";
+//			GWT.log("Server: Sending Data to Mapper");
+//			final Logger rootLogger = Logger.getLogger("");
+//			rootLogger.log(Level.SEVERE, "Server");
+			message = message + "Object created; ";
 			this.compMapper.insert(comp);
-			GWT.log("Server: Data sent to Mapper!");
-		}
+			message = message + this.compMapper.getLog();
+//			GWT.log("Server: Data sent to Mapper!");
+			message = message + "Object sent to Mapper";
+//		}
+		return message;
 	}
 
 	@Override

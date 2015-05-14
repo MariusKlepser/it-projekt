@@ -1,4 +1,4 @@
-package de.hdm.team7.database;
+package de.hdm.team7.server.database;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-import de.hdm.team7.database.*;
+import de.hdm.team7.server.database.*;
 import de.hdm.team7.shared.businessObjects.*;
 
 // In Anlehnung an Thies - Bankprojekt 

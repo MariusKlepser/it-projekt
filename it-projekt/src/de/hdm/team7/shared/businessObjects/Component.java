@@ -10,7 +10,8 @@ public class Component extends BusinessObject{
 	
 	protected String materialIdentifier = "";
 	
-	protected Date changeDate;
+	protected String changeDate;
+	protected Date dtChangeDate;
 
 	/**
 	 * @return the materialIdentifier
@@ -43,15 +44,29 @@ public class Component extends BusinessObject{
 	/**
 	 * @return the aenderungsDatum
 	 */
-	public Date getChangeDate() {
+	public String getChangeDate() {
 		return changeDate;
+	}
+	
+	/**
+	 * @return the aenderungsDatum
+	 */
+	public Date getdtChangeDate() {
+		return dtChangeDate;
 	}
 
 	/**
 	 * @param aenderungsDatum the aenderungsDatum to set
 	 */
-	public void setChangeDate(Date changeDate) {
+	public void setChangeDate(String changeDate) {
 		this.changeDate = changeDate;
+	}
+	
+	/**
+	 * @param aenderungsDatum the aenderungsDatum to set
+	 */
+	public void setChangeDate(Date changeDate) {
+		this.dtChangeDate = changeDate;
 	}
 	
 	public String toString(){

@@ -1,4 +1,4 @@
-package de.hdm.team7.database;
+package de.hdm.team7.server.database;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -6,39 +6,27 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-import de.hdm.team7.database.*;
-import de.hdm.team7.shared.businessObjects.*;
+import de.hdm.team7.shared.businessObjects.ComponentAssembly;
 
-// In Anlehnung an Thies - Bankprojekt 
+public class ComponentAssemblyMapper {
 
-public class UserMapper {
+	private static ComponentAssemblyMapper componentAssemblyMapper = null;
 
-	private static UserMapper userMapper = null;
+	/**
+	 * Geschützter Konstruktor - verhindert die Möglichkeit, mit
+	 * <code>new</code> neue Instanzen dieser Klasse zu erzeugen.
+	 */
+	protected ComponentAssemblyMapper() {
+	}
 
-	  /**
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
-	   * neue Instanzen dieser Klasse zu erzeugen.
-	   */
-	  protected UserMapper() {
-	  }
+	public static ComponentAssemblyMapper componentAssemblyMapper() {
+		if (componentAssemblyMapper == null) {
+			componentAssemblyMapper = new ComponentAssemblyMapper();
+		}
 
-	  public static UserMapper userMapper() {
-	    if (userMapper == null) {
-	      userMapper = new UserMapper();
-	    }
-
-	    return userMapper;
-	  }
-	  
-	  /**
-	   * Suchen eines Users mit vorgegebener ID. Da diese eindeutig ist,
-	   * wird genau ein Objekt zur�ckgegeben.
-	   * 
-	   * @param id Primärschlüsselattribut (->DB)
-	   * @return User-Objekt, das dem übergebenen Schlüssel entspricht, null bei
-	   *         nicht vorhandenem DB-Tupel.
-	   */
-	  public User findByKey(int id) {
+		return componentAssemblyMapper;
+	}
+	public ComponentAssembly findByKey(int id) {
 	    // DB-Verbindung holen
 	    Connection con = DBConnection.connection();
 
@@ -48,7 +36,7 @@ public class UserMapper {
 
 	      // Statement ausfüllen und als Query an die DB schicken
 	      ResultSet rs = stmt
-	          .executeQuery("SELECT id, password, name FROM benutzer "
+	          .executeQuery("SELECT id, name, beschreibung,aenderungsdatum,materialbezeichnung FROM baugruppe "
 	              + "WHERE id=" + id + " ORDER BY name");
 
 	      /*
@@ -57,12 +45,14 @@ public class UserMapper {
 	       */
 	      if (rs.next()) {
 	        // Ergebnis-Tupel in Objekt umwandeln
-	        User u = new User();
-	        u.setId(rs.getInt("id"));
-	        u.setPassword(rs.getString("password"));
-	        u.setName(rs.getString("name"));
+	        ComponentAssembly ca = new ComponentAssembly();
+	        ca.setId(rs.getInt("id"));
+	        ca.setName(rs.getString("name"));
+	        ca.setDescription(rs.getString("beschreibung"));
+	        ca.setChangeDate(rs.getDate("aenderungsdatum"));
+	        ca.setMaterialIdentifier(rs.getString("materialbezeichnung"));
 
-	        return u;
+	        return ca;
 	      }
 	    }
 	    catch (SQLException e) {
@@ -80,27 +70,28 @@ public class UserMapper {
 	   *         repräsentieren. Bei evtl. Exceptions wird ein partiell gef�llter
 	   *         oder ggf. auch leerer Vetor zurückgeliefert.
 	   */
-	  public Vector<User> findAll() {
+	  public Vector<ComponentAssembly> findAll() {
 	    Connection con = DBConnection.connection();
 	    // Ergebnisvektor vorbereiten
-	    Vector<User> result = new Vector<User>();
+	    Vector<ComponentAssembly> result = new Vector<ComponentAssembly>();
 
 	    try {
 	      Statement stmt = con.createStatement();
 
-	      ResultSet rs = stmt.executeQuery("SELECT id, password, name "
-	          + "FROM benutzer " + "ORDER BY name");
+	      ResultSet rs = stmt.executeQuery("SELECT id, name, beschreibung,aenderungsdatum,materialbezeichnung"
+	          + "FROM baugruppe " + "ORDER BY name");
 
 	      // Für jeden Eintrag im Suchergebnis wird nun ein User-Objekt
 	      // erstellt.
 	      while (rs.next()) {
-	        User u = new User();
-	        u.setId(rs.getInt("id"));
-	        u.setPassword(rs.getString("password"));
-	        u.setName(rs.getString("name"));
-
+	        ComponentAssembly ca = new ComponentAssembly();
+	        ca.setId(rs.getInt("id"));
+	        ca.setName(rs.getString("name"));
+	        ca.setDescription(rs.getString("beschreibung"));
+	        ca.setChangeDate(rs.getDate("aenderungsdatum"));
+	        ca.setMaterialIdentifier(rs.getString("materialbezeichnung"));
 	        // Hinzufügen des neuen Objekts zum Ergebnisvektor
-	        result.addElement(u);
+	        result.addElement(ca);
 	      }
 	    }
 	    catch (SQLException e) {
@@ -119,27 +110,29 @@ public class UserMapper {
 	   *         gesuchten Namen repräsentieren. Bei evtl. Exceptions wird ein
 	   *         partiell gefüllter oder ggf. auch leerer Vetor zurückgeliefert.
 	   */
-	  public Vector<User> findByName(String name) {
+	  public Vector<ComponentAssembly> findByName(String name) {
 	    Connection con = DBConnection.connection();
-	    Vector<User> result = new Vector<User>();
+	    Vector<ComponentAssembly> result = new Vector<ComponentAssembly>();
 
 	    try {
 	      Statement stmt = con.createStatement();
 
-	      ResultSet rs = stmt.executeQuery("SELECT id, password, name "
-	          + "FROM benutzer " + "WHERE name LIKE '" + name
+	      ResultSet rs = stmt.executeQuery("SELECT id, name, beschreibung,aenderungsdatum,materialbezeichnung "
+	          + "FROM baugruppe " + "WHERE name LIKE '" + name
 	          + "' ORDER BY name");
 
 	      // Für jeden Eintrag im Suchergebnis wird nun ein User-Objekt
 	      // erstellt.
 	      while (rs.next()) {
-	        User u = new User();
-	        u.setId(rs.getInt("id"));
-	        u.setPassword(rs.getString("password"));
-	        u.setName(rs.getString("name"));
+	        ComponentAssembly ca = new ComponentAssembly();
+	        ca.setId(rs.getInt("id"));
+	        ca.setName(rs.getString("name"));
+	        ca.setDescription(rs.getString("beschreibung"));
+	        ca.setChangeDate(rs.getDate("aenderungsdatum"));
+	        ca.setMaterialIdentifier(rs.getString("materialbezeichnung"));
 
 	        // Hinzufügen des neuen Objekts zum Ergebnisvektor
-	        result.addElement(u);
+	        result.addElement(ca);
 	      }
 	    }
 	    catch (SQLException e) {
@@ -159,7 +152,7 @@ public class UserMapper {
 	   * @return das bereits übergebene Objekt, jedoch mit ggf. korrigierter
 	   *         <code>id</code>.
 	   */
-	  public User insert(User u) {
+	  public ComponentAssembly insert(ComponentAssembly ca) {
 	    Connection con = DBConnection.connection();
 
 	    try {
@@ -178,14 +171,14 @@ public class UserMapper {
 	         * u erhält den bisher maximalen, nun um 1 inkrementierten
 	         * Primärschlüssel.
 	         */
-	        u.setId(rs.getInt("maxid") + 1);
+	        ca.setId(rs.getInt("maxid") + 1);
 
 	        stmt = con.createStatement();
 
 	        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
-	        stmt.executeUpdate("INSERT INTO benutzer (id, password, name) "
-	            + "VALUES (" + u.getId() + ",'" + u.getPassword() + "','"
-	            + u.getName() + "')");
+	        stmt.executeUpdate("INSERT INTO baugruppe (id, name, beschreibung,aenderungsdatum,materialbezeichnung) "
+	            + "VALUES (" + ca.getId() + ",'" + ca.getName() + "','" + ca.getChangeDate() + ",'" + ca.getMaterialIdentifier() + "','"
+	            + ca.getName() + "')");
 	      }
 	    }
 	    catch (SQLException e) {
@@ -201,7 +194,7 @@ public class UserMapper {
 	     * explizite Rückgabe von c ist eher ein Stilmittel, um zu signalisieren,
 	     * dass sich das Objekt evtl. im Laufe der Methode verändert hat.
 	     */
-	    return u;
+	    return ca;
 	  }
 
 	  /**
@@ -210,15 +203,17 @@ public class UserMapper {
 	   * @param u das Objekt, das in die DB geschrieben werden soll
 	   * @return das als Parameter übergebene Objekt
 	   */
-	  public User update(User u) {
+	  public ComponentAssembly update(ComponentAssembly ca) {
 	    Connection con = DBConnection.connection();
 
 	    try {
 	      Statement stmt = con.createStatement();
 
-	      stmt.executeUpdate("UPDATE benutzer " + "SET password=\""
-	          + u.getPassword() + "\", " + "name=\"" + u.getName() + "\" "
-	          + "WHERE id=" + u.getId());
+	      stmt.executeUpdate("UPDATE baugruppe " 
+	          + "SET name=\"" + ca.getName() + "\", " + "beschreibung=\"" + ca.getDescription() + "\" "
+	          + "aenderungsdatum=\"" + ca.getChangeDate() + "\" " 
+	          + "materialbezeichnung=\"" + ca.getMaterialIdentifier() + "\" " 
+	          + "WHERE id=" + ca.getId());
 
 	    }
 	    catch (SQLException e) {
@@ -226,7 +221,7 @@ public class UserMapper {
 	    }
 
 	    // Um Analogie zu insert(User u) zu wahren, geben wir u zurück
-	    return u;
+	    return ca;
 	  }
 
 	  /**
@@ -234,13 +229,13 @@ public class UserMapper {
 	   * 
 	   * @param u das aus der DB zu löschende "Objekt"
 	   */
-	  public void delete(User u) {
+	  public void delete(ComponentAssembly ca) {
 	    Connection con = DBConnection.connection();
 
 	    try {
 	      Statement stmt = con.createStatement();
 
-	      stmt.executeUpdate("DELETE FROM benutzer " + "WHERE id=" + u.getId());
+	      stmt.executeUpdate("DELETE FROM benutzer " + "WHERE id=" + ca.getId());
 	    }
 	    catch (SQLException e) {
 	      e.printStackTrace();
@@ -249,3 +244,5 @@ public class UserMapper {
 
 
 }
+
+

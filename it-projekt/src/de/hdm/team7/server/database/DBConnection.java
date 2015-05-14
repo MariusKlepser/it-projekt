@@ -1,4 +1,4 @@
-package de.hdm.team7.database;
+package de.hdm.team7.server.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

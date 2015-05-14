@@ -13,16 +13,16 @@ public class ClientsideSettings {
 
 	private static BOMAdministrationAsync BOMAdministration = null;
 
-	private AsyncCallback<Void> callback = new AsyncCallback<Void>() {
+	private AsyncCallback<String> callback = new AsyncCallback<String>() {
 		public void onFailure(Throwable caught) {
 			ClientsideSettings.getLogger().severe("Client: AsyncCallback Failure!");
 			// TODO: Do something with errors.
 		}
 
 		@Override
-		public void onSuccess(Void result) {
+		public void onSuccess(String result) {
 			ClientsideSettings.getLogger().severe("Client: AsyncCallback Success!");
-//			ClientsideSettings.getLogger().severe(result);
+			ClientsideSettings.getLogger().info(result);
 			// TODO Auto-generated method stub
 		}
 	};
@@ -43,6 +43,22 @@ public class ClientsideSettings {
 			// Zunächst instantiieren wir BOMAdministration
 			BOMAdministration = GWT
 					.create(de.hdm.team7.shared.BOMAdministration.class);
+			
+			final AsyncCallback<Void> initBOMCallback = new AsyncCallback<Void>() {
+				@Override
+				public void onFailure(Throwable caught) {
+					ClientsideSettings
+							.getLogger()
+							.severe("Die BOMAdministration konnte nicht initialisiert werden!");
+				}
+
+				@Override
+				public void onSuccess(Void result) {
+					ClientsideSettings.getLogger().info(
+							"Die BOMAdministration wurde initialisiert.");
+				}
+			};
+			BOMAdministration.init(initBOMCallback);
 		}
 		// So, nun brauchen wir die BOMAdministration nur noch zurückzugeben.
 		return BOMAdministration;
@@ -77,14 +93,14 @@ public class ClientsideSettings {
 	/**
 	 * @return the callback
 	 */
-	public AsyncCallback<Void> getCallback() {
+	public AsyncCallback<String> getCallback() {
 		return callback;
 	}
 
 	/**
 	 * @param callback the callback to set
 	 */
-	public void setCallback(AsyncCallback<Void> callback) {
+	public void setCallback(AsyncCallback<String> callback) {
 		this.callback = callback;
 	}
 }
