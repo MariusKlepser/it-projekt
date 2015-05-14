@@ -1,4 +1,4 @@
-package de.hdm.team7.server.businessObjects;
+package de.hdm.team7.shared.businessObjects;
 
 import java.util.Date;
 
