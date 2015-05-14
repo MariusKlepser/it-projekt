@@ -11,49 +11,77 @@ import de.hdm.team7.shared.ReportGeneratorAsync;
 
 public class ClientsideSettings {
 
-	  protected static BOMAdministrationAsync BOMAdministration = null;
+	private static BOMAdministrationAsync BOMAdministration = null;
 
-	  protected static ReportGeneratorAsync reportGenerator = null;
+	private AsyncCallback<Void> callback = new AsyncCallback<Void>() {
+		public void onFailure(Throwable caught) {
+			// TODO: Do something with errors.
+		}
 
-	  protected static final String LOGGER_NAME = "BOMAdministration Client";
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+		}
+	};
 
-	  protected static final Logger log = Logger.getLogger(LOGGER_NAME);
+	private static ReportGeneratorAsync reportGenerator = null;
 
-	  public static Logger getLogger() {
-	    return log;
-	  }
+	private static final String LOGGER_NAME = "BOMAdministration Client";
 
-	  public static BOMAdministrationAsync getBOMAdministration() {
-	    // Gab es bislang noch keine BOMAdministration-Instanz, dann...
-	    if (BOMAdministration == null) {
-	      // Zunächst instantiieren wir BOMAdministration
-	      BOMAdministration = GWT.create(de.hdm.team7.shared.BOMAdministration.class);
-	    }
-	    // So, nun brauchen wir die BOMAdministration nur noch zurückzugeben.
-	    return BOMAdministration;
-	  }
+	private static final Logger log = Logger.getLogger(LOGGER_NAME);
 
-	  public static ReportGeneratorAsync getReportGenerator() {
-	    // Gab es bislang noch keine ReportGenerator-Instanz, dann...
-	    if (reportGenerator == null) {
-	      // Zunächst instantiieren wir ReportGenerator
-	    	reportGenerator = GWT.create(ReportGenerator.class);
+	public static Logger getLogger() {
+		return log;
+	}
 
-	      final AsyncCallback<Void> initReportGeneratorCallback = new AsyncCallback<Void>() {
-	        @Override
-			public void onFailure(Throwable caught) {
-	          ClientsideSettings.getLogger().severe(
-	              "Der ReportGenerator konnte nicht initialisiert werden!");
-	        }
-	        @Override
-			public void onSuccess(Void result) {
-	          ClientsideSettings.getLogger().info(
-	              "Der ReportGenerator wurde initialisiert.");
-	        }
-	      };
-	      reportGenerator.init(initReportGeneratorCallback);
-	    }
-	    // So, nun brauchen wir den ReportGenerator nur noch zurückzugeben.
-	    return reportGenerator;
-	  }
+	public static BOMAdministrationAsync getBOMAdministration() {
+		// Gab es bislang noch keine BOMAdministration-Instanz, dann...
+		if (BOMAdministration == null) {
+			// Zunächst instantiieren wir BOMAdministration
+			BOMAdministration = GWT
+					.create(de.hdm.team7.shared.BOMAdministration.class);
+		}
+		// So, nun brauchen wir die BOMAdministration nur noch zurückzugeben.
+		return BOMAdministration;
+	}
+
+	public static ReportGeneratorAsync getReportGenerator() {
+		// Gab es bislang noch keine ReportGenerator-Instanz, dann...
+		if (reportGenerator == null) {
+			// Zunächst instantiieren wir ReportGenerator
+			reportGenerator = GWT.create(ReportGenerator.class);
+
+			final AsyncCallback<Void> initReportGeneratorCallback = new AsyncCallback<Void>() {
+				@Override
+				public void onFailure(Throwable caught) {
+					ClientsideSettings
+							.getLogger()
+							.severe("Der ReportGenerator konnte nicht initialisiert werden!");
+				}
+
+				@Override
+				public void onSuccess(Void result) {
+					ClientsideSettings.getLogger().info(
+							"Der ReportGenerator wurde initialisiert.");
+				}
+			};
+			reportGenerator.init(initReportGeneratorCallback);
+		}
+		// So, nun brauchen wir den ReportGenerator nur noch zurückzugeben.
+		return reportGenerator;
+	}
+
+	/**
+	 * @return the callback
+	 */
+	public AsyncCallback<Void> getCallback() {
+		return callback;
+	}
+
+	/**
+	 * @param callback the callback to set
+	 */
+	public void setCallback(AsyncCallback<Void> callback) {
+		this.callback = callback;
+	}
 }
