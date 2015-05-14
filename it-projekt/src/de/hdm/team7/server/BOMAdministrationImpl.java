@@ -50,11 +50,17 @@ public class BOMAdministrationImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public BusinessObject createObject(String businessObjectType, String name,
+	public void createObject(String businessObjectType, String name,
 			String materialBezeichnung, String beschreibung,
 			ArrayList<Component> childrenComponents) {
-		// TODO Auto-generated method stub
-		return null;
+		if(businessObjectType == "bauteil")
+		{
+			Component comp = new Component();
+			comp.setName(name);
+			comp.setMaterialIdentifier(materialBezeichnung);
+			comp.setDescription(beschreibung);
+			this.compMapper.insert(comp);
+		}
 	}
 
 	@Override

@@ -11,13 +11,13 @@ import de.hdm.team7.shared.ReportGeneratorAsync;
 
 public class ClientsideSettings {
 
-	  private static BOMAdministrationAsync BOMAdministration = null;
+	  protected static BOMAdministrationAsync BOMAdministration = null;
 
-	  private static ReportGeneratorAsync reportGenerator = null;
+	  protected static ReportGeneratorAsync reportGenerator = null;
 
-	  private static final String LOGGER_NAME = "BOMAdministration Client";
+	  protected static final String LOGGER_NAME = "BOMAdministration Client";
 
-	  private static final Logger log = Logger.getLogger(LOGGER_NAME);
+	  protected static final Logger log = Logger.getLogger(LOGGER_NAME);
 
 	  public static Logger getLogger() {
 	    return log;

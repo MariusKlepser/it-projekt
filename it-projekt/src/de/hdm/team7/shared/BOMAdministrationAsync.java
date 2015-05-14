@@ -12,7 +12,7 @@ public interface BOMAdministrationAsync {
 	void getBOMList(AsyncCallback<ArrayList<BillOfMaterial>> callback);
 	void setBOMList(ArrayList<BillOfMaterial> bomList, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	void createObject(String businessObjectType, String name, String materialBezeichnung, 
-			  String beschreibung, ArrayList<Component> childrenComponents, AsyncCallback<BusinessObject> callback);
+			  String beschreibung, ArrayList<Component> childrenComponents, AsyncCallback<Void> callback);
 	void updateObject(String businessObjectType, String name, String materialBezeichnung, 
 			  String beschreibung, ArrayList<Component> childrenComponents, AsyncCallback<BusinessObject> callback);
 	void deleteObject(String businessObjectType, String name, String materialBezeichnung, 
