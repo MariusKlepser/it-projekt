@@ -1,4 +1,4 @@
-package de.hdm.team7.businessObjects;
+package de.hdm.team7.server.businessObjects;
 
 import java.util.Date;
 
@@ -52,6 +52,10 @@ public class Component extends BusinessObject{
 	 */
 	public void setChangeDate(Date changeDate) {
 		this.changeDate = changeDate;
-	} 
+	}
+	
+	public String toString(){
+		return this.getName()+","+this.getMaterialIdentifier()+","+this.getDescription();
+	}
 
 }

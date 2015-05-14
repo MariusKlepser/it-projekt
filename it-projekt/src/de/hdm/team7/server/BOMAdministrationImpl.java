@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.hdm.team7.businessObjects.*;
 import de.hdm.team7.database.*;
+import de.hdm.team7.server.businessObjects.*;
 import de.hdm.team7.shared.BOMAdministration;
 
 @SuppressWarnings("serial")
@@ -30,7 +30,7 @@ public class BOMAdministrationImpl extends RemoteServiceServlet implements
 	@Override
 	public void init() throws IllegalArgumentException {
 		/*
-		 * Ganz wesentlich ist, dass die BOMAdministration einen vollständigen
+		 * Ganz wesentlich ist, dass die BOMAdministration einen vollstï¿½ndigen
 		 * Satz von Mappern besitzt, mit deren Hilfe sie dann mit der Datenbank
 		 * kommunizieren kann.
 		 */

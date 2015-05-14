@@ -4,10 +4,12 @@ package de.hdm.team7.client;
 public class DataSet {
 	private final Integer id;
 	private final String name;
+	private final String type;
 
-	public DataSet(Integer id, String name) {
+	public DataSet(Integer id, String name, String type) {
 		this.id = id;
 		this.name = name;
+		this.type = type;
 	}
 
 	public String getIdString() { 
@@ -20,5 +22,9 @@ public class DataSet {
 
 	public String getName() {
 		return name;
+	}
+	
+	public String getType() {
+		return type;
 	}
 }
