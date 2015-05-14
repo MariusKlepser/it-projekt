@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-import de.hdm.team7.businessObjects.*;
 import de.hdm.team7.database.*;
+import de.hdm.team7.server.businessObjects.*;
 
 // In Anlehnung an Thies - Bankprojekt 
 

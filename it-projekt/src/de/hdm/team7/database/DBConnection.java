@@ -1,11 +1,11 @@
 package de.hdm.team7.database;
 
-import java.sql.DriverManager;
 import java.sql.*;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
-import de.hdm.team7.businessObjects.User;
+
+import de.hdm.team7.server.businessObjects.User;
 
 public class DBConnection {
 	

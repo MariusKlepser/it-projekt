@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import de.hdm.team7.businessObjects.*;
+import de.hdm.team7.server.businessObjects.*;
 
 public interface BOMAdministrationAsync {
 
