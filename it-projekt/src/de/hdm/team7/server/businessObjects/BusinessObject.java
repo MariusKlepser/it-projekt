@@ -1,4 +1,4 @@
-package de.hdm.team7.businessObjects;
+package de.hdm.team7.server.businessObjects;
 
 import java.io.Serializable;
 

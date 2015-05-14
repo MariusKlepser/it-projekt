@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import de.hdm.team7.businessObjects.*;
+import de.hdm.team7.server.businessObjects.*;
 
 @RemoteServiceRelativePath("bomadministration")
 public interface BOMAdministration extends RemoteService {
@@ -20,13 +20,13 @@ public interface BOMAdministration extends RemoteService {
 	   */
 	  public void init() throws IllegalArgumentException;
 	  
-	  // Hinzufügen oder Abfragen von bestimmten Stücklisten für eine Instanz dieser BOMAdministration
+	  // Hinzufï¿½gen oder Abfragen von bestimmten Stï¿½cklisten fï¿½r eine Instanz dieser BOMAdministration
 	  public ArrayList<BillOfMaterial> getBOMList() throws IllegalArgumentException;
 	  public void setBOMList(ArrayList<BillOfMaterial> bomList) throws IllegalArgumentException;
 	  
-	  /** GESCHÄFTSOBJEKTE ERSTELLEN (FÜR HANDLING IN APP)
-	  // Eine Instanz vom Typ BusinessObject anlegen (alle anderen Geschäftsobjekte enthalten); 
-	  // realisiert über optionale Parameter bei Übergabe;
+	  /** GESCHï¿½FTSOBJEKTE ERSTELLEN (Fï¿½R HANDLING IN APP)
+	  // Eine Instanz vom Typ BusinessObject anlegen (alle anderen Geschï¿½ftsobjekte enthalten); 
+	  // realisiert ï¿½ber optionale Parameter bei ï¿½bergabe;
 	  // Eine einzige Methode zum Erstellen von Objekten (Bauteil, Baugruppe, etc.)**/
 	  public BusinessObject createObject(String businessObjectType, String name, String materialBezeichnung, 
 			  String beschreibung, ArrayList<Component> childrenComponents);
@@ -37,19 +37,19 @@ public interface BOMAdministration extends RemoteService {
 	  public BusinessObject deleteObject(String businessObjectType, String name, String materialBezeichnung, 
 			  String beschreibung, ArrayList<Component> childrenComponents);
 	  
-	  // GESCHÄFTSOBJEKTE AUF DB ANLEGEN
+	  // GESCHï¿½FTSOBJEKTE AUF DB ANLEGEN
 	  public void create(BusinessObject bo) throws IllegalArgumentException;
 	  
-	  // GESCHÄFTSOBJEKTE SUCHEN/AUSLESEN
+	  // GESCHï¿½FTSOBJEKTE SUCHEN/AUSLESEN
 	  // TODO: flexible Erweiterung entsprechend der Benutzungsschnittstelle
 	  public BusinessObject getBusinessObjectById(String businessObjectType, int id) throws IllegalArgumentException;
 	  public BusinessObject getBusinessObjectByName(String businessObjectType, String name) throws IllegalArgumentException;
 	  public ArrayList<BusinessObject> getAllBusinessObjects(String businessObjectType) throws IllegalArgumentException;
 	  public ArrayList<BusinessObject> getChildrenObjectsOf(BusinessObject bo, String businessObjectType) throws IllegalArgumentException;
 
-	  // GESCHÄFTSOBJEKTE AKTUALISIEREN
+	  // GESCHï¿½FTSOBJEKTE AKTUALISIEREN
 	  public void update(BusinessObject bo) throws IllegalArgumentException;
 
-	  // GESCHÄFTSOBJEKTE LÖSCHEN
+	  // GESCHï¿½FTSOBJEKTE Lï¿½SCHEN
 	  public void delete(BusinessObject bo) throws IllegalArgumentException;
 }
