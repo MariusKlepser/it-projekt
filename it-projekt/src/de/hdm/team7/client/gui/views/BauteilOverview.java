@@ -1,5 +1,7 @@
 package de.hdm.team7.client.gui.views;
 
+
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -14,6 +16,8 @@ import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
+
 
 public class BauteilOverview {
 
@@ -32,18 +36,18 @@ public class BauteilOverview {
 		HorizontalPanel hPanel1 = new HorizontalPanel();
 		vPanel.add(hPanel1);
 
-		Label name = new Label("Bauteilname:");
-		TextBox bauteilname = new TextBox();	
-		hPanel1.add(name);
+		Label bauteilname = new Label("Bauteilname:");
+		final TextBox bauteilnametxt = new TextBox();	
 		hPanel1.add(bauteilname);
-		hPanel1.setCellWidth(name,"200px");
+		hPanel1.add(bauteilnametxt);
+		hPanel1.setCellWidth(bauteilname,"200px");
 		
 		//Formular Materialbezeichnung
 		HorizontalPanel hPanel2 = new HorizontalPanel();
 		vPanel.add(hPanel2);
 		
 		Label materialbezeichnung = new Label("Materialbezeichnung:");
-		TextBox materialbezeichnungtxt = new TextBox();	
+		final TextBox materialbezeichnungtxt = new TextBox();	
 		hPanel2.add(materialbezeichnung);
 		hPanel2.add(materialbezeichnungtxt);
 		hPanel2.setCellWidth(materialbezeichnung,"200px");
@@ -55,12 +59,12 @@ public class BauteilOverview {
 		vPanel.add(hPanel3);
 		
 		Label beschreibung = new Label("Beschreibung:");
-		TextArea beschreibungtxt = new TextArea();
+		final TextArea beschreibungtxt = new TextArea();
 		hPanel3.add(beschreibung);
 		hPanel3.add(beschreibungtxt);
 		hPanel3.setCellWidth(beschreibung, "200px");
 		
-		panel.add(new Button("Submit", new ClickHandler() {
+		vPanel.add(new Button("Submit", new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				form.submit();
 			}
@@ -68,17 +72,17 @@ public class BauteilOverview {
 		
 		form.addSubmitHandler(new FormPanel.SubmitHandler() {
 			public void onSubmit(SubmitEvent event) {
-				//if (tb.getText().length() == 0) {
-					//Window.alert("Es muss etwas eingegeben werden!");
-					//event.cancel();
-				//}
-			}
-
+				if (materialbezeichnungtxt.getText().length() == 0)
+					Window.alert("Es muss eine Materialbezeichnung vergeben werden");
+				if (bauteilnametxt.getText().length() == 0)
+					Window.alert("Es muss ein Bauteilname vergeben werden");
+		          event.cancel();
+		    
+		          
+				}
 				
-		
+			
 		});
-		
-		
 		
 		
 		
