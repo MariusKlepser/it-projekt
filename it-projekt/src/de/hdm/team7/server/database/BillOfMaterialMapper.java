@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import de.hdm.team7.server.database.*;
@@ -14,6 +15,7 @@ import de.hdm.team7.shared.businessObjects.*;
 public class BillOfMaterialMapper {
 
 	private static BillOfMaterialMapper bomMapper = null;
+	private String log;
 
 	  /**
 	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
@@ -59,7 +61,7 @@ public class BillOfMaterialMapper {
 	        // Ergebnis-Tupel in Objekt umwandeln
 	        BillOfMaterial b = new BillOfMaterial();
 	        b.setId(rs.getInt("id"));
-	        b.setCreationDate(rs.getDate("erstellungsdatum"));
+	        b.setCreationDate(rs.getDate("erstellungsdatum").toString());
 	        b.setName(rs.getString("name"));
 
 	        return b;
@@ -80,10 +82,10 @@ public class BillOfMaterialMapper {
 	   *         repräsentieren. Bei evtl. Exceptions wird ein partiell gef�llter
 	   *         oder ggf. auch leerer Vetor zurückgeliefert.
 	   */
-	  public Vector<BillOfMaterial> findAll() {
+	  public ArrayList<BillOfMaterial> findAll() {
 	    Connection con = DBConnection.connection();
 	    // Ergebnisvektor vorbereiten
-	    Vector<BillOfMaterial> result = new Vector<BillOfMaterial>();
+	    ArrayList<BillOfMaterial> result = new ArrayList<BillOfMaterial>();
 
 	    try {
 	      Statement stmt = con.createStatement();
@@ -96,11 +98,11 @@ public class BillOfMaterialMapper {
 	      while (rs.next()) {
 	        BillOfMaterial b = new BillOfMaterial();
 	        b.setId(rs.getInt("id"));
-	        b.setCreationDate(rs.getDate("erstellungsdatum"));
+	        b.setCreationDate(rs.getDate("erstellungsdatum").toString());
 	        b.setName(rs.getString("name"));
 
 	        // Hinzufügen des neuen Objekts zum Ergebnisvektor
-	        result.addElement(b);
+	        result.add(b);
 	      }
 	    }
 	    catch (SQLException e) {
@@ -119,9 +121,9 @@ public class BillOfMaterialMapper {
 	   *         gesuchten Namen repräsentieren. Bei evtl. Exceptions wird ein
 	   *         partiell gefüllter oder ggf. auch leerer Vetor zurückgeliefert.
 	   */
-	  public Vector<BillOfMaterial> findByName(String name) {
+	  public ArrayList<BillOfMaterial> findByName(String name) {
 	    Connection con = DBConnection.connection();
-	    Vector<BillOfMaterial> result = new Vector<BillOfMaterial>();
+	    ArrayList<BillOfMaterial> result = new ArrayList<BillOfMaterial>();
 
 	    try {
 	      Statement stmt = con.createStatement();
@@ -135,11 +137,11 @@ public class BillOfMaterialMapper {
 	      while (rs.next()) {
 	        BillOfMaterial b = new BillOfMaterial();
 	        b.setId(rs.getInt("id"));
-	        b.setCreationDate(rs.getDate("erstellungsdatum"));
+	        b.setCreationDate(rs.getDate("erstellungsdatum").toString());
 	        b.setName(rs.getString("name"));
 
 	        // Hinzufügen des neuen Objekts zum Ergebnisvektor
-	        result.addElement(b);
+	        result.add(b);
 	      }
 	    }
 	    catch (SQLException e) {
@@ -246,6 +248,11 @@ public class BillOfMaterialMapper {
 	      e.printStackTrace();
 	    }
 	  }
+
+	public String getLog() {
+		// TODO Auto-generated method stub
+		return log;
+	}
 
 
 }

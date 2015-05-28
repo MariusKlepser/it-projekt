@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import de.hdm.team7.server.database.*;
@@ -14,6 +15,7 @@ import de.hdm.team7.shared.businessObjects.*;
 public class UserMapper {
 
 	private static UserMapper userMapper = null;
+	private String log;
 
 	  /**
 	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
@@ -80,10 +82,10 @@ public class UserMapper {
 	   *         repräsentieren. Bei evtl. Exceptions wird ein partiell gef�llter
 	   *         oder ggf. auch leerer Vetor zurückgeliefert.
 	   */
-	  public Vector<User> findAll() {
+	  public ArrayList<User> findAll() {
 	    Connection con = DBConnection.connection();
 	    // Ergebnisvektor vorbereiten
-	    Vector<User> result = new Vector<User>();
+	    ArrayList<User> result = new ArrayList<User>();
 
 	    try {
 	      Statement stmt = con.createStatement();
@@ -100,7 +102,7 @@ public class UserMapper {
 	        u.setName(rs.getString("name"));
 
 	        // Hinzufügen des neuen Objekts zum Ergebnisvektor
-	        result.addElement(u);
+	        result.add(u);
 	      }
 	    }
 	    catch (SQLException e) {
@@ -119,9 +121,9 @@ public class UserMapper {
 	   *         gesuchten Namen repräsentieren. Bei evtl. Exceptions wird ein
 	   *         partiell gefüllter oder ggf. auch leerer Vetor zurückgeliefert.
 	   */
-	  public Vector<User> findByName(String name) {
+	  public ArrayList<User> findByName(String name) {
 	    Connection con = DBConnection.connection();
-	    Vector<User> result = new Vector<User>();
+	    ArrayList<User> result = new ArrayList<User>();
 
 	    try {
 	      Statement stmt = con.createStatement();
@@ -139,7 +141,7 @@ public class UserMapper {
 	        u.setName(rs.getString("name"));
 
 	        // Hinzufügen des neuen Objekts zum Ergebnisvektor
-	        result.addElement(u);
+	        result.add(u);
 	      }
 	    }
 	    catch (SQLException e) {
@@ -246,6 +248,11 @@ public class UserMapper {
 	      e.printStackTrace();
 	    }
 	  }
+
+	public String getLog() {
+		// TODO Auto-generated method stub
+		return log;
+	}
 
 
 }

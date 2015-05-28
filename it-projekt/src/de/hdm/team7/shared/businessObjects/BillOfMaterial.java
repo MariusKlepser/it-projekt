@@ -6,20 +6,20 @@ public class BillOfMaterial extends BusinessObject{
 
 	private static final long serialVersionUID = 1L;
 	
-	private Date creationDate;
+	private String creationDate;
 
 	/**
 	 * @return the creationDate
 	 */
-	public Date getCreationDate() {
+	public String getCreationDate() {
 		return creationDate;
 	}
 
 	/**
-	 * @param creationDate the creationDate to set
+	 * @param date the creationDate to set
 	 */
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
+	public void setCreationDate(String date) {
+		this.creationDate = date;
 	}
 
 }

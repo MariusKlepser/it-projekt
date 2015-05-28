@@ -66,19 +66,16 @@ public class EditView extends ClientsideSettings {
 		//Absenden Button
 		Button bauteilanlegenbtn = new Button("anlegen", new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				String businessObjectType = "bauteil";
-				String name = baugruppenname.getText();
-				String materialBezeichnung = beschreibungtxt.getText();
-				String beschreibung = materialbezeichnungtxt.getText();
+				Component c = new Component();
+				c.setName(baugruppenname.getText());
+				c.setDescription(beschreibungtxt.getText());
+				c.setMaterialIdentifier(materialbezeichnungtxt.getText());
 				ArrayList<Component> childrenComponents = null;
-//				AsyncCallback callback = null; 
 			
 				ClientsideSettings css = new ClientsideSettings();
 				
 				ClientsideSettings.getLogger().severe("Client: Sending request!");
-//				GWT.log("Client: Sending request!");
-				ClientsideSettings.getBOMAdministration().createObject(businessObjectType, name, materialBezeichnung, beschreibung, childrenComponents, css.getCallback());
-//				GWT.log("Client: Request sent!");
+				ClientsideSettings.getBOMAdministration().createComponent(c, css.getCallback());
 				ClientsideSettings.getLogger().severe("Client: Request sent!");
 			
 			

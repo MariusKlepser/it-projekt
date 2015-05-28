@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import de.hdm.team7.shared.businessObjects.ComponentAssembly;
@@ -11,6 +12,7 @@ import de.hdm.team7.shared.businessObjects.ComponentAssembly;
 public class ComponentAssemblyMapper {
 
 	private static ComponentAssemblyMapper componentAssemblyMapper = null;
+	private String log;
 
 	/**
 	 * Geschützter Konstruktor - verhindert die Möglichkeit, mit
@@ -70,10 +72,10 @@ public class ComponentAssemblyMapper {
 	   *         repräsentieren. Bei evtl. Exceptions wird ein partiell gef�llter
 	   *         oder ggf. auch leerer Vetor zurückgeliefert.
 	   */
-	  public Vector<ComponentAssembly> findAll() {
+	  public ArrayList<ComponentAssembly> findAll() {
 	    Connection con = DBConnection.connection();
 	    // Ergebnisvektor vorbereiten
-	    Vector<ComponentAssembly> result = new Vector<ComponentAssembly>();
+	    ArrayList<ComponentAssembly> result = new ArrayList<ComponentAssembly>();
 
 	    try {
 	      Statement stmt = con.createStatement();
@@ -91,7 +93,7 @@ public class ComponentAssemblyMapper {
 	        ca.setChangeDate(rs.getDate("aenderungsdatum"));
 	        ca.setMaterialIdentifier(rs.getString("materialbezeichnung"));
 	        // Hinzufügen des neuen Objekts zum Ergebnisvektor
-	        result.addElement(ca);
+	        result.add(ca);
 	      }
 	    }
 	    catch (SQLException e) {
@@ -110,9 +112,9 @@ public class ComponentAssemblyMapper {
 	   *         gesuchten Namen repräsentieren. Bei evtl. Exceptions wird ein
 	   *         partiell gefüllter oder ggf. auch leerer Vetor zurückgeliefert.
 	   */
-	  public Vector<ComponentAssembly> findByName(String name) {
+	  public ArrayList<ComponentAssembly> findByName(String name) {
 	    Connection con = DBConnection.connection();
-	    Vector<ComponentAssembly> result = new Vector<ComponentAssembly>();
+	    ArrayList<ComponentAssembly> result = new ArrayList<ComponentAssembly>();
 
 	    try {
 	      Statement stmt = con.createStatement();
@@ -132,7 +134,7 @@ public class ComponentAssemblyMapper {
 	        ca.setMaterialIdentifier(rs.getString("materialbezeichnung"));
 
 	        // Hinzufügen des neuen Objekts zum Ergebnisvektor
-	        result.addElement(ca);
+	        result.add(ca);
 	      }
 	    }
 	    catch (SQLException e) {
@@ -241,6 +243,11 @@ public class ComponentAssemblyMapper {
 	      e.printStackTrace();
 	    }
 	  }
+
+	public String getLog() {
+		// TODO Auto-generated method stub
+		return log;
+	}
 
 
 }

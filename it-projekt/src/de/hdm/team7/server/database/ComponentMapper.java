@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import de.hdm.team7.shared.businessObjects.Component;
@@ -85,10 +86,10 @@ public class ComponentMapper {
 	   *         reprÃ¤sentieren. Bei evtl. Exceptions wird ein partiell gefï¿½llter
 	   *         oder ggf. auch leerer Vetor zurÃ¼ckgeliefert.
 	   */
-	  public Vector<Component> findAll() {
+	  public ArrayList<Component> findAll() {
 	    Connection con = DBConnection.connection();
 	    // Ergebnisvektor vorbereiten
-	    Vector<Component> result = new Vector<Component>();
+	    ArrayList<Component> result = new ArrayList<Component>();
 
 	    try {
 	      Statement stmt = con.createStatement();
@@ -107,7 +108,7 @@ public class ComponentMapper {
 	        u.setChangeDate(rs.getDate("date"));
 
 	        // HinzufÃ¼gen des neuen Objekts zum Ergebnisvektor
-	        result.addElement(u);
+	        result.add(u);
 	      }
 	    }
 	    catch (SQLException e) {
@@ -126,9 +127,9 @@ public class ComponentMapper {
 	   *         gesuchten Namen reprÃ¤sentieren. Bei evtl. Exceptions wird ein
 	   *         partiell gefÃ¼llter oder ggf. auch leerer Vetor zurÃ¼ckgeliefert.
 	   */
-	  public Vector<Component> findByName(String name) {
+	  public ArrayList<Component> findByName(String name) {
 	    Connection con = DBConnection.connection();
-	    Vector<Component> result = new Vector<Component>();
+	    ArrayList<Component> result = new ArrayList<Component>();
 
 	    try {
 	      Statement stmt = con.createStatement();
@@ -148,7 +149,7 @@ public class ComponentMapper {
 	        u.setChangeDate(rs.getDate("date"));
 
 	        // HinzufÃ¼gen des neuen Objekts zum Ergebnisvektor
-	        result.addElement(u);
+	        result.add(u);
 	      }
 	    }
 	    catch (SQLException e) {

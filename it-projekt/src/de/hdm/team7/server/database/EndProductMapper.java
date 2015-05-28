@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import de.hdm.team7.server.database.*;
@@ -15,6 +16,7 @@ import de.hdm.team7.shared.businessObjects.*;
 public class EndProductMapper {
 
 	private static EndProductMapper endProductMapper = null;
+	private String log;
 
 	  /**
 	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
@@ -82,10 +84,10 @@ public class EndProductMapper {
 	   *         repräsentieren. Bei evtl. Exceptions wird ein partiell gef�llter
 	   *         oder ggf. auch leerer Vetor zurückgeliefert.
 	   */
-	  public Vector<EndProduct> findAll() {
+	  public ArrayList<EndProduct> findAll() {
 	    Connection con = DBConnection.connection();
 	    // Ergebnisvektor vorbereiten
-	    Vector<EndProduct> result = new Vector<EndProduct>();
+	    ArrayList<EndProduct> result = new ArrayList<EndProduct>();
 
 	    try {
 	      Statement stmt = con.createStatement();
@@ -105,7 +107,7 @@ public class EndProductMapper {
 
 
 	        // Hinzufügen des neuen Objekts zum Ergebnisvektor
-	        result.addElement(e);
+	        result.add(e);
 	      }
 	    }
 	    catch (SQLException e) {
@@ -124,9 +126,9 @@ public class EndProductMapper {
 	   *         gesuchten Namen repräsentieren. Bei evtl. Exceptions wird ein
 	   *         partiell gefüllter oder ggf. auch leerer Vetor zurückgeliefert.
 	   */
-	  public Vector<EndProduct> findByName(String name) {
+	  public ArrayList<EndProduct> findByName(String name) {
 	    Connection con = DBConnection.connection();
-	    Vector<EndProduct> result = new Vector<EndProduct>();
+	    ArrayList<EndProduct> result = new ArrayList<EndProduct>();
 
 	    try {
 	      Statement stmt = con.createStatement();
@@ -146,7 +148,7 @@ public class EndProductMapper {
 		        e.setChangeDate(rs.getDate("aenderungsdatum"));
 
 	        // Hinzufügen des neuen Objekts zum Ergebnisvektor
-	        result.addElement(e);
+	        result.add(e);
 	      }
 	    }
 	    catch (SQLException e) {
@@ -253,6 +255,11 @@ public class EndProductMapper {
 	      e1.printStackTrace();
 	    }
 	  }
+
+	public String getLog() {
+		// TODO Auto-generated method stub
+		return log;
+	}
 
 
 }
