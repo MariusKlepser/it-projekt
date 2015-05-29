@@ -66,7 +66,7 @@ public class ComponentMapper {
 	        u.setName(rs.getString("name"));
 	        u.setDescription(rs.getString("beschreibung"));
 	        u.setMaterialIdentifier(rs.getString("materialbezeichnung"));
-	        u.setChangeDate(rs.getDate("date"));
+	        u.setChangeDate(rs.getDate("aenderungsdatum"));
 	        
 	        return u;
 	      }
@@ -105,7 +105,7 @@ public class ComponentMapper {
 	        u.setName(rs.getString("name"));
 	        u.setDescription(rs.getString("beschreibung"));
 	        u.setMaterialIdentifier(rs.getString("materialbezeichnung"));
-	        u.setChangeDate(rs.getDate("date"));
+	        u.setChangeDate(rs.getDate("aenderungsdatum"));
 
 	        // HinzufÃ¼gen des neuen Objekts zum Ergebnisvektor
 	        result.add(u);
@@ -146,7 +146,7 @@ public class ComponentMapper {
 	        u.setName(rs.getString("name"));
 	        u.setDescription(rs.getString("beschreibung"));
 	        u.setMaterialIdentifier(rs.getString("materialbezeichnung"));
-	        u.setChangeDate(rs.getDate("date"));
+	        u.setChangeDate(rs.getDate("aenderungsdatum"));
 
 	        // HinzufÃ¼gen des neuen Objekts zum Ergebnisvektor
 	        result.add(u);

@@ -1,31 +1,20 @@
 package de.hdm.team7.client;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import de.hdm.team7.client.rpc.AsyncCallbackString;
 import de.hdm.team7.shared.BOMAdministrationAsync;
 import de.hdm.team7.shared.ReportGenerator;
 import de.hdm.team7.shared.ReportGeneratorAsync;
+import de.hdm.team7.shared.businessObjects.*;
 
 public class ClientsideSettings {
 
 	private static BOMAdministrationAsync BOMAdministration = null;
-
-	private AsyncCallback<String> callback = new AsyncCallback<String>() {
-		public void onFailure(Throwable caught) {
-			ClientsideSettings.getLogger().severe("Client: AsyncCallback Failure!");
-			// TODO: Do something with errors.
-		}
-
-		@Override
-		public void onSuccess(String result) {
-			ClientsideSettings.getLogger().severe("Client: AsyncCallback Success!");
-			ClientsideSettings.getLogger().info(result);
-			// TODO Auto-generated method stub
-		}
-	};
 
 	private static ReportGeneratorAsync reportGenerator = null;
 
@@ -88,19 +77,5 @@ public class ClientsideSettings {
 		}
 		// So, nun brauchen wir den ReportGenerator nur noch zurückzugeben.
 		return reportGenerator;
-	}
-
-	/**
-	 * @return the callback
-	 */
-	public AsyncCallback<String> getCallback() {
-		return callback;
-	}
-
-	/**
-	 * @param callback the callback to set
-	 */
-	public void setCallback(AsyncCallback<String> callback) {
-		this.callback = callback;
 	}
 }

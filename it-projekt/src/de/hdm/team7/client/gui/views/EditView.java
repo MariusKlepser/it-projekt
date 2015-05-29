@@ -17,9 +17,12 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.team7.client.ClientsideSettings;
+import de.hdm.team7.client.rpc.*;
 import de.hdm.team7.shared.businessObjects.*;
 
 public class EditView extends ClientsideSettings {
+	
+	VerticalPanel vPanel = new VerticalPanel();
 
 	public Panel getView(){
 		// Initiate wrapper Panel
@@ -28,8 +31,6 @@ public class EditView extends ClientsideSettings {
 		// Start layout creation here
 		HTML h1 = new HTML("<h1>Baugruppen</h1>");
 		panel.add(h1);
-		
-		VerticalPanel vPanel = new VerticalPanel();
 		
 		//Formular Baugruppenname 
 		HorizontalPanel hPanel1 = new HorizontalPanel();
@@ -64,21 +65,17 @@ public class EditView extends ClientsideSettings {
 		hPanel3.setCellWidth(beschreibung, "200px");
 		
 		//Absenden Button
-		Button bauteilanlegenbtn = new Button("anlegen", new ClickHandler() {
+		Button bauteilanlegenbtn = new Button("Anlegen", new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				Component c = new Component();
 				c.setName(baugruppenname.getText());
 				c.setDescription(beschreibungtxt.getText());
 				c.setMaterialIdentifier(materialbezeichnungtxt.getText());
-				ArrayList<Component> childrenComponents = null;
-			
-				ClientsideSettings css = new ClientsideSettings();
 				
 				ClientsideSettings.getLogger().severe("Client: Sending request!");
-				ClientsideSettings.getBOMAdministration().createComponent(c, css.getCallback());
+				AsyncCallbackString stringCallback = new AsyncCallbackString();
+				ClientsideSettings.getBOMAdministration().createComponent(c, stringCallback);
 				ClientsideSettings.getLogger().severe("Client: Request sent!");
-			
-			
 			}
 		});
 		
@@ -91,5 +88,4 @@ public class EditView extends ClientsideSettings {
 		// IMPORTANT: always return a Panel!
 		return panel;
 	}
-	
 }

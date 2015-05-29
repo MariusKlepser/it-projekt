@@ -21,44 +21,44 @@ public class CustomMenuBar {
 		menuBar.setAnimationEnabled(true);
 
 		// Create MenuBar items and commands
-		menuBar.addItem("Bauteil", new Command() { 
+		menuBar.addItem("Element", new Command() { 
 			public void execute() { 
-				History.newItem("Bauteil");
+//				History.newItem("Bauteil");
 			}
 		});
-		menuBar.addItem("Baugruppe", new Command() { 
+		menuBar.addItem("Bearbeiten", new Command() { 
 			public void execute() { 
 				// Set History Item			
-				History.newItem("Baugruppe");
+//				History.newItem("Baugruppe");
 				
 			}
 		});
-		menuBar.addItem("Enderzeugnis", new Command() { 
+		menuBar.addItem("Ansicht", new Command() { 
 			public void execute() { 
 				// Set History Item
-				History.newItem("Enderzeugnis");
+//				History.newItem("Enderzeugnis");
 			}
 		});
-		menuBar.addItem("Stückliste", new Command() { 
-			public void execute() { 
-				// Set History Item
-				History.newItem("Stueckliste");
-			}
-		});
+//		menuBar.addItem("Stückliste", new Command() { 
+//			public void execute() { 
+//				// Set History Item
+//				History.newItem("Stueckliste");
+//			}
+//		});
 		menuBar.addSeparator();
-		menuBar.addItem("Benutzer", new Command() { 
+		menuBar.addItem("Hilfe", new Command() { 
 			public void execute() { 
 				// Set History Item
-				History.newItem("Benutzer");
+//				History.newItem("Benutzer");
 			}
 		});
-		menuBar.addSeparator();
-		menuBar.addItem("Report Generator", new Command() { 
-			public void execute() { 
-				// Set History Item
-				History.newItem("ReportGenerator");
-			}
-		});	
+//		menuBar.addSeparator();
+//		menuBar.addItem("Report Generator", new Command() { 
+//			public void execute() { 
+//				// Set History Item
+//				History.newItem("ReportGenerator");
+//			}
+//		});	
 	}
 
 	// MenuBar getter

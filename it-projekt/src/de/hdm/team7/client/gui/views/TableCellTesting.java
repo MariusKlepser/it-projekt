@@ -11,6 +11,8 @@ import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.CompositeCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.HasCell;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
@@ -21,9 +23,16 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.Tree;
+import com.google.gwt.user.client.ui.TreeItem;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 
+import de.hdm.team7.client.ClientsideSettings;
 import de.hdm.team7.client.DataSet;
+import de.hdm.team7.client.gui.CustomStaticTree;
+import de.hdm.team7.client.rpc.AsyncCallbackComponentList;
 
 public class TableCellTesting {
 
@@ -148,9 +157,34 @@ public class TableCellTesting {
 		// We know that the data is sorted alphabetically by default.
 	    table.getColumnSortList().push(nameColumn);
 	    
-	    table.setWidth("100%");
+	    // Create a dynamically generated tree and a container to hold it
+	    final CustomStaticTree staticTree = new CustomStaticTree().createStaticTree();
+	    staticTree.ensureDebugId("cwTree-staticTree");
+	    ScrollPanel staticTreeWrapper = new ScrollPanel(staticTree);
+	    staticTreeWrapper.ensureDebugId("cwTree-staticTree-Wrapper");
 	    
-	    panel.add(table);
+	    SelectionHandler<TreeItem> handler = new SelectionHandler<TreeItem>(){
+
+			@Override
+			public void onSelection(SelectionEvent event) {
+				AsyncCallbackComponentList componentListCallback = new AsyncCallbackComponentList();
+				TreeItem item = (TreeItem)event.getSelectedItem();
+				ClientsideSettings.getBOMAdministration().getComponentByName(item.getText(), componentListCallback);
+			}
+			
+		};
+		
+		staticTree.addSelectionHandler(handler);
+	    
+	    staticTreeWrapper.setWidth("50%");
+	    VerticalPanel vPanel1 = new VerticalPanel();
+	    VerticalPanel vPanel2 = new VerticalPanel();
+	    panel.add(vPanel1);
+	    panel.add(vPanel2);
+	    vPanel1.add(staticTreeWrapper);
+	    
+	    table.setWidth("100%");
+	    vPanel2.add(table);
 		
 		Label lbl = new Label("<de.hdm.team7.client.gui.views.TableCellTesting.java>");
 		panel.add(lbl);
