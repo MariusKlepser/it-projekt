@@ -44,7 +44,7 @@ public class ViewHandler {
 			viewContent = new ReportGeneratorOverview().getView();
 			break;
 		case "TableCellTesting":
-			viewContent = new TableCellTesting().getView();
+//			viewContent = new TableCellTesting().getView();
 			break;
 		case "edit":
 			viewContent = new EditView().getView();

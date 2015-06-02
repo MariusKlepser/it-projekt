@@ -9,21 +9,25 @@ import java.util.logging.Logger;
 
 import de.hdm.team7.client.gui.CustomMenuBar;
 import de.hdm.team7.client.gui.HistoryHandler;
+import de.hdm.team7.client.gui.views.TableCellTesting;
 
 public class It_projekt implements EntryPoint {
 	
 	public void onModuleLoad() {		
-		// Setup HistoryHandler
-		HistoryHandler historyHandler = new HistoryHandler();
-		historyHandler.setHistoryHandler();
+//		// Setup HistoryHandler
+//		HistoryHandler historyHandler = new HistoryHandler();
+//		historyHandler.setHistoryHandler();
 		
 		// Setup Custom MenuBar
 		CustomMenuBar customMenuBar = new CustomMenuBar();
 		MenuBar menuBar = customMenuBar.getMenuBar();
 		
+		TableCellTesting tct = new TableCellTesting();
+		
 		// Add MenuBar to Menu-Div
 		RootPanel menuPanel = RootPanel.get("menu");
 		menuPanel.add(menuBar);
+		menuPanel.add(tct.asWidget());
 	}
 
 }
