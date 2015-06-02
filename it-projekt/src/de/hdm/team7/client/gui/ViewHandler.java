@@ -3,13 +3,13 @@ package de.hdm.team7.client.gui;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Panel;
 
-import de.hdm.team7.client.gui.views.BaugruppeOverview;
-import de.hdm.team7.client.gui.views.BauteilOverview;
-import de.hdm.team7.client.gui.views.BenutzerOverview;
-import de.hdm.team7.client.gui.views.DefaultView;
-import de.hdm.team7.client.gui.views.EnderzeugnisOverview;
-import de.hdm.team7.client.gui.views.ReportGeneratorOverview;
-import de.hdm.team7.client.gui.views.StuecklisteOverview;
+import de.hdm.team7.client.ui.views.legacy.BaugruppeOverview;
+import de.hdm.team7.client.ui.views.legacy.BauteilOverview;
+import de.hdm.team7.client.ui.views.legacy.BenutzerOverview;
+import de.hdm.team7.client.ui.views.legacy.DefaultView;
+import de.hdm.team7.client.ui.views.legacy.EnderzeugnisOverview;
+import de.hdm.team7.client.ui.views.legacy.ReportGeneratorOverview;
+import de.hdm.team7.client.ui.views.legacy.StuecklisteOverview;
 
 public class ViewHandler {
 	
