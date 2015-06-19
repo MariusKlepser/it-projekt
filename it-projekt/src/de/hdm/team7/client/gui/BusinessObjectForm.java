@@ -17,14 +17,15 @@ import de.hdm.team7.shared.BOMAdministrationAsync;
 import de.hdm.team7.shared.businessObjects.*;
 
 /**
- * Formular für die Darstellung des selektierten Kunden
- * Angelehnt an Thies & Rathke
+ * Formular für die Darstellung des selektierten Kunden Angelehnt an Thies &
+ * Rathke
  */
 
 public class BusinessObjectForm extends VerticalPanel {
+	
 	BOMAdministrationAsync bomAdministration = ClientsideSettings
 			.getBOMAdministration();
-	
+
 	BillOfMaterial bomToDisplay = null;
 	Component compToDisplay = null;
 	ComponentAssembly compAssToDisplay = null;
@@ -39,13 +40,14 @@ public class BusinessObjectForm extends VerticalPanel {
 	TextBox nameTextBox = new TextBox();
 
 	/*
-	 * Im Konstruktor werden die Widgets z.T. erzeugt. Alle werden in
-	 * einem Raster angeordnet, dessen Größe sich aus dem Platzbedarf
-	 * der enthaltenen Widgets bestimmt.
+	 * Im Konstruktor werden die Widgets z.T. erzeugt. Alle werden in einem
+	 * Raster angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen
+	 * Widgets bestimmt.
 	 */
 	public BusinessObjectForm() {
 		/**
-		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem Gitter.
+		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem
+		 * Gitter.
 		 */
 		Grid boGrid = new Grid(3, 2);
 		this.add(boGrid);
@@ -64,11 +66,11 @@ public class BusinessObjectForm extends VerticalPanel {
 		Button newButton = new Button("Neu");
 		newButton.addClickHandler(new NewClickHandler());
 		boButtonsPanel.add(newButton);
-		
+
 		Button deleteButton = new Button("Löschen");
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		boButtonsPanel.add(deleteButton);
-		
+
 		Button editButton = new Button("Bearbeiten");
 		deleteButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
@@ -83,13 +85,13 @@ public class BusinessObjectForm extends VerticalPanel {
 	 * Callback eine Löschung durchgeführt wird.
 	 * 
 	 */
-	
-	/* 	
-	TODO: Struktur am Beispiel von Löschung/Erstellung einer BOM (andere Objekte fehlen noch)
-	TODO: Instanziierung von botvm wird nicht erkannt; deleteBOMCallback wird nicht erkannt; ComponentAssembly bei Erstellung einer neuen BOM mit einbinden?
-		
-	
-	*/
+
+	/*
+	 * TODO: Struktur am Beispiel von Löschung/Erstellung einer BOM (andere
+	 * Objekte fehlen noch) TODO: Instanziierung von botvm wird nicht erkannt;
+	 * deleteBOMCallback wird nicht erkannt; ComponentAssembly bei Erstellung
+	 * einer neuen BOM mit einbinden?
+	 */
 
 	private class DeleteClickHandler implements ClickHandler {
 
@@ -97,32 +99,10 @@ public class BusinessObjectForm extends VerticalPanel {
 		public void onClick(ClickEvent event) {
 			if (bomToDisplay != null) {
 				bomAdministration.deleteBillOfMaterial(bomToDisplay,
-						new deleteBOMCallback(bomToDisplay));
+						new DeleteBOMCallback(bomToDisplay));
 			} else {
 
 			}
-		}
-	}
-
-	}
-	
-class deleteBOMCallback implements AsyncCallback<String> {
-
-	BillOfMaterial bom = null;
-
-	void deleteBOMCallback(BillOfMaterial bom) {
-		this.bom = bom;
-	}
-
-	@Override
-	public void onFailure(Throwable caught) {
-		Window.alert("Das Löschen des Objekts ist fehlgeschlagen!");
-	}
-
-	public void onSuccess(Void result) {
-		if (bom != null) {
-			setSelected(null);
-			botvm.removeBOM(bom);
 		}
 	}
 
@@ -138,7 +118,7 @@ class deleteBOMCallback implements AsyncCallback<String> {
 			if (selectedBOM == null) {
 				Window.alert("kein Objekt ausgewählt");
 			} else {
-				bomAdministration.createBillOfMaterial(BillOfMaterial bom,
+				bomAdministration.createBillOfMaterial(selectedBOM, null,
 						new CreateBOMCallback(selectedBOM));
 			}
 		}
@@ -152,7 +132,7 @@ class deleteBOMCallback implements AsyncCallback<String> {
 	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
 	 * ergebnis des asynchronen Aufrufs geliefert wird.
 	 */
-	private class CreateBOMCallback implements AsyncCallback<String> {
+	public class CreateBOMCallback implements AsyncCallback<String> {
 
 		BillOfMaterial bom = null;
 
@@ -175,13 +155,34 @@ class deleteBOMCallback implements AsyncCallback<String> {
 		@Override
 		public void onSuccess(String result) {
 			// TODO Auto-generated method stub
-			
+
 		}
 	}
 
-	@Override
-	public void onSuccess(String result) {
-		// TODO Auto-generated method stub
-		
+	public class DeleteBOMCallback implements AsyncCallback<String> {
+
+		BillOfMaterial bom = null;
+
+		DeleteBOMCallback(BillOfMaterial bom) {
+			this.bom = bom;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Das Löschen des Objekts ist fehlgeschlagen!");
+		}
+
+		public void onSuccess(Void result) {
+			if (bom != null) {
+				setSelected(null);
+				botvm.removeBOM(bom);
+			}
+		}
+
+		@Override
+		public void onSuccess(String result) {
+			// TODO Auto-generated method stub
+
+		}
 	}
 }
