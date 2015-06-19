@@ -14,9 +14,10 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
-import de.hdm.team7.client.ClientsideSettings;
-import de.hdm.team7.shared.BOMAdministrationAsync;
-import de.hdm.team7.shared.businessObjects.*;
+import de.hdm.team7.client.ClientEinstellungen;
+import de.hdm.team7.client.cell.BusinessObjectCell;
+import de.hdm.team7.shared.StücklistenVerwaltungAsync;
+import de.hdm.team7.shared.geschäftsobjekte.*;
 
 public class BusinessObjectTreeViewModel implements TreeViewModel {
 
@@ -46,16 +47,16 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		// enderzeugnisBearbeitenFormular;
 		// private EnderzeugnisLoeschenFormular enderzeugnisLoeschenFormular;
 
-		private BillOfMaterial selektierteStueckliste = null;
-		private ComponentAssembly selektierteBaugruppe = null;
-		private Component selektiertesBauteil = null;
-		private EndProduct selektiertesEnderzeugnis = null;
+		private Stückliste selektierteStueckliste = null;
+		private Baugruppe selektierteBaugruppe = null;
+		private Bauteil selektiertesBauteil = null;
+		private Enderzeugnis selektiertesEnderzeugnis = null;
 
-		private BOMAdministrationAsync bomVerwaltung = null;
-		private ListDataProvider<BillOfMaterial> StuecklistenDatenProvider = null;
-		private ListDataProvider<BillOfMaterial> BaugruppenDatenProvider = null;
-		private ListDataProvider<BillOfMaterial> BauteilDatenProvider = null;
-		private ListDataProvider<BillOfMaterial> EnderzeugnisDatenProvider = null;
+		private StücklistenVerwaltungAsync bomVerwaltung = null;
+		private ListDataProvider<Stückliste> StuecklistenDatenProvider = null;
+		private ListDataProvider<Stückliste> BaugruppenDatenProvider = null;
+		private ListDataProvider<Stückliste> BauteilDatenProvider = null;
+		private ListDataProvider<Stückliste> EnderzeugnisDatenProvider = null;
 		/*
 		 * In dieser Map merken wir uns die ListDataProviders fÃƒÂ¼r die
 		 * Kontolisten der im Kunden- und Kontobaum expandierten Kundenknoten.
@@ -88,7 +89,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		// };
 
 		// private BusinessObjectKeyProvider boKeyProvider = null;
-		private SingleSelectionModel<BusinessObject> selectionModel = null;
+		private SingleSelectionModel<Geschäftsobjekt> selectionModel = null;
 
 		/**
 		 * Nested Class fÃƒÂ¼r die Reaktion auf Selektionsereignisse. Als Folge
@@ -99,15 +100,15 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 				SelectionChangeEvent.Handler {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				BusinessObject selection = selectionModel.getSelectedObject();
-				if (selection instanceof Component) {
-					setzeSelektiertesBauteil((Component) selection);
-				} else if (selection instanceof ComponentAssembly) {
-					setzeSelektierteBaugruppe((ComponentAssembly) selection);
-				} else if (selection instanceof EndProduct) {
-					setzeSelektiertesEndprodukt((EndProduct) selection);
-				} else if (selection instanceof BillOfMaterial) {
-					setzeSelektierteStueckliste((BillOfMaterial) selection);
+				Geschäftsobjekt selection = selectionModel.getSelectedObject();
+				if (selection instanceof Bauteil) {
+					setzeSelektiertesBauteil((Bauteil) selection);
+				} else if (selection instanceof Baugruppe) {
+					setzeSelektierteBaugruppe((Baugruppe) selection);
+				} else if (selection instanceof Enderzeugnis) {
+					setzeSelektiertesEndprodukt((Enderzeugnis) selection);
+				} else if (selection instanceof Stückliste) {
+					setzeSelektierteStueckliste((Stückliste) selection);
 				}
 			}
 		}
@@ -117,9 +118,9 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		 * lokalen Variaben initialisiert.
 		 */
 		public BusinessObjectTreeViewModel() {
-			bomVerwaltung = ClientsideSettings.getBOMAdministration();
+			bomVerwaltung = ClientEinstellungen.getStücklistenVerwaltung();
 			// boKeyProvider = new BusinessObjectKeyProvider();
-			selectionModel = new SingleSelectionModel<BusinessObject>();
+			selectionModel = new SingleSelectionModel<Geschäftsobjekt>();
 			selectionModel
 					.addSelectionChangeHandler(new SelectionChangeEventHandler());
 			// accountDataProviders = new HashMap<Customer,
@@ -264,22 +265,22 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		// }
 		// }
 
-		public void setzeSelektierteStueckliste(BillOfMaterial selection) {
+		public void setzeSelektierteStueckliste(Stückliste selection) {
 			// TODO Auto-generated method stub
 
 		}
 
-		public void setzeSelektiertesEndprodukt(EndProduct selection) {
+		public void setzeSelektiertesEndprodukt(Enderzeugnis selection) {
 			// TODO Auto-generated method stub
 
 		}
 
-		public void setzeSelektierteBaugruppe(ComponentAssembly selection) {
+		public void setzeSelektierteBaugruppe(Baugruppe selection) {
 			// TODO Auto-generated method stub
 
 		}
 
-		public void setzeSelektiertesBauteil(Component selection) {
+		public void setzeSelektiertesBauteil(Bauteil selection) {
 			// TODO Auto-generated method stub
 
 		}
@@ -290,17 +291,17 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 
 		if (value.equals("Root")) {
 			// Erzeugen eines ListDataproviders fÃƒÂ¼r Customerdaten
-			ListDataProvider<BusinessObject> kategorieDatenProvider = new ListDataProvider<BusinessObject>();
+			ListDataProvider<Geschäftsobjekt> kategorieDatenProvider = new ListDataProvider<Geschäftsobjekt>();
 
-			List<BusinessObject> kategorien = new ArrayList<BusinessObject>();
-			kategorien.add(new Component());
-			kategorien.add(new ComponentAssembly());
-			kategorien.add(new EndProduct());
-			kategorien.add(new BillOfMaterial());
+			List<Geschäftsobjekt> kategorien = new ArrayList<Geschäftsobjekt>();
+			kategorien.add(new Bauteil());
+			kategorien.add(new Baugruppe());
+			kategorien.add(new Enderzeugnis());
+			kategorien.add(new Stückliste());
 			kategorien = kategorieDatenProvider.getList();
 
 			// Return a node info that pairs the data with a cell.
-			return new DefaultNodeInfo<BusinessObject>(kategorieDatenProvider,
+			return new DefaultNodeInfo<Geschäftsobjekt>(kategorieDatenProvider,
 					new BusinessObjectCell(), selectionModel, null);
 		}
 
@@ -336,7 +337,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 	@Override
 	public boolean isLeaf(Object value) {
 		// value is of type Account
-		return (value instanceof BusinessObject);
+		return (value instanceof Geschäftsobjekt);
 	}
 
 }

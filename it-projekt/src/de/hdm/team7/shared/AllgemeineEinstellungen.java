@@ -6,6 +6,6 @@ package de.hdm.team7.shared;
  * <code>ServersideSettings</code>.
  * 
  */
-public class CommonSettings {
+public class AllgemeineEinstellungen {
 
 }
