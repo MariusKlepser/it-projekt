@@ -21,16 +21,12 @@ import de.hdm.team7.shared.businessObjects.*;
  * Rathke
  */
 
-public class BusinessObjectForm extends VerticalPanel {
+public class ComponentAssemblyForm extends VerticalPanel {
 	
 	BOMAdministrationAsync bomAdministration = ClientsideSettings
 			.getBOMAdministration();
 
-	BillOfMaterial bomToDisplay = null;
-	Component compToDisplay = null;
-	ComponentAssembly compAssToDisplay = null;
-	EndProduct endProToDisplay = null;
-	User userToDisplay = null;
+	ComponentAssembly componentAssemblyToDisplay = null;
 	BusinessObjectTreeViewModel botvm = null;
 
 	/*
@@ -44,7 +40,7 @@ public class BusinessObjectForm extends VerticalPanel {
 	 * Raster angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen
 	 * Widgets bestimmt.
 	 */
-	public BusinessObjectForm() {
+	public ComponentAssemblyForm() {
 		/**
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem
 		 * Gitter.
@@ -72,7 +68,7 @@ public class BusinessObjectForm extends VerticalPanel {
 		boButtonsPanel.add(deleteButton);
 
 		Button editButton = new Button("Bearbeiten");
-		deleteButton.addClickHandler(new EditClickHandler());
+		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
 	}
 
@@ -87,19 +83,17 @@ public class BusinessObjectForm extends VerticalPanel {
 	 */
 
 	/*
-	 * TODO: Struktur am Beispiel von Löschung/Erstellung einer BOM (andere
-	 * Objekte fehlen noch) TODO: Instanziierung von botvm wird nicht erkannt;
-	 * deleteBOMCallback wird nicht erkannt; ComponentAssembly bei Erstellung
-	 * einer neuen BOM mit einbinden?
+	 * TODO: Edit-Methode + ClickHandler müssen eingefügt werden
+	 * TODO: Methoden, auf die im BusinessObjectTreeViewModel zugegriffen wird, müssen ergänzt werden
 	 */
 
 	private class DeleteClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (bomToDisplay != null) {
-				bomAdministration.deleteBillOfMaterial(bomToDisplay,
-						new DeleteBOMCallback(bomToDisplay));
+			if (componentAssemblyToDisplay != null) {
+				bomAdministration.deleteComponentAssembly(componentAssemblyToDisplay,
+						new deleteComponentAssemblyCallback(componentAssemblyToDisplay));
 			} else {
 
 			}
@@ -114,12 +108,12 @@ public class BusinessObjectForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			BillOfMaterial selectedBOM = botvm.getSelectedBOM();
-			if (selectedBOM == null) {
-				Window.alert("kein Objekt ausgewählt");
+			ComponentAssembly selectedComponentAssembly = botvm.getSelectedComponentAssembly();
+			if (selectedComponentAssembly == null) {
+				Window.alert("keine Baugruppe ausgewählt");
 			} else {
-				bomAdministration.createBillOfMaterial(selectedBOM, null,
-						new CreateBOMCallback(selectedBOM));
+				bomAdministration.createComponentAssembly(selectedComponentAssembly, null,
+						new createComponentAssemblyCallback(selectedComponentAssembly));
 			}
 		}
 	}
@@ -132,23 +126,21 @@ public class BusinessObjectForm extends VerticalPanel {
 	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
 	 * ergebnis des asynchronen Aufrufs geliefert wird.
 	 */
-	public class CreateBOMCallback implements AsyncCallback<String> {
+	public class createComponentAssemblyCallback implements AsyncCallback<String> {
 
-		BillOfMaterial bom = null;
+		ComponentAssembly compAss = null;
 
-		CreateBOMCallback(BillOfMaterial bom) {
-			this.bom = bom;
+		createComponentAssemblyCallback(ComponentAssembly compAss) {
+			this.compAss = compAss;
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// this.showcase.append("Fehler bei der Abfrage " +
-			// caught.getMessage());
 		}
 
-		public void onSuccess(BillOfMaterial bom) {
-			if (account != null && customer != null) {
-				botvm.addAccountOfCustomer(account, customer);
+		public void onSuccess(ComponentAssembly compAss) {
+			if (compAss != null) {
+				botvm.addComponentAssembly(compAss);
 			}
 		}
 
@@ -159,23 +151,23 @@ public class BusinessObjectForm extends VerticalPanel {
 		}
 	}
 
-	public class DeleteBOMCallback implements AsyncCallback<String> {
+	public class deleteComponentAssemblyCallback implements AsyncCallback<String> {
 
-		BillOfMaterial bom = null;
+		ComponentAssembly compAss = null;
 
-		DeleteBOMCallback(BillOfMaterial bom) {
-			this.bom = bom;
+		deleteComponentAssemblyCallback(ComponentAssembly compAss) {
+			this.compAss = compAss;
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Löschen des Objekts ist fehlgeschlagen!");
+			Window.alert("Das Löschen der Baugruppe ist fehlgeschlagen!");
 		}
 
 		public void onSuccess(Void result) {
-			if (bom != null) {
+			if (compAss != null) {
 				setSelected(null);
-				botvm.removeBOM(bom);
+				botvm.removeComponentAssembly(compAss);
 			}
 		}
 
@@ -185,4 +177,16 @@ public class BusinessObjectForm extends VerticalPanel {
 
 		}
 	}
+
+void setSelected(ComponentAssembly compAss) {
+	if (compAss != null) {
+		componentAssemblyToDisplay = compAss;
+		nameTextBox.setText(componentAssemblyToDisplay.getName());
+		idValueLabel.setText(Integer.toString(componentAssemblyToDisplay.getId()));
+	} else {
+		nameTextBox.setText("");
+		idValueLabel.setText("");
+	}
+}
+
 }
