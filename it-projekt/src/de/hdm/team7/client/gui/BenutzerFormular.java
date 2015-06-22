@@ -17,16 +17,16 @@ import de.hdm.team7.shared.BOMAdministrationAsync;
 import de.hdm.team7.shared.businessObjects.*;
 
 /**
- * Formular für die Darstellung des selektierten Kunden Angelehnt an Thies &
+ * Formular fï¿½r die Darstellung des selektierten Kunden Angelehnt an Thies &
  * Rathke
  */
 
-public class UserForm extends VerticalPanel {
+public class BenutzerFormular extends VerticalPanel {
 	
-	BOMAdministrationAsync bomAdministration = ClientsideSettings
+	BOMAdministrationAsync bomAdministration = ClientEinstellungen
 			.getBOMAdministration();
 
-	User userToDisplay = null;
+	Benutzer benutzerDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
 
 	/*
@@ -37,10 +37,10 @@ public class UserForm extends VerticalPanel {
 
 	/*
 	 * Im Konstruktor werden die Widgets z.T. erzeugt. Alle werden in einem
-	 * Raster angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen
+	 * Raster angeordnet, dessen Grï¿½ï¿½e sich aus dem Platzbedarf der enthaltenen
 	 * Widgets bestimmt.
 	 */
-	public UserForm() {
+	public BenutzerFormular() {
 		/**
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem
 		 * Gitter.
@@ -63,7 +63,7 @@ public class UserForm extends VerticalPanel {
 		newButton.addClickHandler(new NewClickHandler());
 		boButtonsPanel.add(newButton);
 
-		Button deleteButton = new Button("Löschen");
+		Button deleteButton = new Button("Lï¿½schen");
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		boButtonsPanel.add(deleteButton);
 
@@ -73,27 +73,27 @@ public class UserForm extends VerticalPanel {
 	}
 
 	/*
-	 * Click handlers und abhängige AsyncCallback Klassen.
+	 * Click handlers und abhï¿½ngige AsyncCallback Klassen.
 	 */
 
 	/**
-	 * Zum Löschen eines Kontos wird zunächst der Eigentümer abgefragt, bevor im
-	 * Callback eine Löschung durchgeführt wird.
+	 * Zum Lï¿½schen eines Kontos wird zunï¿½chst der Eigentï¿½mer abgefragt, bevor im
+	 * Callback eine Lï¿½schung durchgefï¿½hrt wird.
 	 * 
 	 */
 
 	/*
-	 * TODO: Edit-Methode + ClickHandler müssen eingefügt werden
-	 * TODO: Methoden, auf die im BusinessObjectTreeViewModel zugegriffen wird, müssen ergänzt werden
+	 * TODO: Edit-Methode + ClickHandler mï¿½ssen eingefï¿½gt werden
+	 * TODO: Methoden, auf die im BusinessObjectTreeViewModel zugegriffen wird, mï¿½ssen ergï¿½nzt werden
 	 */
 
 	private class DeleteClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (userToDisplay != null) {
-				bomAdministration.deleteUser(userToDisplay,
-						new DeleteUserCallback(userToDisplay));
+			if (benutzerDarstellung != null) {
+				bomAdministration.deleteUser(benutzerDarstellung,
+						new DeleteUserCallback(benutzerDarstellung));
 			} else {
 
 			}
@@ -108,39 +108,39 @@ public class UserForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			User selectedUser = botvm.getSelectedUser();
-			if (selectedUser == null) {
-				Window.alert("kein Nutzer ausgewählt");
+			User selektierterBenutzer = botvm.waehleSelektiertenBenutzer();
+			if (selektierterBenutzer == null) {
+				Window.alert("kein Nutzer ausgewÃ¤hlt");
 			} else {
-				bomAdministration.createUser(selectedUser, null,
-						new CreateUserCallback(selectedUser));
+				bomAdministration.erzeugeBenutzer(selektierterBenutzer, null,
+						new CreateUserCallback(selektierterBenutzer));
 			}
 		}
 	}
 
 	/*
 	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
-	 * Kontobaum aktualisiert werden. Dafür dient ein privates Attribut und der
+	 * Kontobaum aktualisiert werden. Dafï¿½r dient ein privates Attribut und der
 	 * Konstruktor.
 	 * 
-	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
+	 * Wir benï¿½tigen hier nur einen Parameter fï¿½r den Kunden, da das Konto als
 	 * ergebnis des asynchronen Aufrufs geliefert wird.
 	 */
 	public class CreateUserCallback implements AsyncCallback<String> {
 
-		User us = null;
+		Benutzer b = null;
 
-		CreateUserCallback(User us) {
-			this.us = us;
+		CreateUserCallback(Benutzer b) {
+			this.b = b;
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
 		}
 
-		public void onSuccess(User us) {
-			if (us != null) {
-				botvm.addUser(us);
+		public void onSuccess(Benutzer b) {
+			if (b != null) {
+				botvm.fÃ¼geBenutzerHinzu(b);
 			}
 		}
 
@@ -153,21 +153,21 @@ public class UserForm extends VerticalPanel {
 
 	public class DeleteUserCallback implements AsyncCallback<String> {
 
-		User us = null;
+		Benutzer b = null;
 
-		DeleteUserCallback(User us) {
-			this.us = us;
+		DeleteUserCallback(Benutzer b) {
+			this.b = b;
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Löschen des Nutzers ist fehlgeschlagen!");
+			Window.alert("Das LÃ¶schen des Nutzers ist fehlgeschlagen!");
 		}
 
 		public void onSuccess(Void result) {
-			if (us != null) {
+			if (b != null) {
 				setSelected(null);
-				botvm.removeUser(us);
+				botvm.loescheBenutzer(b);
 			}
 		}
 
@@ -178,11 +178,11 @@ public class UserForm extends VerticalPanel {
 		}
 	}
 
-void setSelected(User us) {
-	if (us != null) {
-		userToDisplay = us;
-		nameTextBox.setText(userToDisplay.getName());
-		idValueLabel.setText(Integer.toString(userToDisplay.getId()));
+void setSelected(Benutzer b) {
+	if (b != null) {
+		benutzerDarstellung = b;
+		nameTextBox.setText(benutzerDarstellung.getName());
+		idValueLabel.setText(Integer.toString(benutzerDarstellung.getId()));
 	} else {
 		nameTextBox.setText("");
 		idValueLabel.setText("");
