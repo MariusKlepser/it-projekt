@@ -29,34 +29,25 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 	 * 
 	 */
 
-		// private StuecklistenAnlegenFormular stuecklistenAnlegenFormular;
-		// private StuecklistenBearbeitenFormular
-		// stuecklistenBearbeitenFormular;
-		// private StuecklistenLoeschenFormular stuecklistenLoeschenFormular;
-		//
-		// private BaugruppenAnlegenFormular baugruppenAnlegenFormular;
-		// private BaugruppenBearbeitenFormular baugruppenBearbeitenFormular;
-		// private BaugruppenLoeschenFormular baugruppenLoeschenFormular;
-		//
-		// private BauteilAnlegenFormular bauteilAnlegenFormular;
-		// private BauteilBearbeitenFormular bauteilBearbeitenFormular;
-		// private BauteilAnlegenFormular bauteilLoeschenFormular;
-		//
-		// private EnderzeugnisAnlegenFormular enderzeugnisAnlegenFormular;
-		// private EnderzeugnisBearbeitenFormular
-		// enderzeugnisBearbeitenFormular;
-		// private EnderzeugnisLoeschenFormular enderzeugnisLoeschenFormular;
+		private UserForm benutzerFormular;
+		private BillOfMaterialForm stücklisteFormular;
+		private ComponentAssemblyForm baugruppeFormular;
+		private ComponentForm bauteilFormular;
+		private EndProductForm enderzeugnisFormular;
 
-		private Stückliste selektierteStueckliste = null;
+		private Benutzer selektierterBenutzer = null;
+		private Stückliste selektierteStückliste = null;
 		private Baugruppe selektierteBaugruppe = null;
 		private Bauteil selektiertesBauteil = null;
 		private Enderzeugnis selektiertesEnderzeugnis = null;
+		
+		private StücklistenVerwaltungAsync stücklistenVerwaltung = null;
 
-		private StücklistenVerwaltungAsync bomVerwaltung = null;
-		private ListDataProvider<Stückliste> StuecklistenDatenProvider = null;
-		private ListDataProvider<Stückliste> BaugruppenDatenProvider = null;
-		private ListDataProvider<Stückliste> BauteilDatenProvider = null;
-		private ListDataProvider<Stückliste> EnderzeugnisDatenProvider = null;
+//		private StücklistenVerwaltungAsync bomVerwaltung = null;
+//		private ListDataProvider<Stückliste> StuecklistenDatenProvider = null;
+//		private ListDataProvider<Stückliste> BaugruppenDatenProvider = null;
+//		private ListDataProvider<Stückliste> BauteilDatenProvider = null;
+//		private ListDataProvider<Stückliste> EnderzeugnisDatenProvider = null;
 		/*
 		 * In dieser Map merken wir uns die ListDataProviders fÃƒÂ¼r die
 		 * Kontolisten der im Kunden- und Kontobaum expandierten Kundenknoten.
@@ -73,22 +64,21 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		 * Objektes ergibt. Dadurch kÃƒÂ¶nnen Kunden- von Kontenobjekten
 		 * unterschieden werden, auch wenn sie dieselbe id haben.
 		 */
-		// //private class BusinessObjectKeyProvider implements
-		// ProvidesKey<BusinessObject> {
-		// @Override
-		// public Integer getKey(BusinessObject bo) {
-		// if (bo == null) {
-		// return null;
-		// }
-		// if (bo instanceof Customer) {
-		// return new Integer(bo.getId());
-		// } else {
-		// return new Integer(-bo.getId());
-		// }
-		// }
-		// };
+		private class BusinessObjectKeyProvider implements ProvidesKey<Geschäftsobjekt> {
+		@Override
+		public Integer getKey(Geschäftsobjekt bo) {
+		if (bo == null) {
+		return null;
+		}
+		if (bo instanceof Benutzer) {
+		return new Integer(bo.getId());
+		} else {
+		return new Integer(-bo.getId());
+		}
+		}
+		};
 
-		// private BusinessObjectKeyProvider boKeyProvider = null;
+		private BusinessObjectKeyProvider boKeyProvider = null;
 		private SingleSelectionModel<Geschäftsobjekt> selectionModel = null;
 
 		/**
@@ -118,37 +108,69 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		 * lokalen Variaben initialisiert.
 		 */
 		public BusinessObjectTreeViewModel() {
-			bomVerwaltung = ClientEinstellungen.getStücklistenVerwaltung();
-			// boKeyProvider = new BusinessObjectKeyProvider();
-			selectionModel = new SingleSelectionModel<Geschäftsobjekt>();
+			stücklistenVerwaltung = ClientEinstellungen.getStücklistenVerwaltung();
+			boKeyProvider = new BusinessObjectKeyProvider();
+			selectionModel = new SingleSelectionModel<Geschäftsobjekt>(boKeyProvider);
 			selectionModel
 					.addSelectionChangeHandler(new SelectionChangeEventHandler());
 			// accountDataProviders = new HashMap<Customer,
 			// ListDataProvider<Account>>();
 		}
 
-		// void setCustomerForm(CustomerForm cf) {
-		// customerForm = cf;
-		// }
+		void setUserForm(UserForm uf) {
+			benutzerFormular = uf;
+		}
+		
+		void setBillOfMaterialsForm(BillOfMaterialForm bf) {
+			stücklisteFormular = bf;
+		}
+		
+		void setComponentAssemblyForm(ComponentAssemblyForm caf) {
+			baugruppeFormular = caf;
+		}
+		
+		void setComponentForm(ComponentForm cf) {
+			bauteilFormular = cf;
+		}
+		
+		void setEndProductForm(EndProductForm ef) {
+			enderzeugnisFormular = ef;
+		}
+		
+		Benutzer getSelektierterBenutzer() {
+		return selektierterBenutzer;
+		}
+		
+//		void setSelektierterBenutzer(Benutzer b) {
+//		selektierterBenutzer = b;
+//		userForm.setSelected(b);
+//		selektierteStückliste = null;
+//		selektierteBaugruppe = null;
+//		selektiertesBauteil = null;
+//		selektiertesEnderzeugnis = null;
+		// BillOfMaterialForm.setSelected(null);
+		// ComponentAssemblyForm.setSelected(null);
+		// ComponentForm.setSelected(null);
+		// EndProductForm.setSelected(null);
+		//}
 		//
-		// void setAccountForm(AccountForm af) {
-		// accountForm = af;
-		// }
-		//
-		// Customer getSelectedCustomer() {
-		// return selectedCustomer;
-		// }
-		//
-		// void setSelectedCustomer(Customer c) {
-		// selectedCustomer = c;
-		// customerForm.setSelected(c);
-		// selectedAccount = null;
-		// accountForm.setSelected(null);
-		// }
-		//
-		// Account getSelectedAccount() {
-		// return selectedAccount;
-		// }
+		Stückliste getSelektierteStückliste() {
+		return selektierteStückliste;
+		}
+		
+		Baugruppe getSelektierteBaugruppe() {
+			return selektierteBaugruppe;
+		}
+		
+		Bauteil getSelektiertesBauteil() {
+			return selektiertesBauteil;
+		}
+		
+		void setSelektierteStückliste(Stückliste s) {
+			selektierteStückliste = s;
+			stücklisteFormular.setSelected(s);
+		}
+		
 
 		// /*
 		// * Wenn ein Konto ausgewÃƒÂ¤hlt wird, wird auch der ausgewÃƒÂ¤hlte Kunde
@@ -159,8 +181,8 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		// accountForm.setSelected(a);
 		//
 		// if (a != null) {
-		// bankVerwaltung.getCustomerById(a.getOwnerID(),
-		// new AsyncCallback<Customer>() {
+		// stückenlistenVerwaltung.holeBenutzerAnhandId(a.getOwnerID(),
+		// new AsyncCallback<Benutzer>() {
 		// @Override
 		// public void onFailure(Throwable caught) {
 		// }
