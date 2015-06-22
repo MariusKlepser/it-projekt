@@ -12,9 +12,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.team7.client.ClientsideSettings;
-import de.hdm.team7.shared.BOMAdministrationAsync;
-import de.hdm.team7.shared.businessObjects.*;
+import de.hdm.team7.client.ClientEinstellungen;
+import de.hdm.team7.shared.StücklistenVerwaltung;
+import de.hdm.team7.shared.StücklistenVerwaltungAsync;
+import de.hdm.team7.shared.geschäftsobjekte.*;
 
 /**
  * Formular für die Darstellung des selektierten Kunden Angelehnt an Thies &
@@ -23,10 +24,9 @@ import de.hdm.team7.shared.businessObjects.*;
 
 public class BillOfMaterialForm extends VerticalPanel {
 	
-	BOMAdministrationAsync bomAdministration = ClientsideSettings
-			.getBOMAdministration();
+	StücklistenVerwaltungAsync bomAdministration = ClientEinstellungen.getStücklistenVerwaltung();
 
-	BillOfMaterial bomToDisplay = null;
+	Stückliste bomToDisplay = null;
 	BusinessObjectTreeViewModel botvm = null;
 
 	/*
@@ -93,7 +93,7 @@ public class BillOfMaterialForm extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (bomToDisplay != null) {
-				bomAdministration.deleteBillOfMaterial(bomToDisplay,
+				bomAdministration.löscheStückliste(bomToDisplay,
 						new DeleteBOMCallback(bomToDisplay));
 			} else {
 
@@ -109,11 +109,11 @@ public class BillOfMaterialForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			BillOfMaterial selectedBOM = botvm.getSelectedBOM();
+			Stückliste selectedBOM = botvm.getSelektierteStückliste();
 			if (selectedBOM == null) {
 				Window.alert("keine Stückliste ausgewählt");
 			} else {
-				bomAdministration.createBillOfMaterial(selectedBOM, null,
+				bomAdministration.erstelleStückliste(selectedBOM, null,
 						new CreateBOMCallback(selectedBOM));
 			}
 		}
@@ -129,9 +129,9 @@ public class BillOfMaterialForm extends VerticalPanel {
 	 */
 	public class CreateBOMCallback implements AsyncCallback<String> {
 
-		BillOfMaterial bom = null;
+		Stückliste bom = null;
 
-		CreateBOMCallback(BillOfMaterial bom) {
+		CreateBOMCallback(Stückliste bom) {
 			this.bom = bom;
 		}
 
@@ -139,7 +139,7 @@ public class BillOfMaterialForm extends VerticalPanel {
 		public void onFailure(Throwable caught) {
 		}
 
-		public void onSuccess(BillOfMaterial bom) {
+		public void onSuccess(Stückliste bom) {
 			if (bom != null) {
 				botvm.addBillOfMaterial(bom);
 			}
@@ -154,9 +154,9 @@ public class BillOfMaterialForm extends VerticalPanel {
 
 	public class DeleteBOMCallback implements AsyncCallback<String> {
 
-		BillOfMaterial bom = null;
+		Stückliste bom = null;
 
-		DeleteBOMCallback(BillOfMaterial bom) {
+		DeleteBOMCallback(Stückliste bom) {
 			this.bom = bom;
 		}
 
@@ -179,7 +179,7 @@ public class BillOfMaterialForm extends VerticalPanel {
 		}
 	}
 
-void setSelected(BillOfMaterial bom) {
+void setSelected(Stückliste bom) {
 	if (bom != null) {
 		bomToDisplay = bom;
 		nameTextBox.setText(bomToDisplay.getName());

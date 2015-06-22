@@ -1,8 +1,8 @@
-package de.hdm.team7.client.gui;
+package de.hdm.team7.client.cell;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
-import de.hdm.team7.shared.businessObjects.*;
+import de.hdm.team7.shared.geschäftsobjekte.*;
 
 
 
@@ -16,9 +16,9 @@ import de.hdm.team7.shared.businessObjects.*;
  * 
  * In Anlehnung an: @author rathke
  *
- */public class ComponentCell extends AbstractCell<Component> {
+ */public class ComponentCell extends AbstractCell<Bauteil> {
 	@Override
-    public void render(Context context, Component value, SafeHtmlBuilder sb) {
+    public void render(Context context, Bauteil value, SafeHtmlBuilder sb) {
       // Value can be null, so do a null check..
       if (value == null) {
         return;

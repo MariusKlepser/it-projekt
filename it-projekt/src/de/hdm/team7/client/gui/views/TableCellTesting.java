@@ -32,7 +32,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 
-import de.hdm.team7.client.ClientsideSettings;
+import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.client.DataSet;
 import de.hdm.team7.client.gui.BusinessObjectTreeViewModel;
 import de.hdm.team7.client.gui.CustomStaticTree;
