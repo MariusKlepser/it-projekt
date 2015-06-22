@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import de.hdm.team7.shared.geschäftsobjekte.*;
+import de.hdm.team7.shared.geschaeftsobjekte.*;
 
 @RemoteServiceRelativePath("stuecklistenverwaltung")
-public interface StücklistenVerwaltung extends RemoteService {
+public interface StuecklistenVerwaltung extends RemoteService {
 
 	/**
 	 * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von
 	 * GWT RPC zusÃ¤tzlich zum No Argument Constructor der implementierenden
-	 * Klasse {@link StücklistenVerwaltungImpl} notwendig. Bitte diese Methode
+	 * Klasse {@link StuecklistenVerwaltungImpl} notwendig. Bitte diese Methode
 	 * direkt nach der Instantiierung aufrufen.
 	 * 
 	 * @throws IllegalArgumentException
@@ -22,10 +22,10 @@ public interface StücklistenVerwaltung extends RemoteService {
 
 	// Hinzufï¿½gen oder Abfragen von bestimmten Stï¿½cklisten fï¿½r eine
 	// Instanz dieser BOMAdministration
-	public ArrayList<Stückliste> getStücklistenListe()
+	public ArrayList<Stueckliste> getStuecklistenListe()
 			throws IllegalArgumentException;
 
-	public void setStücklistenListe(ArrayList<Stückliste> stücklistenListe)
+	public void setStuecklistenListe(ArrayList<Stueckliste> stuecklistenListe)
 			throws IllegalArgumentException;
 
 	/**
@@ -44,7 +44,7 @@ public interface StücklistenVerwaltung extends RemoteService {
 	public String erstelleEnderzeugnis(Enderzeugnis enderzeugnis,
 			ArrayList<Bauteil> kinderKomponenten);
 
-	public String erstelleStückliste(Stückliste stückliste,
+	public String erstelleStueckliste(Stueckliste stueckliste,
 			Baugruppe wurzelElement);
 
 	public String erstelleBenutzer(Benutzer benutzer);
@@ -57,7 +57,7 @@ public interface StücklistenVerwaltung extends RemoteService {
 	public String aktualisiereEnderzeugnis(Enderzeugnis enderzeugnis,
 			ArrayList<Bauteil> kinderKomponenten);
 
-	public String aktualisiereStückliste(Stückliste stückliste,
+	public String aktualisiereStueckliste(Stueckliste stueckliste,
 			Baugruppe wurzelElement);
 
 	public String aktualisiereBenutzer(Benutzer benutzer);
@@ -69,7 +69,7 @@ public interface StücklistenVerwaltung extends RemoteService {
 			ArrayList<Bauteil> enderzeugnis);
 
 	public String ordneBaugruppenZuBaugruppe(
-			ArrayList<Bauteil> ausgewählteBaugruppen,
+			ArrayList<Bauteil> ausgewaehlteBaugruppen,
 			ArrayList<Bauteil> zugewieseneBaugruppe);
 
 	public String ordneBaugruppenZuEnderzeugnis(
@@ -81,18 +81,18 @@ public interface StücklistenVerwaltung extends RemoteService {
 			ArrayList<Bauteil> baugruppe);
 
 	public String ordneEnderzeugnisseZuEnderzeugnis(
-			ArrayList<Bauteil> ausgewählteEnderzeugnisse,
+			ArrayList<Bauteil> ausgewaehlteEnderzeugnisse,
 			ArrayList<Bauteil> zugewiesenesEnderzeugnis);
 
-	public String löscheBauteil(Bauteil bauteil);
+	public String loescheBauteil(Bauteil bauteil);
 
-	public String löscheBaugruppe(Baugruppe baugruppe);
+	public String loescheBaugruppe(Baugruppe baugruppe);
 
-	public String löscheEnderzeugnis(Enderzeugnis enderzeugnis);
+	public String loescheEnderzeugnis(Enderzeugnis enderzeugnis);
 
-	public String löscheStückliste(Stückliste stückliste);
+	public String loescheStueckliste(Stueckliste stueckliste);
 
-	public String löscheBenutzer(Benutzer benutzer);
+	public String loescheBenutzer(Benutzer benutzer);
 
 	public Bauteil holeBauteilAnhandId(int id) throws IllegalArgumentException;
 
@@ -101,7 +101,7 @@ public interface StücklistenVerwaltung extends RemoteService {
 
 	public Enderzeugnis holeEnderzeugnisAnhandId(int id) throws IllegalArgumentException;
 
-	public Stückliste holeStücklisteAnhandId(int id)
+	public Stueckliste holeStuecklisteAnhandId(int id)
 			throws IllegalArgumentException;
 
 	public Benutzer holeBenutzerAnhandId(int id) throws IllegalArgumentException;
@@ -115,7 +115,7 @@ public interface StücklistenVerwaltung extends RemoteService {
 	public ArrayList<Enderzeugnis> holeEnderzeugnisAnhandName(String name)
 			throws IllegalArgumentException;
 
-	public ArrayList<Stückliste> holeStücklisteAnhandName(String name)
+	public ArrayList<Stueckliste> holeStuecklisteAnhandName(String name)
 			throws IllegalArgumentException;
 
 	public ArrayList<Benutzer> holeBenutzerAnhandName(String name)
@@ -130,7 +130,7 @@ public interface StücklistenVerwaltung extends RemoteService {
 	public ArrayList<Enderzeugnis> holeAlleEnderzeugnisse()
 			throws IllegalArgumentException;
 
-	public ArrayList<Stückliste> holeAlleStücklisten()
+	public ArrayList<Stueckliste> holeAlleStuecklisten()
 			throws IllegalArgumentException;
 
 	public ArrayList<Benutzer> holeAlleBenutzer() throws IllegalArgumentException;

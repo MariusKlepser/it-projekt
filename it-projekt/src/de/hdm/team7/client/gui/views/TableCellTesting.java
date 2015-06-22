@@ -34,7 +34,6 @@ import com.google.gwt.view.client.ListDataProvider;
 
 import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.client.DataSet;
-import de.hdm.team7.client.gui.BusinessObjectTreeViewModel;
 import de.hdm.team7.client.gui.CustomStaticTree;
 import de.hdm.team7.client.rpc.AsyncCallbackComponentList;
 
@@ -45,16 +44,16 @@ public class TableCellTesting extends Widget{
 		VerticalPanel navPanel = new VerticalPanel();
 		// detailsPanel.add(cf);
 		// detailsPanel.add(af);
-		BusinessObjectTreeViewModel botvm = new BusinessObjectTreeViewModel();
+//		BusinessObjectTreeViewModel botvm = new BusinessObjectTreeViewModel();
 
 		// CellTree.Resources bankTreeResource =
 		// GWT.create(BankTreeResources.class);
-		CellTree cellTree = new CellTree(botvm, "Root");
-		cellTree.setAnimationEnabled(true);
-
-		navPanel.add(cellTree);
-		RootPanel.get("Navigator").add(navPanel);
-		RootPanel.get("Details").add(detailsPanel);
+//		CellTree cellTree = new CellTree(botvm, "Root");
+//		cellTree.setAnimationEnabled(true);
+//
+//		navPanel.add(cellTree);
+//		RootPanel.get("Navigator").add(navPanel);
+//		RootPanel.get("Details").add(detailsPanel);
 	}
 	
 	public Widget asWidget() {

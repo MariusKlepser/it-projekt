@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import de.hdm.team7.shared.geschäftsobjekte.*;
+import de.hdm.team7.shared.geschaeftsobjekte.*;
 
-public interface StücklistenVerwaltungAsync {
+public interface StuecklistenVerwaltungAsync {
 
 	void init(AsyncCallback<Void> callback);
 
-	void getStücklistenListe(AsyncCallback<ArrayList<Stückliste>> callback);
+	void getStuecklistenListe(AsyncCallback<ArrayList<Stueckliste>> callback);
 
-	void setStücklistenListe(ArrayList<Stückliste> bomList,
+	void setStuecklistenListe(ArrayList<Stueckliste> bomList,
 			AsyncCallback<Void> callback) throws IllegalArgumentException;
 
 	void erstelleBauteil(Bauteil component, AsyncCallback<String> callback);
@@ -25,7 +25,7 @@ public interface StücklistenVerwaltungAsync {
 			ArrayList<Bauteil> childrenComponents,
 			AsyncCallback<String> callback);
 
-	void erstelleStückliste(Stückliste bom,
+	void erstelleStueckliste(Stueckliste bom,
 			Baugruppe rootElement, AsyncCallback<String> callback);
 
 	void erstelleBenutzer(Benutzer user, AsyncCallback<String> callback);
@@ -40,7 +40,7 @@ public interface StücklistenVerwaltungAsync {
 			ArrayList<Bauteil> childrenComponents,
 			AsyncCallback<String> callback);
 
-	void aktualisiereStückliste(Stückliste bom,
+	void aktualisiereStueckliste(Stueckliste bom,
 			Baugruppe rootElement, AsyncCallback<String> callback);
 
 	void aktualisiereBenutzer(Benutzer user, AsyncCallback<String> callback);
@@ -67,16 +67,16 @@ public interface StücklistenVerwaltungAsync {
 			ArrayList<Bauteil> assignableEndProducts,
 			AsyncCallback<String> callback);
 
-	void löscheBauteil(Bauteil component, AsyncCallback<String> callback);
+	void loescheBauteil(Bauteil component, AsyncCallback<String> callback);
 
-	void löscheBaugruppe(Baugruppe compAssembly,
+	void loescheBaugruppe(Baugruppe compAssembly,
 			AsyncCallback<String> callback);
 
-	void löscheEnderzeugnis(Enderzeugnis endproduct, AsyncCallback<String> callback);
+	void loescheEnderzeugnis(Enderzeugnis endproduct, AsyncCallback<String> callback);
 
-	void löscheStückliste(Stückliste bom, AsyncCallback<String> callback);
+	void loescheStueckliste(Stueckliste bom, AsyncCallback<String> callback);
 
-	void löscheBenutzer(Benutzer user, AsyncCallback<String> callback);
+	void loescheBenutzer(Benutzer user, AsyncCallback<String> callback);
 
 	void holeBauteilAnhandId(int id, AsyncCallback<Bauteil> callback)
 			throws IllegalArgumentException;
@@ -88,7 +88,7 @@ public interface StücklistenVerwaltungAsync {
 	void holeEnderzeugnisAnhandId(int id, AsyncCallback<Enderzeugnis> callback)
 			throws IllegalArgumentException;
 
-	void holeStücklisteAnhandId(int id, AsyncCallback<Stückliste> callback)
+	void holeStuecklisteAnhandId(int id, AsyncCallback<Stueckliste> callback)
 			throws IllegalArgumentException;
 
 	void holeBenutzerAnhandId(int id, AsyncCallback<Benutzer> callback)
@@ -106,8 +106,8 @@ public interface StücklistenVerwaltungAsync {
 			AsyncCallback<ArrayList<Enderzeugnis>> callback)
 			throws IllegalArgumentException;
 
-	void holeStücklisteAnhandName(String name,
-			AsyncCallback<ArrayList<Stückliste>> callback)
+	void holeStuecklisteAnhandName(String name,
+			AsyncCallback<ArrayList<Stueckliste>> callback)
 			throws IllegalArgumentException;
 
 	void holeBenutzerAnhandName(String name, AsyncCallback<ArrayList<Benutzer>> callback)
@@ -123,7 +123,7 @@ public interface StücklistenVerwaltungAsync {
 	void holeAlleEnderzeugnisse(AsyncCallback<ArrayList<Enderzeugnis>> callback)
 			throws IllegalArgumentException;
 
-	void holeAlleStücklisten(AsyncCallback<ArrayList<Stückliste>> callback)
+	void holeAlleStuecklisten(AsyncCallback<ArrayList<Stueckliste>> callback)
 			throws IllegalArgumentException;
 
 	void holeAlleBenutzer(AsyncCallback<ArrayList<Benutzer>> callback)
