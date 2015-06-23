@@ -2,7 +2,7 @@ package de.hdm.team7.client.cell;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
-import de.hdm.team7.shared.geschäftsobjekte.Geschäftsobjekt;
+import de.hdm.team7.shared.geschaeftsobjekte.Geschaeftsobjekt;
 
 
 
@@ -16,9 +16,9 @@ import de.hdm.team7.shared.geschäftsobjekte.Geschäftsobjekt;
  * 
  * @author rathke
  *
- */public class BusinessObjectCell extends AbstractCell<Geschäftsobjekt> {
+ */public class BusinessObjectCell extends AbstractCell<Geschaeftsobjekt> {
 	@Override
-    public void render(Context context, Geschäftsobjekt value, SafeHtmlBuilder sb) {
+    public void render(Context context, Geschaeftsobjekt value, SafeHtmlBuilder sb) {
       // Value can be null, so do a null check..
       if (value == null) {
         return;

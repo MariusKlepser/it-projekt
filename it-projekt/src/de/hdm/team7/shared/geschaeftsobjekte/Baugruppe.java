@@ -1,4 +1,4 @@
-package de.hdm.team7.shared.geschäftsobjekte;
+package de.hdm.team7.shared.geschaeftsobjekte;
 
 import java.util.ArrayList;
 

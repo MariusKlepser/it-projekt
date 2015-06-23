@@ -2,7 +2,7 @@ package de.hdm.team7.client.cell;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
-import de.hdm.team7.shared.geschäftsobjekte.*;
+import de.hdm.team7.shared.geschaeftsobjekte.*;
 
 
 
@@ -18,9 +18,9 @@ import de.hdm.team7.shared.geschäftsobjekte.*;
  *
  */
 
-public class BillOfMaterialCell extends AbstractCell<Stückliste> {
+public class BillOfMaterialCell extends AbstractCell<Stueckliste> {
 	@Override
-    public void render(Context context, Stückliste value, SafeHtmlBuilder sb) {
+    public void render(Context context, Stueckliste value, SafeHtmlBuilder sb) {
       // Value can be null, so do a null check..
       if (value == null) {
         return;

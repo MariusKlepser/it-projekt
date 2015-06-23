@@ -7,7 +7,7 @@ import com.google.gwt.user.client.ui.TreeItem;
 
 import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.client.gui.views.TableCellTesting;
-import de.hdm.team7.shared.geschäftsobjekte.Bauteil;
+import de.hdm.team7.shared.geschaeftsobjekte.Bauteil;
 
 public class AsyncCallbackComponentList implements
 		AsyncCallback<ArrayList<Bauteil>> {

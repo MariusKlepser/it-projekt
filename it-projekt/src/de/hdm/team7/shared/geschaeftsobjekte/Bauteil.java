@@ -1,8 +1,8 @@
-package de.hdm.team7.shared.geschäftsobjekte;
+package de.hdm.team7.shared.geschaeftsobjekte;
 
 import java.util.Date;
 
-public class Bauteil extends Geschäftsobjekt {
+public class Bauteil extends Geschaeftsobjekt {
 
 	private static final long serialVersionUID = 1L;
 	

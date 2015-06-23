@@ -1,6 +1,6 @@
-package de.hdm.team7.shared.geschäftsobjekte;
+package de.hdm.team7.shared.geschaeftsobjekte;
 
-public class Benutzer extends Geschäftsobjekt {
+public class Benutzer extends Geschaeftsobjekt {
 
 	private static final long serialVersionUID = 1L;
 	

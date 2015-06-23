@@ -18,7 +18,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.client.rpc.*;
-import de.hdm.team7.shared.geschäftsobjekte.*;
+import de.hdm.team7.shared.geschaeftsobjekte.*;
 
 public class EditView extends ClientEinstellungen {
 	
@@ -74,7 +74,7 @@ public class EditView extends ClientEinstellungen {
 				
 				ClientEinstellungen.getLogger().severe("Client: Sending request!");
 				AsyncCallbackString stringCallback = new AsyncCallbackString();
-				ClientEinstellungen.getStücklistenVerwaltung().erstelleBauteil(c, stringCallback);
+				ClientEinstellungen.getStuecklistenVerwaltung().erstelleBauteil(c, stringCallback);
 				ClientEinstellungen.getLogger().severe("Client: Request sent!");
 			}
 		});

@@ -7,11 +7,11 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.team7.shared.ReportGenerator;
 import de.hdm.team7.shared.ReportGeneratorAsync;
-import de.hdm.team7.shared.StücklistenVerwaltungAsync;
+import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
 
 public class ClientEinstellungen {
 
-	private static StücklistenVerwaltungAsync stücklistenVerwaltung = null;
+	private static StuecklistenVerwaltungAsync stuecklistenVerwaltung = null;
 
 	private static ReportGeneratorAsync reportGenerator = null;
 
@@ -23,12 +23,12 @@ public class ClientEinstellungen {
 		return log;
 	}
 
-	public static StücklistenVerwaltungAsync getStücklistenVerwaltung() {
+	public static StuecklistenVerwaltungAsync getStuecklistenVerwaltung() {
 		// Gab es bislang noch keine BOMAdministration-Instanz, dann...
-		if (stücklistenVerwaltung == null) {
+		if (stuecklistenVerwaltung == null) {
 			// Zunächst instantiieren wir BOMAdministration
-			stücklistenVerwaltung = GWT
-					.create(de.hdm.team7.shared.StücklistenVerwaltung.class);
+			stuecklistenVerwaltung = GWT
+					.create(de.hdm.team7.shared.StuecklistenVerwaltung.class);
 			
 			final AsyncCallback<Void> initBOMCallback = new AsyncCallback<Void>() {
 				@Override
@@ -44,10 +44,10 @@ public class ClientEinstellungen {
 							"Die BOMAdministration wurde initialisiert.");
 				}
 			};
-			stücklistenVerwaltung.init(initBOMCallback);
+			stuecklistenVerwaltung.init(initBOMCallback);
 		}
 		// So, nun brauchen wir die BOMAdministration nur noch zurückzugeben.
-		return stücklistenVerwaltung;
+		return stuecklistenVerwaltung;
 	}
 
 	public static ReportGeneratorAsync getReportGenerator() {

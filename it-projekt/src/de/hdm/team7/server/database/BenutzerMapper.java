@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import de.hdm.team7.shared.geschäftsobjekte.Benutzer;
+import de.hdm.team7.shared.geschaeftsobjekte.Benutzer;
 
 // In Anlehnung an Thies - Bankprojekt 
 
