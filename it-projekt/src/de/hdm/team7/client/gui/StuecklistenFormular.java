@@ -12,21 +12,21 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.team7.client.ClientsideSettings;
-import de.hdm.team7.shared.BOMAdministrationAsync;
-import de.hdm.team7.shared.businessObjects.*;
+import de.hdm.team7.client.ClientEinstellungen;
+import de.hdm.team7.shared.StuecklistenVerwaltung;
+import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
+import de.hdm.team7.shared.geschaeftsobjekte.*;
 
 /**
  * Formular für die Darstellung des selektierten Kunden Angelehnt an Thies &
  * Rathke
  */
 
-public class ComponentForm extends VerticalPanel {
+public class StuecklistenFormular extends VerticalPanel {
 	
-	BOMAdministrationAsync bomAdministration = ClientsideSettings
-			.getBOMAdministration();
+	StuecklistenVerwaltungAsync stuecklistenVerwaltung = ClientEinstellungen.getStuecklistenVerwaltung();
 
-	Component componentToDisplay = null;
+	Stueckliste stuecklistenDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
 
 	/*
@@ -40,7 +40,7 @@ public class ComponentForm extends VerticalPanel {
 	 * Raster angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen
 	 * Widgets bestimmt.
 	 */
-	public ComponentForm() {
+	public StuecklistenFormular() {
 		/**
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem
 		 * Gitter.
@@ -85,15 +85,16 @@ public class ComponentForm extends VerticalPanel {
 	/*
 	 * TODO: Edit-Methode + ClickHandler müssen eingefügt werden
 	 * TODO: Methoden, auf die im BusinessObjectTreeViewModel zugegriffen wird, müssen ergänzt werden
+	 * TODO: rootElement bei Erstellung einer neuen BOM muss mitgegeben werden
 	 */
 
 	private class DeleteClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (componentToDisplay != null) {
-				bomAdministration.deleteComponent(componentToDisplay,
-						new deleteComponentCallback(componentToDisplay));
+			if (stuecklistenDarstellung != null) {
+				stuecklistenVerwaltung.loescheStueckliste(stuecklistenDarstellung,
+						new LoescheStuecklistenCallback(stuecklistenDarstellung));
 			} else {
 
 			}
@@ -108,12 +109,12 @@ public class ComponentForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Component selectedComponent = botvm.getSelectedComponent();
-			if (selectedComponent == null) {
-				Window.alert("kein Bauteil ausgewählt");
+			Stueckliste selektierteStueckliste = botvm.getSelektierteStueckliste();
+			if (selektierteStueckliste == null) {
+				Window.alert("keine Stückliste ausgewählt");
 			} else {
-				bomAdministration.createComponent(selectedComponent, null,
-						new createComponentCallback(selectedComponent));
+				stuecklistenVerwaltung.erstelleStueckliste(selektierteStueckliste, null,
+						new ErstelleStuecklistenCallback(selektierteStueckliste));
 			}
 		}
 	}
@@ -126,21 +127,21 @@ public class ComponentForm extends VerticalPanel {
 	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
 	 * ergebnis des asynchronen Aufrufs geliefert wird.
 	 */
-	public class createComponentCallback implements AsyncCallback<String> {
+	public class ErstelleStuecklistenCallback implements AsyncCallback<String> {
 
-		Component comp = null;
+		Stueckliste bom = null;
 
-		createComponentCallback(Component comp) {
-			this.comp = comp;
+		ErstelleStuecklistenCallback(Stueckliste bom) {
+			this.bom = bom;
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
 		}
 
-		public void onSuccess(Component comp) {
-			if (comp != null) {
-				botvm.addComponent(comp);
+		public void onSuccess(Stueckliste bom) {
+			if (bom != null) {
+				botvm.fuegeStuecklisteHinzu(bom);
 			}
 		}
 
@@ -151,23 +152,23 @@ public class ComponentForm extends VerticalPanel {
 		}
 	}
 
-	public class deleteComponentCallback implements AsyncCallback<String> {
+	public class loescheStuecklisteCallback implements AsyncCallback<String> {
 
-		Component comp = null;
+		Stueckliste bom = null;
 
-		deleteComponentCallback(Component comp) {
-			this.comp = comp;
+		loescheStuecklisteCallback(Stueckliste bom) {
+			this.bom = bom;
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Löschen des Bauteils ist fehlgeschlagen!");
+			Window.alert("Das Löschen der Stückliste ist fehlgeschlagen!");
 		}
 
 		public void onSuccess(Void result) {
-			if (comp != null) {
-				setSelected(null);
-				botvm.removeComponent(comp);
+			if (bom != null) {
+				setzeSelektiert(null);
+				botvm.entferneStueckliste(bom);
 			}
 		}
 
@@ -178,11 +179,11 @@ public class ComponentForm extends VerticalPanel {
 		}
 	}
 
-void setSelected(Component comp) {
-	if (comp != null) {
-		componentToDisplay = comp;
-		nameTextBox.setText(componentToDisplay.getName());
-		idValueLabel.setText(Integer.toString(componentToDisplay.getId()));
+void setzeSelektiert(Stueckliste bom) {
+	if (bom != null) {
+		stuecklistenDarstellung = bom;
+		nameTextBox.setText(stuecklistenDarstellung.getName());
+		idValueLabel.setText(Integer.toString(stuecklistenDarstellung.getId()));
 	} else {
 		nameTextBox.setText("");
 		idValueLabel.setText("");

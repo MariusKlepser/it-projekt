@@ -13,7 +13,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.team7.client.ClientEinstellungen;
-import de.hdm.team7.shared.StuecklistenVerwaltung;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
 import de.hdm.team7.shared.geschaeftsobjekte.*;
 
@@ -22,11 +21,12 @@ import de.hdm.team7.shared.geschaeftsobjekte.*;
  * Rathke
  */
 
-public class BillOfMaterialForm extends VerticalPanel {
+public class EnderzeugnisFormular extends VerticalPanel {
 	
-	StuecklistenVerwaltungAsync bomAdministration = ClientEinstellungen.getStuecklistenVerwaltung();
+	StuecklistenVerwaltungAsync stuecklistenVerwaltung = ClientEinstellungen
+			.getStuecklistenVerwaltung();
 
-	Stueckliste bomToDisplay = null;
+	Enderzeugnis enderzeugnisDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
 
 	/*
@@ -40,7 +40,7 @@ public class BillOfMaterialForm extends VerticalPanel {
 	 * Raster angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen
 	 * Widgets bestimmt.
 	 */
-	public BillOfMaterialForm() {
+	public EnderzeugnisFormular() {
 		/**
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem
 		 * Gitter.
@@ -85,16 +85,15 @@ public class BillOfMaterialForm extends VerticalPanel {
 	/*
 	 * TODO: Edit-Methode + ClickHandler müssen eingefügt werden
 	 * TODO: Methoden, auf die im BusinessObjectTreeViewModel zugegriffen wird, müssen ergänzt werden
-	 * TODO: rootElement bei Erstellung einer neuen BOM muss mitgegeben werden
 	 */
 
 	private class DeleteClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (bomToDisplay != null) {
-				bomAdministration.löscheStueckliste(bomToDisplay,
-						new DeleteBOMCallback(bomToDisplay));
+			if (enderzeugnisDarstellung != null) {
+				stuecklistenVerwaltung.loescheEnderzeugnis(enderzeugnisDarstellung,
+						new loescheEnderzeugnisCallback(enderzeugnisDarstellung));
 			} else {
 
 			}
@@ -109,12 +108,12 @@ public class BillOfMaterialForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Stueckliste selectedBOM = botvm.getSelektierteStueckliste();
-			if (selectedBOM == null) {
-				Window.alert("keine Stückliste ausgewählt");
+			Enderzeugnis selektiertesEnderzeugnis = botvm.getSelektiertesEnderzeugnis();
+			if (selektiertesEnderzeugnis == null) {
+				Window.alert("kein Enderzeugnis ausgewählt");
 			} else {
-				bomAdministration.erstelleStueckliste(selectedBOM, null,
-						new CreateBOMCallback(selectedBOM));
+				stuecklistenVerwaltung.erstelleEnderzeugnis(selektiertesEnderzeugnis, null,
+						new erstelleEnderzeugnisCallback(selektiertesEnderzeugnis));
 			}
 		}
 	}
@@ -127,21 +126,21 @@ public class BillOfMaterialForm extends VerticalPanel {
 	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
 	 * ergebnis des asynchronen Aufrufs geliefert wird.
 	 */
-	public class CreateBOMCallback implements AsyncCallback<String> {
+	public class erstelleEnderzeugnisCallback implements AsyncCallback<String> {
 
-		Stueckliste bom = null;
+		Enderzeugnis endproduct = null;
 
-		CreateBOMCallback(Stueckliste bom) {
-			this.bom = bom;
+		erstelleEnderzeugnisCallback(Enderzeugnis endProduct) {
+			this.endproduct = endProduct;
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
 		}
 
-		public void onSuccess(Stueckliste bom) {
-			if (bom != null) {
-				botvm.addBillOfMaterial(bom);
+		public void onSuccess(Enderzeugnis endProduct) {
+			if (endProduct != null) {
+				botvm.fuegeEnderzeugnisHinzu(endProduct);
 			}
 		}
 
@@ -152,23 +151,23 @@ public class BillOfMaterialForm extends VerticalPanel {
 		}
 	}
 
-	public class DeleteBOMCallback implements AsyncCallback<String> {
+	public class loescheEnderzeugnisCallback implements AsyncCallback<String> {
 
-		Stueckliste bom = null;
+		Enderzeugnis endProduct = null;
 
-		DeleteBOMCallback(Stueckliste bom) {
-			this.bom = bom;
+		loescheEnderzeugnisCallback(Enderzeugnis endProduct) {
+			this.endProduct = endProduct;
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Löschen der Stückliste ist fehlgeschlagen!");
+			Window.alert("Das Löschen des Endprodukts ist fehlgeschlagen!");
 		}
 
 		public void onSuccess(Void result) {
-			if (bom != null) {
-				setSelected(null);
-				botvm.removeBOM(bom);
+			if (endProduct != null) {
+				setzeSelektiert(null);
+				botvm.entferneEnderzeugnis(endProduct);
 			}
 		}
 
@@ -179,11 +178,11 @@ public class BillOfMaterialForm extends VerticalPanel {
 		}
 	}
 
-void setSelected(Stueckliste bom) {
-	if (bom != null) {
-		bomToDisplay = bom;
-		nameTextBox.setText(bomToDisplay.getName());
-		idValueLabel.setText(Integer.toString(bomToDisplay.getId()));
+void setzeSelektiert(Enderzeugnis endProduct) {
+	if (endProduct != null) {
+		enderzeugnisDarstellung = endProduct;
+		nameTextBox.setText(enderzeugnisDarstellung.getName());
+		idValueLabel.setText(Integer.toString(enderzeugnisDarstellung.getId()));
 	} else {
 		nameTextBox.setText("");
 		idValueLabel.setText("");

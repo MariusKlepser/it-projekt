@@ -12,21 +12,21 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.team7.client.ClientsideSettings;
-import de.hdm.team7.shared.BOMAdministrationAsync;
-import de.hdm.team7.shared.businessObjects.*;
+import de.hdm.team7.client.ClientEinstellungen;
+import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
+import de.hdm.team7.shared.geschaeftsobjekte.*;
 
 /**
  * Formular für die Darstellung des selektierten Kunden Angelehnt an Thies &
  * Rathke
  */
 
-public class UserForm extends VerticalPanel {
+public class BenutzerFormular extends VerticalPanel {
 	
-	BOMAdministrationAsync bomAdministration = ClientsideSettings
-			.getBOMAdministration();
+	StuecklistenVerwaltungAsync stuecklistenVerwaltung = ClientEinstellungen
+			.getStuecklistenVerwaltung();
 
-	User userToDisplay = null;
+	Benutzer benutzerDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
 
 	/*
@@ -40,7 +40,7 @@ public class UserForm extends VerticalPanel {
 	 * Raster angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen
 	 * Widgets bestimmt.
 	 */
-	public UserForm() {
+	public BenutzerFormular() {
 		/**
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem
 		 * Gitter.
@@ -91,9 +91,9 @@ public class UserForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (userToDisplay != null) {
-				bomAdministration.deleteUser(userToDisplay,
-						new DeleteUserCallback(userToDisplay));
+			if (benutzerDarstellung != null) {
+				stuecklistenVerwaltung.loescheBenutzer(benutzerDarstellung,
+						new LoescheBenutzerCallback(benutzerDarstellung));
 			} else {
 
 			}
@@ -108,12 +108,12 @@ public class UserForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			User selectedUser = botvm.getSelectedUser();
-			if (selectedUser == null) {
-				Window.alert("kein Nutzer ausgewählt");
+			Benutzer selektierterBenutzer = botvm.getSelektierterBenutzer();
+			if (selektierterBenutzer == null) {
+				Window.alert("kein Benutzer ausgewählt");
 			} else {
-				bomAdministration.createUser(selectedUser, null,
-						new CreateUserCallback(selectedUser));
+				stuecklistenVerwaltung.erstelleBenutzer(selektierterBenutzer,
+						new ErstelleBenutzerCallback(selektierterBenutzer));
 			}
 		}
 	}
@@ -126,21 +126,21 @@ public class UserForm extends VerticalPanel {
 	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
 	 * ergebnis des asynchronen Aufrufs geliefert wird.
 	 */
-	public class CreateUserCallback implements AsyncCallback<String> {
+	public class ErstelleBenutzerCallback implements AsyncCallback<String> {
 
-		User us = null;
+		Benutzer b = null;
 
-		CreateUserCallback(User us) {
-			this.us = us;
+		ErstelleBenutzerCallback(Benutzer b) {
+			this.b = b;
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
 		}
 
-		public void onSuccess(User us) {
-			if (us != null) {
-				botvm.addUser(us);
+		public void onSuccess(Benutzer b) {
+			if (b != null) {
+				botvm.fuegeBenutzerHinzu(b);
 			}
 		}
 
@@ -151,23 +151,23 @@ public class UserForm extends VerticalPanel {
 		}
 	}
 
-	public class DeleteUserCallback implements AsyncCallback<String> {
+	public class LoescheBenutzerCallback implements AsyncCallback<String> {
 
-		User us = null;
+		Benutzer b = null;
 
-		DeleteUserCallback(User us) {
-			this.us = us;
+		LoescheBenutzerCallback(Benutzer b) {
+			this.b = b;
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Löschen des Nutzers ist fehlgeschlagen!");
+			Window.alert("Das Löschen des Benutzers ist fehlgeschlagen!");
 		}
 
 		public void onSuccess(Void result) {
-			if (us != null) {
-				setSelected(null);
-				botvm.removeUser(us);
+			if (b != null) {
+				setzeSelektiert(null);
+				botvm.entferneBenutzer(b);
 			}
 		}
 
@@ -178,11 +178,11 @@ public class UserForm extends VerticalPanel {
 		}
 	}
 
-void setSelected(User us) {
-	if (us != null) {
-		userToDisplay = us;
-		nameTextBox.setText(userToDisplay.getName());
-		idValueLabel.setText(Integer.toString(userToDisplay.getId()));
+void setzeSelektiert(Benutzer b) {
+	if (b != null) {
+		benutzerDarstellung = b;
+		nameTextBox.setText(benutzerDarstellung.getName());
+		idValueLabel.setText(Integer.toString(benutzerDarstellung.getId()));
 	} else {
 		nameTextBox.setText("");
 		idValueLabel.setText("");

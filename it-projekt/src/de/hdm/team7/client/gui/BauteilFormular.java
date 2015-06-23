@@ -12,21 +12,21 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.team7.client.ClientsideSettings;
-import de.hdm.team7.shared.BOMAdministrationAsync;
-import de.hdm.team7.shared.businessObjects.*;
+import de.hdm.team7.client.ClientEinstellungen;
+import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
+import de.hdm.team7.shared.geschaeftsobjekte.*;
 
 /**
  * Formular für die Darstellung des selektierten Kunden Angelehnt an Thies &
  * Rathke
  */
 
-public class ComponentAssemblyForm extends VerticalPanel {
+public class BauteilFormular extends VerticalPanel {
 	
-	BOMAdministrationAsync bomAdministration = ClientsideSettings
-			.getBOMAdministration();
+	StuecklistenVerwaltungAsync stuecklistenVerwaltung = ClientEinstellungen
+			.getStuecklistenVerwaltung();
 
-	ComponentAssembly componentAssemblyToDisplay = null;
+	Bauteil bauteilDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
 
 	/*
@@ -40,7 +40,7 @@ public class ComponentAssemblyForm extends VerticalPanel {
 	 * Raster angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen
 	 * Widgets bestimmt.
 	 */
-	public ComponentAssemblyForm() {
+	public BauteilFormular() {
 		/**
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem
 		 * Gitter.
@@ -91,9 +91,9 @@ public class ComponentAssemblyForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (componentAssemblyToDisplay != null) {
-				bomAdministration.deleteComponentAssembly(componentAssemblyToDisplay,
-						new deleteComponentAssemblyCallback(componentAssemblyToDisplay));
+			if (bauteilDarstellung != null) {
+				stuecklistenVerwaltung.loescheBauteil(bauteilDarstellung,
+						new loescheBauteilCallback(bauteilDarstellung));
 			} else {
 
 			}
@@ -108,12 +108,12 @@ public class ComponentAssemblyForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			ComponentAssembly selectedComponentAssembly = botvm.getSelectedComponentAssembly();
-			if (selectedComponentAssembly == null) {
-				Window.alert("keine Baugruppe ausgewählt");
+			Bauteil selektiertesBauteil = botvm.getSelektiertesBauteil();
+			if (selektiertesBauteil == null) {
+				Window.alert("kein Bauteil ausgewählt");
 			} else {
-				bomAdministration.createComponentAssembly(selectedComponentAssembly, null,
-						new createComponentAssemblyCallback(selectedComponentAssembly));
+				stuecklistenVerwaltung.erstelleBauteil(selektiertesBauteil,
+						new erstelleBauteilCallback(selektiertesBauteil));
 			}
 		}
 	}
@@ -126,21 +126,21 @@ public class ComponentAssemblyForm extends VerticalPanel {
 	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
 	 * ergebnis des asynchronen Aufrufs geliefert wird.
 	 */
-	public class createComponentAssemblyCallback implements AsyncCallback<String> {
+	public class erstelleBauteilCallback implements AsyncCallback<String> {
 
-		ComponentAssembly compAss = null;
+		Bauteil comp = null;
 
-		createComponentAssemblyCallback(ComponentAssembly compAss) {
-			this.compAss = compAss;
+		erstelleBauteilCallback(Bauteil comp) {
+			this.comp = comp;
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
 		}
 
-		public void onSuccess(ComponentAssembly compAss) {
-			if (compAss != null) {
-				botvm.addComponentAssembly(compAss);
+		public void onSuccess(Bauteil comp) {
+			if (comp != null) {
+				botvm.fuegeBauteilHinzu(comp);
 			}
 		}
 
@@ -151,23 +151,23 @@ public class ComponentAssemblyForm extends VerticalPanel {
 		}
 	}
 
-	public class deleteComponentAssemblyCallback implements AsyncCallback<String> {
+	public class loescheBauteilCallback implements AsyncCallback<String> {
 
-		ComponentAssembly compAss = null;
+		Bauteil comp = null;
 
-		deleteComponentAssemblyCallback(ComponentAssembly compAss) {
-			this.compAss = compAss;
+		loescheBauteilCallback(Bauteil comp) {
+			this.comp = comp;
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Löschen der Baugruppe ist fehlgeschlagen!");
+			Window.alert("Das Löschen des Bauteils ist fehlgeschlagen!");
 		}
 
 		public void onSuccess(Void result) {
-			if (compAss != null) {
-				setSelected(null);
-				botvm.removeComponentAssembly(compAss);
+			if (comp != null) {
+				setzeSelektiert(null);
+				botvm.entferneBauteil(comp);
 			}
 		}
 
@@ -178,11 +178,11 @@ public class ComponentAssemblyForm extends VerticalPanel {
 		}
 	}
 
-void setSelected(ComponentAssembly compAss) {
-	if (compAss != null) {
-		componentAssemblyToDisplay = compAss;
-		nameTextBox.setText(componentAssemblyToDisplay.getName());
-		idValueLabel.setText(Integer.toString(componentAssemblyToDisplay.getId()));
+void setzeSelektiert(Bauteil comp) {
+	if (comp != null) {
+		bauteilDarstellung = comp;
+		nameTextBox.setText(bauteilDarstellung.getName());
+		idValueLabel.setText(Integer.toString(bauteilDarstellung.getId()));
 	} else {
 		nameTextBox.setText("");
 		idValueLabel.setText("");

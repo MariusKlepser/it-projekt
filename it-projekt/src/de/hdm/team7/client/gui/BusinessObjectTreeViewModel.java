@@ -29,11 +29,11 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 	 * 
 	 */
 
-		private UserForm benutzerFormular;
-		private BillOfMaterialForm stücklisteFormular;
-		private ComponentAssemblyForm baugruppeFormular;
-		private ComponentForm bauteilFormular;
-		private EndProductForm enderzeugnisFormular;
+		private BenutzerFormular benutzerFormular;
+		private StuecklistenFormular stücklisteFormular;
+		private BaugruppeFormular baugruppeFormular;
+		private BauteilFormular bauteilFormular;
+		private EnderzeugnisFormular enderzeugnisFormular;
 
 		private Benutzer selektierterBenutzer = null;
 		private Stueckliste selektierteStueckliste = null;
@@ -117,23 +117,23 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 			// ListDataProvider<Account>>();
 		}
 
-		void setUserForm(UserForm uf) {
+		void setUserForm(BenutzerFormular uf) {
 			benutzerFormular = uf;
 		}
 		
-		void setBillOfMaterialsForm(BillOfMaterialForm bf) {
+		void setBillOfMaterialsForm(StuecklistenFormular bf) {
 			stücklisteFormular = bf;
 		}
 		
-		void setComponentAssemblyForm(ComponentAssemblyForm caf) {
+		void setComponentAssemblyForm(BaugruppeFormular caf) {
 			baugruppeFormular = caf;
 		}
 		
-		void setComponentForm(ComponentForm cf) {
+		void setComponentForm(BauteilFormular cf) {
 			bauteilFormular = cf;
 		}
 		
-		void setEndProductForm(EndProductForm ef) {
+		void setEndProductForm(EnderzeugnisFormular ef) {
 			enderzeugnisFormular = ef;
 		}
 		

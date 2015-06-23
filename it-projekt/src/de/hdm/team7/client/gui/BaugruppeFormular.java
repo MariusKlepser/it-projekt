@@ -12,21 +12,21 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.team7.client.ClientsideSettings;
-import de.hdm.team7.shared.BOMAdministrationAsync;
-import de.hdm.team7.shared.businessObjects.*;
+import de.hdm.team7.client.ClientEinstellungen;
+import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
+import de.hdm.team7.shared.geschaeftsobjekte.*;
 
 /**
  * Formular für die Darstellung des selektierten Kunden Angelehnt an Thies &
  * Rathke
  */
 
-public class EndProductForm extends VerticalPanel {
+public class BaugruppeFormular extends VerticalPanel {
 	
-	BOMAdministrationAsync bomAdministration = ClientsideSettings
-			.getBOMAdministration();
+	StuecklistenVerwaltungAsync stuecklistenVerwaltung = ClientEinstellungen
+			.getStuecklistenVerwaltung();
 
-	EndProduct EndProductToDisplay = null;
+	Baugruppe baugruppeDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
 
 	/*
@@ -40,7 +40,7 @@ public class EndProductForm extends VerticalPanel {
 	 * Raster angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen
 	 * Widgets bestimmt.
 	 */
-	public EndProductForm() {
+	public BaugruppeFormular() {
 		/**
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem
 		 * Gitter.
@@ -91,9 +91,9 @@ public class EndProductForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (EndProductToDisplay != null) {
-				bomAdministration.deleteEndProduct(EndProductToDisplay,
-						new deleteEndProductCallback(EndProductToDisplay));
+			if (baugruppeDarstellung != null) {
+				stuecklistenVerwaltung.loescheBaugruppe(baugruppeDarstellung,
+						new loescheBaugruppeCallback(baugruppeDarstellung));
 			} else {
 
 			}
@@ -108,12 +108,12 @@ public class EndProductForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			EndProduct selectedEndProduct = botvm.getSelectedEndProduct();
-			if (selectedEndProduct == null) {
-				Window.alert("kein Endprodukt ausgewählt");
+			Baugruppe selektierteBaugruppe = botvm.getSelektierteBaugruppe();
+			if (selektierteBaugruppe == null) {
+				Window.alert("keine Baugruppe ausgewählt");
 			} else {
-				bomAdministration.createEndProduct(selectedEndProduct, null,
-						new createEndProductCallback(selectedEndProduct));
+				stuecklistenVerwaltung.erstelleBaugruppe(selektierteBaugruppe, null,
+						new erstelleBaugruppeCallback(selektierteBaugruppe));
 			}
 		}
 	}
@@ -126,21 +126,21 @@ public class EndProductForm extends VerticalPanel {
 	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
 	 * ergebnis des asynchronen Aufrufs geliefert wird.
 	 */
-	public class createEndProductCallback implements AsyncCallback<String> {
+	public class erstelleBaugruppeCallback implements AsyncCallback<String> {
 
-		EndProduct endProduct = null;
+		Baugruppe compAss = null;
 
-		createEndProductCallback(EndProduct endProduct) {
-			this.endProduct = endProduct;
+		erstelleBaugruppeCallback(Baugruppe compAss) {
+			this.compAss = compAss;
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
 		}
 
-		public void onSuccess(EndProduct endProduct) {
-			if (endProduct != null) {
-				botvm.addEndProduct(endProduct);
+		public void onSuccess(Baugruppe compAss) {
+			if (compAss != null) {
+				botvm.fuegeBaugruppeHinzu(compAss);
 			}
 		}
 
@@ -151,23 +151,23 @@ public class EndProductForm extends VerticalPanel {
 		}
 	}
 
-	public class deleteEndProductCallback implements AsyncCallback<String> {
+	public class loescheBaugruppeCallback implements AsyncCallback<String> {
 
-		EndProduct endProduct = null;
+		Baugruppe compAss = null;
 
-		deleteEndProductCallback(EndProduct endProduct) {
-			this.endProduct = endProduct;
+		loescheBaugruppeCallback(Baugruppe compAss) {
+			this.compAss = compAss;
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Löschen des Endprodukts ist fehlgeschlagen!");
+			Window.alert("Das Löschen der Baugruppe ist fehlgeschlagen!");
 		}
 
 		public void onSuccess(Void result) {
-			if (endProduct != null) {
-				setSelected(null);
-				botvm.removeEndProduct(endProduct);
+			if (compAss != null) {
+				setzeSelektiert(null);
+				botvm.entferneBaugruppe(compAss);
 			}
 		}
 
@@ -178,11 +178,11 @@ public class EndProductForm extends VerticalPanel {
 		}
 	}
 
-void setSelected(EndProduct endProduct) {
-	if (endProduct != null) {
-		EndProductToDisplay = endProduct;
-		nameTextBox.setText(EndProductToDisplay.getName());
-		idValueLabel.setText(Integer.toString(EndProductToDisplay.getId()));
+void setzeSelektiert(Baugruppe compAss) {
+	if (compAss != null) {
+		baugruppeDarstellung = compAss;
+		nameTextBox.setText(baugruppeDarstellung.getName());
+		idValueLabel.setText(Integer.toString(baugruppeDarstellung.getId()));
 	} else {
 		nameTextBox.setText("");
 		idValueLabel.setText("");
