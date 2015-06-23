@@ -15,7 +15,7 @@ public class ClientEinstellungen {
 
 	private static ReportGeneratorAsync reportGenerator = null;
 
-	private static final String LOGGER_NAME = "StücklistenVerwaltung Client";
+	private static final String LOGGER_NAME = "StuecklistenVerwaltung Client";
 
 	protected static final Logger log = Logger.getLogger(LOGGER_NAME);
 

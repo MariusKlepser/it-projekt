@@ -111,7 +111,7 @@ public class BillOfMaterialForm extends VerticalPanel {
 		public void onClick(ClickEvent event) {
 			Stueckliste selectedBOM = botvm.getSelektierteStueckliste();
 			if (selectedBOM == null) {
-				Window.alert("keine Stückliste ausgewählt");
+				Window.alert("keine Stueckliste ausgewählt");
 			} else {
 				bomAdministration.erstelleStueckliste(selectedBOM, null,
 						new CreateBOMCallback(selectedBOM));
@@ -162,7 +162,7 @@ public class BillOfMaterialForm extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Löschen der Stückliste ist fehlgeschlagen!");
+			Window.alert("Das Löschen der Stueckliste ist fehlgeschlagen!");
 		}
 
 		public void onSuccess(Void result) {

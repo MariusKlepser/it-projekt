@@ -69,7 +69,7 @@ public interface StuecklistenVerwaltung extends RemoteService {
 			ArrayList<Bauteil> enderzeugnis);
 
 	public String ordneBaugruppenZuBaugruppe(
-			ArrayList<Bauteil> ausgewählteBaugruppen,
+			ArrayList<Bauteil> ausgewaehlteBaugruppen,
 			ArrayList<Bauteil> zugewieseneBaugruppe);
 
 	public String ordneBaugruppenZuEnderzeugnis(
@@ -81,7 +81,7 @@ public interface StuecklistenVerwaltung extends RemoteService {
 			ArrayList<Bauteil> baugruppe);
 
 	public String ordneEnderzeugnisseZuEnderzeugnis(
-			ArrayList<Bauteil> ausgewählteEnderzeugnisse,
+			ArrayList<Bauteil> ausgewaehlteEnderzeugnisse,
 			ArrayList<Bauteil> zugewiesenesEnderzeugnis);
 
 	public String loescheBauteil(Bauteil bauteil);
