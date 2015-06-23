@@ -17,7 +17,7 @@ import de.hdm.team7.shared.BOMAdministrationAsync;
 import de.hdm.team7.shared.businessObjects.*;
 
 /**
- * Formular für die Darstellung des selektierten Kunden Angelehnt an Thies &
+ * Formular fuer die Darstellung des selektierten Kunden Angelehnt an Thies &
  * Rathke
  */
 
@@ -37,7 +37,7 @@ public class ComponentAssemblyForm extends VerticalPanel {
 
 	/*
 	 * Im Konstruktor werden die Widgets z.T. erzeugt. Alle werden in einem
-	 * Raster angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen
+	 * Raster angeordnet, dessen Groeße sich aus dem Platzbedarf der enthaltenen
 	 * Widgets bestimmt.
 	 */
 	public ComponentAssemblyForm() {
@@ -63,7 +63,7 @@ public class ComponentAssemblyForm extends VerticalPanel {
 		newButton.addClickHandler(new NewClickHandler());
 		boButtonsPanel.add(newButton);
 
-		Button deleteButton = new Button("Löschen");
+		Button deleteButton = new Button("Loeschen");
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		boButtonsPanel.add(deleteButton);
 
@@ -73,18 +73,18 @@ public class ComponentAssemblyForm extends VerticalPanel {
 	}
 
 	/*
-	 * Click handlers und abhängige AsyncCallback Klassen.
+	 * Click handlers und abhaengige AsyncCallback Klassen.
 	 */
 
 	/**
-	 * Zum Löschen eines Kontos wird zunächst der Eigentümer abgefragt, bevor im
-	 * Callback eine Löschung durchgeführt wird.
+	 * Zum Loeschen eines Kontos wird zunaechst der Eigentuemer abgefragt, bevor im
+	 * Callback eine Loeschung durchgefuehrt wird.
 	 * 
 	 */
 
 	/*
-	 * TODO: Edit-Methode + ClickHandler müssen eingefügt werden
-	 * TODO: Methoden, auf die im BusinessObjectTreeViewModel zugegriffen wird, müssen ergänzt werden
+	 * TODO: Edit-Methode + ClickHandler muessen eingefuegt werden
+	 * TODO: Methoden, auf die im BusinessObjectTreeViewModel zugegriffen wird, muessen ergaenzt werden
 	 */
 
 	private class DeleteClickHandler implements ClickHandler {
@@ -110,7 +110,7 @@ public class ComponentAssemblyForm extends VerticalPanel {
 		public void onClick(ClickEvent event) {
 			ComponentAssembly selectedComponentAssembly = botvm.getSelectedComponentAssembly();
 			if (selectedComponentAssembly == null) {
-				Window.alert("keine Baugruppe ausgewählt");
+				Window.alert("keine Baugruppe ausgewaehlt");
 			} else {
 				bomAdministration.createComponentAssembly(selectedComponentAssembly, null,
 						new createComponentAssemblyCallback(selectedComponentAssembly));
@@ -120,10 +120,10 @@ public class ComponentAssemblyForm extends VerticalPanel {
 
 	/*
 	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
-	 * Kontobaum aktualisiert werden. Dafür dient ein privates Attribut und der
+	 * Kontobaum aktualisiert werden. Dafuer dient ein privates Attribut und der
 	 * Konstruktor.
 	 * 
-	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
+	 * Wir benoetigen hier nur einen Parameter fuer den Kunden, da das Konto als
 	 * ergebnis des asynchronen Aufrufs geliefert wird.
 	 */
 	public class createComponentAssemblyCallback implements AsyncCallback<String> {
@@ -161,7 +161,7 @@ public class ComponentAssemblyForm extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Löschen der Baugruppe ist fehlgeschlagen!");
+			Window.alert("Das Loeschen der Baugruppe ist fehlgeschlagen!");
 		}
 
 		public void onSuccess(Void result) {

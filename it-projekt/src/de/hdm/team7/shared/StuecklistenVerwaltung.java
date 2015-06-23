@@ -84,15 +84,15 @@ public interface StuecklistenVerwaltung extends RemoteService {
 			ArrayList<Bauteil> ausgewählteEnderzeugnisse,
 			ArrayList<Bauteil> zugewiesenesEnderzeugnis);
 
-	public String löscheBauteil(Bauteil bauteil);
+	public String loescheBauteil(Bauteil bauteil);
 
-	public String löscheBaugruppe(Baugruppe baugruppe);
+	public String loescheBaugruppe(Baugruppe baugruppe);
 
-	public String löscheEnderzeugnis(Enderzeugnis enderzeugnis);
+	public String loescheEnderzeugnis(Enderzeugnis enderzeugnis);
 
-	public String löscheStueckliste(Stueckliste stueckliste);
+	public String loescheStueckliste(Stueckliste stueckliste);
 
-	public String löscheBenutzer(Benutzer benutzer);
+	public String loescheBenutzer(Benutzer benutzer);
 
 	public Bauteil holeBauteilAnhandId(int id) throws IllegalArgumentException;
 

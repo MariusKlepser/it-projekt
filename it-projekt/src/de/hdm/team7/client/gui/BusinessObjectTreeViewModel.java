@@ -30,7 +30,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 	 */
 
 		private UserForm benutzerFormular;
-		private BillOfMaterialForm stücklisteFormular;
+		private BillOfMaterialForm stuecklisteFormular;
 		private ComponentAssemblyForm baugruppeFormular;
 		private ComponentForm bauteilFormular;
 		private EndProductForm enderzeugnisFormular;
@@ -41,13 +41,13 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		private Bauteil selektiertesBauteil = null;
 		private Enderzeugnis selektiertesEnderzeugnis = null;
 		
-		private StuecklistenVerwaltungAsync stücklistenVerwaltung = null;
+		private StuecklistenVerwaltungAsync stuecklistenVerwaltung = null;
 
-//		private StücklistenVerwaltungAsync bomVerwaltung = null;
-//		private ListDataProvider<Stückliste> StuecklistenDatenProvider = null;
-//		private ListDataProvider<Stückliste> BaugruppenDatenProvider = null;
-//		private ListDataProvider<Stückliste> BauteilDatenProvider = null;
-//		private ListDataProvider<Stückliste> EnderzeugnisDatenProvider = null;
+//		private StuecklistenVerwaltungAsync bomVerwaltung = null;
+//		private ListDataProvider<Stueckliste> StuecklistenDatenProvider = null;
+//		private ListDataProvider<Stueckliste> BaugruppenDatenProvider = null;
+//		private ListDataProvider<Stueckliste> BauteilDatenProvider = null;
+//		private ListDataProvider<Stueckliste> EnderzeugnisDatenProvider = null;
 		/*
 		 * In dieser Map merken wir uns die ListDataProviders fÃƒÂ¼r die
 		 * Kontolisten der im Kunden- und Kontobaum expandierten Kundenknoten.
@@ -108,7 +108,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		 * lokalen Variaben initialisiert.
 		 */
 		public BusinessObjectTreeViewModel() {
-			stücklistenVerwaltung = ClientEinstellungen.getStuecklistenVerwaltung();
+			stuecklistenVerwaltung = ClientEinstellungen.getStuecklistenVerwaltung();
 			boKeyProvider = new BusinessObjectKeyProvider();
 			selectionModel = new SingleSelectionModel<Geschaeftsobjekt>(boKeyProvider);
 			selectionModel
@@ -122,7 +122,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		}
 		
 		void setBillOfMaterialsForm(BillOfMaterialForm bf) {
-			stücklisteFormular = bf;
+			stuecklisteFormular = bf;
 		}
 		
 		void setComponentAssemblyForm(ComponentAssemblyForm caf) {
@@ -144,7 +144,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 //		void setSelektierterBenutzer(Benutzer b) {
 //		selektierterBenutzer = b;
 //		userForm.setSelected(b);
-//		selektierteStückliste = null;
+//		selektierteStueckliste = null;
 //		selektierteBaugruppe = null;
 //		selektiertesBauteil = null;
 //		selektiertesEnderzeugnis = null;
@@ -166,9 +166,9 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 			return selektiertesBauteil;
 		}
 		
-		void setSelektierteStückliste(Stueckliste s) {
+		void setSelektierteStueckliste(Stueckliste s) {
 			selektierteStueckliste = s;
-			stücklisteFormular.setSelected(s);
+			stuecklisteFormular.setSelected(s);
 		}
 		
 
@@ -181,7 +181,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		// accountForm.setSelected(a);
 		//
 		// if (a != null) {
-		// stückenlistenVerwaltung.holeBenutzerAnhandId(a.getOwnerID(),
+		// stueckenlistenVerwaltung.holeBenutzerAnhandId(a.getOwnerID(),
 		// new AsyncCallback<Benutzer>() {
 		// @Override
 		// public void onFailure(Throwable caught) {
