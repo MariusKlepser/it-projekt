@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 
 import com.google.appengine.api.utils.SystemProperty;
 
-public class DBConnection {
+public class DBVerbindung {
 
     private static Connection connection = null;
 

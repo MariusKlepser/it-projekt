@@ -12,25 +12,21 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.team7.client.ClientsideSettings;
-import de.hdm.team7.shared.BOMAdministrationAsync;
-import de.hdm.team7.shared.businessObjects.*;
+import de.hdm.team7.client.ClientEinstellungen;
+import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
+import de.hdm.team7.shared.geschaeftsobjekte.*;
 
 /**
  * Formular für die Darstellung des selektierten Kunden Angelehnt an Thies &
  * Rathke
  */
 
-public class BusinessObjectForm extends VerticalPanel {
+public class BauteilFormular extends VerticalPanel {
 	
-	BOMAdministrationAsync bomAdministration = ClientsideSettings
-			.getBOMAdministration();
+	StuecklistenVerwaltungAsync stuecklistenVerwaltung = ClientEinstellungen
+			.getStuecklistenVerwaltung();
 
-	BillOfMaterial bomToDisplay = null;
-	Component compToDisplay = null;
-	ComponentAssembly compAssToDisplay = null;
-	EndProduct endProToDisplay = null;
-	User userToDisplay = null;
+	Bauteil bauteilDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
 
 	/*
@@ -44,7 +40,7 @@ public class BusinessObjectForm extends VerticalPanel {
 	 * Raster angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen
 	 * Widgets bestimmt.
 	 */
-	public BusinessObjectForm() {
+	public BauteilFormular() {
 		/**
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem
 		 * Gitter.
@@ -72,7 +68,7 @@ public class BusinessObjectForm extends VerticalPanel {
 		boButtonsPanel.add(deleteButton);
 
 		Button editButton = new Button("Bearbeiten");
-		deleteButton.addClickHandler(new EditClickHandler());
+		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
 	}
 
@@ -87,19 +83,17 @@ public class BusinessObjectForm extends VerticalPanel {
 	 */
 
 	/*
-	 * TODO: Struktur am Beispiel von Löschung/Erstellung einer BOM (andere
-	 * Objekte fehlen noch) TODO: Instanziierung von botvm wird nicht erkannt;
-	 * deleteBOMCallback wird nicht erkannt; ComponentAssembly bei Erstellung
-	 * einer neuen BOM mit einbinden?
+	 * TODO: Edit-Methode + ClickHandler müssen eingefügt werden
+	 * TODO: Methoden, auf die im BusinessObjectTreeViewModel zugegriffen wird, müssen ergänzt werden
 	 */
 
 	private class DeleteClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (bomToDisplay != null) {
-				bomAdministration.deleteBillOfMaterial(bomToDisplay,
-						new DeleteBOMCallback(bomToDisplay));
+			if (bauteilDarstellung != null) {
+				stuecklistenVerwaltung.loescheBauteil(bauteilDarstellung,
+						new loescheBauteilCallback(bauteilDarstellung));
 			} else {
 
 			}
@@ -114,12 +108,12 @@ public class BusinessObjectForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			BillOfMaterial selectedBOM = botvm.getSelectedBOM();
-			if (selectedBOM == null) {
-				Window.alert("kein Objekt ausgewählt");
+			Bauteil selektiertesBauteil = botvm.getSelektiertesBauteil();
+			if (selektiertesBauteil == null) {
+				Window.alert("kein Bauteil ausgewählt");
 			} else {
-				bomAdministration.createBillOfMaterial(selectedBOM, null,
-						new CreateBOMCallback(selectedBOM));
+				stuecklistenVerwaltung.erstelleBauteil(selektiertesBauteil,
+						new erstelleBauteilCallback(selektiertesBauteil));
 			}
 		}
 	}
@@ -132,23 +126,21 @@ public class BusinessObjectForm extends VerticalPanel {
 	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
 	 * ergebnis des asynchronen Aufrufs geliefert wird.
 	 */
-	public class CreateBOMCallback implements AsyncCallback<String> {
+	public class erstelleBauteilCallback implements AsyncCallback<String> {
 
-		BillOfMaterial bom = null;
+		Bauteil comp = null;
 
-		CreateBOMCallback(BillOfMaterial bom) {
-			this.bom = bom;
+		erstelleBauteilCallback(Bauteil comp) {
+			this.comp = comp;
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// this.showcase.append("Fehler bei der Abfrage " +
-			// caught.getMessage());
 		}
 
-		public void onSuccess(BillOfMaterial bom) {
-			if (account != null && customer != null) {
-				botvm.addAccountOfCustomer(account, customer);
+		public void onSuccess(Bauteil comp) {
+			if (comp != null) {
+				botvm.fuegeBauteilHinzu(comp);
 			}
 		}
 
@@ -159,23 +151,23 @@ public class BusinessObjectForm extends VerticalPanel {
 		}
 	}
 
-	public class DeleteBOMCallback implements AsyncCallback<String> {
+	public class loescheBauteilCallback implements AsyncCallback<String> {
 
-		BillOfMaterial bom = null;
+		Bauteil comp = null;
 
-		DeleteBOMCallback(BillOfMaterial bom) {
-			this.bom = bom;
+		loescheBauteilCallback(Bauteil comp) {
+			this.comp = comp;
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Löschen des Objekts ist fehlgeschlagen!");
+			Window.alert("Das Löschen des Bauteils ist fehlgeschlagen!");
 		}
 
 		public void onSuccess(Void result) {
-			if (bom != null) {
-				setSelected(null);
-				botvm.removeBOM(bom);
+			if (comp != null) {
+				setzeSelektiert(null);
+				botvm.entferneBauteil(comp);
 			}
 		}
 
@@ -185,4 +177,16 @@ public class BusinessObjectForm extends VerticalPanel {
 
 		}
 	}
+
+void setzeSelektiert(Bauteil comp) {
+	if (comp != null) {
+		bauteilDarstellung = comp;
+		nameTextBox.setText(bauteilDarstellung.getName());
+		idValueLabel.setText(Integer.toString(bauteilDarstellung.getId()));
+	} else {
+		nameTextBox.setText("");
+		idValueLabel.setText("");
+	}
+}
+
 }

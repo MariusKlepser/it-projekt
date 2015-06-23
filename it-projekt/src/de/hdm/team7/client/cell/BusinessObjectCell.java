@@ -1,8 +1,8 @@
-package de.hdm.team7.client.gui;
+package de.hdm.team7.client.cell;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
-import de.hdm.team7.shared.businessObjects.*;
+import de.hdm.team7.shared.geschaeftsobjekte.Geschaeftsobjekt;
 
 
 
@@ -14,12 +14,11 @@ import de.hdm.team7.shared.businessObjects.*;
  * und einer Leerstelle in einem <code>div-</code>Element
  * erzeugt.
  * 
- * In Anlehnung an: @author rathke
+ * @author rathke
  *
- */
-public class ComponentAssemblyCell extends AbstractCell<ComponentAssembly> {
+ */public class BusinessObjectCell extends AbstractCell<Geschaeftsobjekt> {
 	@Override
-    public void render(Context context, ComponentAssembly value, SafeHtmlBuilder sb) {
+    public void render(Context context, Geschaeftsobjekt value, SafeHtmlBuilder sb) {
       // Value can be null, so do a null check..
       if (value == null) {
         return;

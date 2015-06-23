@@ -16,11 +16,11 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.team7.client.ClientsideSettings;
+import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.client.rpc.*;
-import de.hdm.team7.shared.businessObjects.*;
+import de.hdm.team7.shared.geschaeftsobjekte.*;
 
-public class EditView extends ClientsideSettings {
+public class EditView extends ClientEinstellungen {
 	
 	VerticalPanel vPanel = new VerticalPanel();
 
@@ -67,15 +67,15 @@ public class EditView extends ClientsideSettings {
 		//Absenden Button
 		Button bauteilanlegenbtn = new Button("Anlegen", new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				Component c = new Component();
+				Bauteil c = new Bauteil();
 				c.setName(baugruppenname.getText());
 				c.setDescription(beschreibungtxt.getText());
-				c.setMaterialIdentifier(materialbezeichnungtxt.getText());
+				c.setMaterialBezeichnung(materialbezeichnungtxt.getText());
 				
-				ClientsideSettings.getLogger().severe("Client: Sending request!");
+				ClientEinstellungen.getLogger().severe("Client: Sending request!");
 				AsyncCallbackString stringCallback = new AsyncCallbackString();
-				ClientsideSettings.getBOMAdministration().createComponent(c, stringCallback);
-				ClientsideSettings.getLogger().severe("Client: Request sent!");
+				ClientEinstellungen.getStuecklistenVerwaltung().erstelleBauteil(c, stringCallback);
+				ClientEinstellungen.getLogger().severe("Client: Request sent!");
 			}
 		});
 		

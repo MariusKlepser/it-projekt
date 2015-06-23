@@ -13,14 +13,14 @@ import com.google.gwt.user.client.ui.TreeItem;
 
 import de.hdm.team7.client.*;
 import de.hdm.team7.client.rpc.*;
-import de.hdm.team7.shared.businessObjects.*;
+import de.hdm.team7.shared.geschaeftsobjekte.*;
 
 public class CustomStaticTree extends Tree {
 
-	private static ArrayList<Component> components = new ArrayList<Component>();
-	private static ArrayList<ComponentAssembly> componentAssemblies = new ArrayList<ComponentAssembly>();
-	private static ArrayList<EndProduct> endProducts = new ArrayList<EndProduct>();
-	private static ArrayList<BillOfMaterial> billOfMaterials = new ArrayList<BillOfMaterial>();
+	private static ArrayList<Bauteil> components = new ArrayList<Bauteil>();
+	private static ArrayList<Baugruppe> componentAssemblies = new ArrayList<Baugruppe>();
+	private static ArrayList<Enderzeugnis> endProducts = new ArrayList<Enderzeugnis>();
+	private static ArrayList<Stückliste> billOfMaterials = new ArrayList<Stückliste>();
 
 	/**
 	 * @return the new tree
@@ -43,7 +43,7 @@ public class CustomStaticTree extends Tree {
 	public void refreshComponents(TreeItem parent) {
 		AsyncCallbackComponentList componentListCallback = new AsyncCallbackComponentList();
 		componentListCallback.setParentTreeItem(parent);
-		ClientsideSettings.getBOMAdministration().getAllComponents(
+		ClientEinstellungen.getStücklistenVerwaltung().holeAlleBauteile(
 				componentListCallback);
 	}
 }
