@@ -31,8 +31,8 @@ public class It_projekt implements EntryPoint {
 		RootPanel navPanel = RootPanel.get("Navigator");
 		RootPanel detailsPanel = RootPanel.get("Details");
 		
-//		final CustomStaticTree staticTree = new CustomStaticTree()
-//				.createStaticTree();
+//		final BusinessObjectTreeViewModel botvm = new BusinessObjectTreeViewModel();
+//		navPanel.add(botvm);
 //		staticTree.ensureDebugId("cwTree-staticTree");
 //		ScrollPanel staticTreeWrapper = new ScrollPanel(staticTree);
 //		staticTreeWrapper.ensureDebugId("cwTree-staticTree-Wrapper");
