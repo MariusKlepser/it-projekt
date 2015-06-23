@@ -7,7 +7,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TreeItem;
 
-import de.hdm.team7.client.gui.BusinessObjectTreeViewModel;
 import de.hdm.team7.client.gui.CustomStaticTree;
 import de.hdm.team7.client.rpc.AsyncCallbackComponentList;
 
