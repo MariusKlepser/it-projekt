@@ -16,11 +16,9 @@ import de.hdm.team7.shared.geschaeftsobjekte.*;
  * 
  * In Anlehnung an: @author rathke
  *
- */
-
-public class EndProductCell extends AbstractCell<Enderzeugnis> {
+ */public class BauteilCell extends AbstractCell<Bauteil> {
 	@Override
-    public void render(Context context, Enderzeugnis value, SafeHtmlBuilder sb) {
+    public void render(Context context, Bauteil value, SafeHtmlBuilder sb) {
       // Value can be null, so do a null check..
       if (value == null) {
         return;

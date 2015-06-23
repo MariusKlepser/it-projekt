@@ -16,7 +16,7 @@ import de.hdm.team7.shared.geschaeftsobjekte.Geschaeftsobjekt;
  * 
  * @author rathke
  *
- */public class BusinessObjectCell extends AbstractCell<Geschaeftsobjekt> {
+ */public class GeschaeftsobjektCell extends AbstractCell<Geschaeftsobjekt> {
 	@Override
     public void render(Context context, Geschaeftsobjekt value, SafeHtmlBuilder sb) {
       // Value can be null, so do a null check..

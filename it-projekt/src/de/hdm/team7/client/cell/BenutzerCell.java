@@ -18,7 +18,7 @@ import de.hdm.team7.shared.geschaeftsobjekte.*;
  *
  */
 
-public class UserCell extends AbstractCell<Benutzer> {
+public class BenutzerCell extends AbstractCell<Benutzer> {
 	@Override
     public void render(Context context, Benutzer value, SafeHtmlBuilder sb) {
       // Value can be null, so do a null check..

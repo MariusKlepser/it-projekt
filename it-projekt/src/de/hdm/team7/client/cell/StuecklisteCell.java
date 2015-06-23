@@ -17,9 +17,10 @@ import de.hdm.team7.shared.geschaeftsobjekte.*;
  * In Anlehnung an: @author rathke
  *
  */
-public class ComponentAssemblyCell extends AbstractCell<Baugruppe> {
+
+public class StuecklisteCell extends AbstractCell<Stueckliste> {
 	@Override
-    public void render(Context context, Baugruppe value, SafeHtmlBuilder sb) {
+    public void render(Context context, Stueckliste value, SafeHtmlBuilder sb) {
       // Value can be null, so do a null check..
       if (value == null) {
         return;
