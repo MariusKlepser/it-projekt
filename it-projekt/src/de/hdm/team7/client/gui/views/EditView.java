@@ -18,7 +18,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.client.rpc.*;
-import de.hdm.team7.shared.geschäftsobjekte.*;
+import de.hdm.team7.shared.geschaeftsobjekte.*;
 
 public class EditView extends ClientEinstellungen {
 	

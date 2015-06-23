@@ -16,8 +16,8 @@ import com.google.gwt.view.client.TreeViewModel;
 
 import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.client.cell.BusinessObjectCell;
-import de.hdm.team7.shared.StücklistenVerwaltungAsync;
-import de.hdm.team7.shared.geschäftsobjekte.*;
+import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
+import de.hdm.team7.shared.geschaeftsobjekte.*;
 
 public class BusinessObjectTreeViewModel implements TreeViewModel {
 
@@ -36,12 +36,12 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		private EndProductForm enderzeugnisFormular;
 
 		private Benutzer selektierterBenutzer = null;
-		private Stückliste selektierteStückliste = null;
+		private Stueckliste selektierteStückliste = null;
 		private Baugruppe selektierteBaugruppe = null;
 		private Bauteil selektiertesBauteil = null;
 		private Enderzeugnis selektiertesEnderzeugnis = null;
 		
-		private StücklistenVerwaltungAsync stücklistenVerwaltung = null;
+		private StuecklistenVerwaltungAsync stücklistenVerwaltung = null;
 
 //		private StücklistenVerwaltungAsync bomVerwaltung = null;
 //		private ListDataProvider<Stückliste> StuecklistenDatenProvider = null;
@@ -64,9 +64,9 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		 * Objektes ergibt. Dadurch kÃƒÂ¶nnen Kunden- von Kontenobjekten
 		 * unterschieden werden, auch wenn sie dieselbe id haben.
 		 */
-		private class BusinessObjectKeyProvider implements ProvidesKey<Geschäftsobjekt> {
+		private class BusinessObjectKeyProvider implements ProvidesKey<Geschaeftsobjekt> {
 		@Override
-		public Integer getKey(Geschäftsobjekt bo) {
+		public Integer getKey(Geschaeftsobjekt bo) {
 		if (bo == null) {
 		return null;
 		}
@@ -79,7 +79,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		};
 
 		private BusinessObjectKeyProvider boKeyProvider = null;
-		private SingleSelectionModel<Geschäftsobjekt> selectionModel = null;
+		private SingleSelectionModel<Geschaeftsobjekt> selectionModel = null;
 
 		/**
 		 * Nested Class fÃƒÂ¼r die Reaktion auf Selektionsereignisse. Als Folge
@@ -90,15 +90,15 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 				SelectionChangeEvent.Handler {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				Geschäftsobjekt selection = selectionModel.getSelectedObject();
+				Geschaeftsobjekt selection = selectionModel.getSelectedObject();
 				if (selection instanceof Bauteil) {
 					setzeSelektiertesBauteil((Bauteil) selection);
 				} else if (selection instanceof Baugruppe) {
 					setzeSelektierteBaugruppe((Baugruppe) selection);
 				} else if (selection instanceof Enderzeugnis) {
 					setzeSelektiertesEndprodukt((Enderzeugnis) selection);
-				} else if (selection instanceof Stückliste) {
-					setzeSelektierteStueckliste((Stückliste) selection);
+				} else if (selection instanceof Stueckliste) {
+					setzeSelektierteStueckliste((Stueckliste) selection);
 				}
 			}
 		}
@@ -110,7 +110,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		public BusinessObjectTreeViewModel() {
 			stücklistenVerwaltung = ClientEinstellungen.getStücklistenVerwaltung();
 			boKeyProvider = new BusinessObjectKeyProvider();
-			selectionModel = new SingleSelectionModel<Geschäftsobjekt>(boKeyProvider);
+			selectionModel = new SingleSelectionModel<Geschaeftsobjekt>(boKeyProvider);
 			selectionModel
 					.addSelectionChangeHandler(new SelectionChangeEventHandler());
 			// accountDataProviders = new HashMap<Customer,
@@ -154,7 +154,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		// EndProductForm.setSelected(null);
 		//}
 		//
-		Stückliste getSelektierteStückliste() {
+		Stueckliste getSelektierteStückliste() {
 		return selektierteStückliste;
 		}
 		
@@ -166,7 +166,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 			return selektiertesBauteil;
 		}
 		
-		void setSelektierteStückliste(Stückliste s) {
+		void setSelektierteStückliste(Stueckliste s) {
 			selektierteStückliste = s;
 			stücklisteFormular.setSelected(s);
 		}
@@ -287,7 +287,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		// }
 		// }
 
-		public void setzeSelektierteStueckliste(Stückliste selection) {
+		public void setzeSelektierteStueckliste(Stueckliste selection) {
 			// TODO Auto-generated method stub
 
 		}
@@ -313,17 +313,17 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 
 		if (value.equals("Root")) {
 			// Erzeugen eines ListDataproviders fÃƒÂ¼r Customerdaten
-			ListDataProvider<Geschäftsobjekt> kategorieDatenProvider = new ListDataProvider<Geschäftsobjekt>();
+			ListDataProvider<Geschaeftsobjekt> kategorieDatenProvider = new ListDataProvider<Geschaeftsobjekt>();
 
-			List<Geschäftsobjekt> kategorien = new ArrayList<Geschäftsobjekt>();
+			List<Geschaeftsobjekt> kategorien = new ArrayList<Geschaeftsobjekt>();
 			kategorien.add(new Bauteil());
 			kategorien.add(new Baugruppe());
 			kategorien.add(new Enderzeugnis());
-			kategorien.add(new Stückliste());
+			kategorien.add(new Stueckliste());
 			kategorien = kategorieDatenProvider.getList();
 
 			// Return a node info that pairs the data with a cell.
-			return new DefaultNodeInfo<Geschäftsobjekt>(kategorieDatenProvider,
+			return new DefaultNodeInfo<Geschaeftsobjekt>(kategorieDatenProvider,
 					new BusinessObjectCell(), selectionModel, null);
 		}
 
@@ -359,7 +359,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 	@Override
 	public boolean isLeaf(Object value) {
 		// value is of type Account
-		return (value instanceof Geschäftsobjekt);
+		return (value instanceof Geschaeftsobjekt);
 	}
 
 }

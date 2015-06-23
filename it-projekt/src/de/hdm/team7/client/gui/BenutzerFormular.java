@@ -140,7 +140,7 @@ public class BenutzerFormular extends VerticalPanel {
 
 		public void onSuccess(Benutzer b) {
 			if (b != null) {
-				botvm.fügeBenutzerHinzu(b);
+				botvm.fuegeBenutzerHinzu(b);
 			}
 		}
 

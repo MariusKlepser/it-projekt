@@ -2,7 +2,7 @@ package de.hdm.team7.client.cell;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
-import de.hdm.team7.shared.geschäftsobjekte.*;
+import de.hdm.team7.shared.geschaeftsobjekte.*;
 
 
 

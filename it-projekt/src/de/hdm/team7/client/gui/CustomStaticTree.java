@@ -13,14 +13,14 @@ import com.google.gwt.user.client.ui.TreeItem;
 
 import de.hdm.team7.client.*;
 import de.hdm.team7.client.rpc.*;
-import de.hdm.team7.shared.geschäftsobjekte.*;
+import de.hdm.team7.shared.geschaeftsobjekte.*;
 
 public class CustomStaticTree extends Tree {
 
 	private static ArrayList<Bauteil> components = new ArrayList<Bauteil>();
 	private static ArrayList<Baugruppe> componentAssemblies = new ArrayList<Baugruppe>();
 	private static ArrayList<Enderzeugnis> endProducts = new ArrayList<Enderzeugnis>();
-	private static ArrayList<Stückliste> billOfMaterials = new ArrayList<Stückliste>();
+	private static ArrayList<Stueckliste> billOfMaterials = new ArrayList<Stueckliste>();
 
 	/**
 	 * @return the new tree

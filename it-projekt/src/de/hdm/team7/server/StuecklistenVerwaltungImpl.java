@@ -10,26 +10,26 @@ import de.hdm.team7.server.database.BaugruppeMapper;
 import de.hdm.team7.server.database.BauteilMapper;
 import de.hdm.team7.server.database.BenutzerMapper;
 import de.hdm.team7.server.database.EnderzeugnisMapper;
-import de.hdm.team7.server.database.StücklisteMapper;
-import de.hdm.team7.shared.StücklistenVerwaltung;
-import de.hdm.team7.shared.geschäftsobjekte.Baugruppe;
-import de.hdm.team7.shared.geschäftsobjekte.Bauteil;
-import de.hdm.team7.shared.geschäftsobjekte.Benutzer;
-import de.hdm.team7.shared.geschäftsobjekte.Enderzeugnis;
-import de.hdm.team7.shared.geschäftsobjekte.Stückliste;
+import de.hdm.team7.server.database.StuecklisteMapper;
+import de.hdm.team7.shared.StuecklistenVerwaltung;
+import de.hdm.team7.shared.geschaeftsobjekte.Baugruppe;
+import de.hdm.team7.shared.geschaeftsobjekte.Bauteil;
+import de.hdm.team7.shared.geschaeftsobjekte.Benutzer;
+import de.hdm.team7.shared.geschaeftsobjekte.Enderzeugnis;
+import de.hdm.team7.shared.geschaeftsobjekte.Stueckliste;
 
 @SuppressWarnings("serial")
-public class StücklistenVerwaltungImpl extends RemoteServiceServlet implements
-		StücklistenVerwaltung {
+public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
+		StuecklistenVerwaltung {
 
-	private ArrayList<Stückliste> stücklistenListe = null;
-	private StücklisteMapper stücklisteMapper = null;
+	private ArrayList<Stueckliste> stücklistenListe = null;
+	private StuecklisteMapper stücklisteMapper = null;
 	private BaugruppeMapper baugruppeMapper = null;
 	private BauteilMapper bauteilMapper = null;
 	private EnderzeugnisMapper enderzeugnisMapper = null;
 	private BenutzerMapper benutzerMapper = null;
 
-	public StücklistenVerwaltungImpl() throws IllegalArgumentException {
+	public StuecklistenVerwaltungImpl() throws IllegalArgumentException {
 		/*
 		 * Eine weitergehende Funktion muss der No-Argument-Constructor nicht
 		 * haben. Er muss einfach vorhanden sein.
@@ -43,18 +43,18 @@ public class StücklistenVerwaltungImpl extends RemoteServiceServlet implements
 		 * Satz von Mappern besitzt, mit deren Hilfe sie dann mit der Datenbank
 		 * kommunizieren kann.
 		 */
-		this.stücklisteMapper = StücklisteMapper.stücklisteMapper();
+		this.stücklisteMapper = StuecklisteMapper.stücklisteMapper();
 		this.baugruppeMapper = BaugruppeMapper.baugruppeMapper();
 		this.bauteilMapper = BauteilMapper.bauteilMapper();
 		this.enderzeugnisMapper = EnderzeugnisMapper.enderzeugnisMapper();
 		this.benutzerMapper = BenutzerMapper.benutzerMapper();
 	}
 
-	public ArrayList<Stückliste> getStücklistenListe() {
+	public ArrayList<Stueckliste> getStücklistenListe() {
 		return stücklistenListe;
 	}
 
-	public void setStücklistenListe(ArrayList<Stückliste> stücklistenListe) {
+	public void setStücklistenListe(ArrayList<Stueckliste> stücklistenListe) {
 		this.stücklistenListe = stücklistenListe;
 	}
 
@@ -111,7 +111,7 @@ public class StücklistenVerwaltungImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public String erstelleStückliste(Stückliste stückliste, Baugruppe wurzelElement) {
+	public String erstelleStückliste(Stueckliste stückliste, Baugruppe wurzelElement) {
 		String message;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
@@ -165,7 +165,7 @@ public class StücklistenVerwaltungImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public String aktualisiereStückliste(Stückliste stückliste, Baugruppe wurzelElement) {
+	public String aktualisiereStückliste(Stueckliste stückliste, Baugruppe wurzelElement) {
 		this.stücklisteMapper.update(stückliste);
 		return null;
 	}
@@ -239,7 +239,7 @@ public class StücklistenVerwaltungImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public String löscheStückliste(Stückliste stückliste) {
+	public String löscheStückliste(Stueckliste stückliste) {
 		this.stücklisteMapper.delete(stückliste);
 		return null;
 	}
@@ -268,7 +268,7 @@ public class StücklistenVerwaltungImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public Stückliste holeStücklisteAnhandId(int id)
+	public Stueckliste holeStücklisteAnhandId(int id)
 			throws IllegalArgumentException {
 		return this.stücklisteMapper.findByKey(id);
 	}
@@ -298,7 +298,7 @@ public class StücklistenVerwaltungImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public ArrayList<Stückliste> holeStücklisteAnhandName(String name)
+	public ArrayList<Stueckliste> holeStücklisteAnhandName(String name)
 			throws IllegalArgumentException {
 		return this.stücklisteMapper.findByName(name);
 	}
@@ -328,7 +328,7 @@ public class StücklistenVerwaltungImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public ArrayList<Stückliste> holeAlleStücklisten()
+	public ArrayList<Stueckliste> holeAlleStücklisten()
 			throws IllegalArgumentException {
 		return this.stücklisteMapper.findAll();
 	}

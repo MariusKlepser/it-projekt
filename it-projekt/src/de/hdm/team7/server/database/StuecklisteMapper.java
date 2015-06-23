@@ -6,25 +6,25 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import de.hdm.team7.shared.geschäftsobjekte.Stückliste;
+import de.hdm.team7.shared.geschaeftsobjekte.Stueckliste;
 
 // In Anlehnung an Thies - Bankprojekt 
 
-public class StücklisteMapper {
+public class StuecklisteMapper {
 
-	private static StücklisteMapper stücklisteMapper = null;
+	private static StuecklisteMapper stücklisteMapper = null;
 	private String log;
 
 	/**
 	 * GeschÃ¼tzter Konstruktor - verhindert die MÃ¶glichkeit, mit
 	 * <code>new</code> neue Instanzen dieser Klasse zu erzeugen.
 	 */
-	protected StücklisteMapper() {
+	protected StuecklisteMapper() {
 	}
 
-	public static StücklisteMapper stücklisteMapper() {
+	public static StuecklisteMapper stücklisteMapper() {
 		if (stücklisteMapper == null) {
-			stücklisteMapper = new StücklisteMapper();
+			stücklisteMapper = new StuecklisteMapper();
 		}
 
 		return stücklisteMapper;
@@ -39,7 +39,7 @@ public class StücklisteMapper {
 	 * @return BOM-Objekt, das dem Ã¼bergebenen SchlÃ¼ssel entspricht, null bei
 	 *         nicht vorhandenem DB-Tupel.
 	 */
-	public Stückliste findByKey(int id) {
+	public Stueckliste findByKey(int id) {
 		// DB-Verbindung holen
 		Connection con = DBVerbindung.connection();
 
@@ -58,7 +58,7 @@ public class StücklisteMapper {
 			 */
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
-				Stückliste b = new Stückliste();
+				Stueckliste b = new Stueckliste();
 				b.setId(rs.getInt("id"));
 				b.setErstellungsDatum(rs.getDate("erstellungsdatum").toString());
 				b.setName(rs.getString("name"));
@@ -80,10 +80,10 @@ public class StücklisteMapper {
 	 *         Bei evtl. Exceptions wird ein partiell gefï¿½llter oder ggf. auch
 	 *         leerer Vetor zurÃ¼ckgeliefert.
 	 */
-	public ArrayList<Stückliste> findAll() {
+	public ArrayList<Stueckliste> findAll() {
 		Connection con = DBVerbindung.connection();
 		// Ergebnisvektor vorbereiten
-		ArrayList<Stückliste> result = new ArrayList<Stückliste>();
+		ArrayList<Stueckliste> result = new ArrayList<Stueckliste>();
 
 		try {
 			Statement stmt = con.createStatement();
@@ -95,7 +95,7 @@ public class StücklisteMapper {
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein BOM-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Stückliste b = new Stückliste();
+				Stueckliste b = new Stueckliste();
 				b.setId(rs.getInt("id"));
 				b.setErstellungsDatum(rs.getDate("erstellungsdatum").toString());
 				b.setName(rs.getString("name"));
@@ -120,9 +120,9 @@ public class StücklisteMapper {
 	 *         gesuchten Namen reprÃ¤sentieren. Bei evtl. Exceptions wird ein
 	 *         partiell gefÃ¼llter oder ggf. auch leerer Vetor zurÃ¼ckgeliefert.
 	 */
-	public ArrayList<Stückliste> findByName(String name) {
+	public ArrayList<Stueckliste> findByName(String name) {
 		Connection con = DBVerbindung.connection();
-		ArrayList<Stückliste> result = new ArrayList<Stückliste>();
+		ArrayList<Stueckliste> result = new ArrayList<Stueckliste>();
 
 		try {
 			Statement stmt = con.createStatement();
@@ -135,7 +135,7 @@ public class StücklisteMapper {
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein User-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Stückliste b = new Stückliste();
+				Stueckliste b = new Stueckliste();
 				b.setId(rs.getInt("id"));
 				b.setErstellungsDatum(rs.getDate("erstellungsdatum").toString());
 				b.setName(rs.getString("name"));
@@ -161,7 +161,7 @@ public class StücklisteMapper {
 	 * @return das bereits Ã¼bergebene Objekt, jedoch mit ggf. korrigierter
 	 *         <code>id</code>.
 	 */
-	public Stückliste insert(Stückliste b) {
+	public Stueckliste insert(Stueckliste b) {
 		Connection con = DBVerbindung.connection();
 
 		try {
@@ -217,7 +217,7 @@ public class StücklisteMapper {
 	 *            das Objekt, das in die DB geschrieben werden soll
 	 * @return das als Parameter Ã¼bergebene Objekt
 	 */
-	public Stückliste update(Stückliste b) {
+	public Stueckliste update(Stueckliste b) {
 		Connection con = DBVerbindung.connection();
 
 		try {
@@ -242,7 +242,7 @@ public class StücklisteMapper {
 	 * @param b
 	 *            das aus der DB zu lÃ¶schende "Objekt"
 	 */
-	public void delete(Stückliste b) {
+	public void delete(Stueckliste b) {
 		Connection con = DBVerbindung.connection();
 
 		try {

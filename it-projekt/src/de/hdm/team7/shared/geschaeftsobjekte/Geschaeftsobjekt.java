@@ -1,8 +1,8 @@
-package de.hdm.team7.shared.geschäftsobjekte;
+package de.hdm.team7.shared.geschaeftsobjekte;
 
 import java.io.Serializable;
 
-public abstract class Geschäftsobjekt implements Serializable {
+public abstract class Geschaeftsobjekt implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	protected String name = "";
@@ -47,8 +47,8 @@ public abstract class Geschäftsobjekt implements Serializable {
 		 * Abfragen, ob ein Objekt ungleich NULL ist und ob ein Objekt gecastet
 		 * werden kann, sind immer wichtig!
 		 */
-		if (o != null && o instanceof Geschäftsobjekt) {
-			Geschäftsobjekt bo = (Geschäftsobjekt) o;
+		if (o != null && o instanceof Geschaeftsobjekt) {
+			Geschaeftsobjekt bo = (Geschaeftsobjekt) o;
 			try {
 				if (bo.getId() == this.id)
 					return true;

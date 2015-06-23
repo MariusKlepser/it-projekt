@@ -1,7 +1,7 @@
-package de.hdm.team7.shared.geschäftsobjekte;
+package de.hdm.team7.shared.geschaeftsobjekte;
 
 
-public class Stückliste extends Geschäftsobjekt {
+public class Stueckliste extends Geschaeftsobjekt {
 
 	private static final long serialVersionUID = 1L;
 
