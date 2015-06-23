@@ -31,11 +31,11 @@ public class It_projekt implements EntryPoint {
 		RootPanel navPanel = RootPanel.get("Navigator");
 		RootPanel detailsPanel = RootPanel.get("Details");
 		
-		final CustomStaticTree staticTree = new CustomStaticTree()
-				.createStaticTree();
-		staticTree.ensureDebugId("cwTree-staticTree");
-		ScrollPanel staticTreeWrapper = new ScrollPanel(staticTree);
-		staticTreeWrapper.ensureDebugId("cwTree-staticTree-Wrapper");
+//		final CustomStaticTree staticTree = new CustomStaticTree()
+//				.createStaticTree();
+//		staticTree.ensureDebugId("cwTree-staticTree");
+//		ScrollPanel staticTreeWrapper = new ScrollPanel(staticTree);
+//		staticTreeWrapper.ensureDebugId("cwTree-staticTree-Wrapper");
 
 		SelectionHandler<TreeItem> handler = new SelectionHandler<TreeItem>() {
 
@@ -50,9 +50,9 @@ public class It_projekt implements EntryPoint {
 
 		};
 
-		staticTree.addSelectionHandler(handler);
-		staticTreeWrapper.setWidth("100%");
-		navPanel.add(staticTreeWrapper);
+//		staticTree.addSelectionHandler(handler);
+//		staticTreeWrapper.setWidth("100%");
+//		navPanel.add(staticTreeWrapper);
 	}
 
 }
