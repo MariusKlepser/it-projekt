@@ -2,15 +2,18 @@ package de.hdm.team7.client.gui;
 
 import java.util.ArrayList;
 
+import com.google.gwt.event.logical.shared.OpenEvent;
+import com.google.gwt.event.logical.shared.OpenHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.user.client.Random;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 
-import de.hdm.team7.client.ClientEinstellungen;
-import de.hdm.team7.client.rpc.AsyncCallbackComponentList;
-import de.hdm.team7.shared.geschaeftsobjekte.Baugruppe;
-import de.hdm.team7.shared.geschaeftsobjekte.Bauteil;
-import de.hdm.team7.shared.geschaeftsobjekte.Enderzeugnis;
-import de.hdm.team7.shared.geschaeftsobjekte.Stueckliste;
+import de.hdm.team7.client.*;
+import de.hdm.team7.client.rpc.*;
+import de.hdm.team7.shared.geschaeftsobjekte.*;
 
 public class CustomStaticTree extends Tree {
 
