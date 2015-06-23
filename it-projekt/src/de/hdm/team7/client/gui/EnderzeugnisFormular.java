@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.team7.client.ClientEinstellungen;
+import de.hdm.team7.client.gui.BaugruppeFormular.SpeicherCallback;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
 import de.hdm.team7.shared.geschaeftsobjekte.*;
 
@@ -34,6 +35,9 @@ public class EnderzeugnisFormular extends VerticalPanel {
 	 */
 	Label idValueLabel = new Label();
 	TextBox nameTextBox = new TextBox();
+	TextBox materialTextBox = new TextBox();
+	TextBox beschreibungTextBox = new TextBox();
+	Label datumValueLabel = new Label();
 
 	/*
 	 * Im Konstruktor werden die Widgets z.T. erzeugt. Alle werden in einem
@@ -55,6 +59,18 @@ public class EnderzeugnisFormular extends VerticalPanel {
 		Label nameLabel = new Label("Name");
 		boGrid.setWidget(1, 0, nameLabel);
 		boGrid.setWidget(1, 1, nameTextBox);
+		
+		Label beschreibungLabel = new Label("Beschreibung");
+		boGrid.setWidget(2, 0, beschreibungLabel);
+		boGrid.setWidget(2, 1, beschreibungTextBox);
+		
+		Label materialLabel = new Label("Materialbezeichnung");
+		boGrid.setWidget(3, 0, materialLabel);
+		boGrid.setWidget(3, 1, materialTextBox);
+		
+		Label datumLabel = new Label("Änderungsdatum");
+		boGrid.setWidget(4, 0, datumLabel);
+		boGrid.setWidget(4, 1, datumValueLabel);
 
 		HorizontalPanel boButtonsPanel = new HorizontalPanel();
 		this.add(boButtonsPanel);
@@ -118,14 +134,33 @@ public class EnderzeugnisFormular extends VerticalPanel {
 		}
 	}
 
-	/*
-	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
-	 * Kontobaum aktualisiert werden. Dafür dient ein privates Attribut und der
-	 * Konstruktor.
-	 * 
-	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
-	 * ergebnis des asynchronen Aufrufs geliefert wird.
-	 */
+	private class EditClickHandler implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+			if (enderzeugnisDarstellung != null) {
+				enderzeugnisDarstellung.setzeName(nameTextBox.getText());
+				enderzeugnisDarstellung.setzeBeschreibung(beschreibungTextBox.getText());
+				enderzeugnisDarstellung.setzeMaterial(materialTextBox.getText());
+				enderzeugnisDarstellung.setzeDatum(datumValueLabel.getText());
+				stuecklistenVerwaltung.speichere(enderzeugnisDarstellung, new SpeicherCallback());
+			} else {
+				Window.alert("keine Baugruppe ausgewählt");
+			}
+		}
+	}
+
+	private class SpeicherCallback implements AsyncCallback<Void> {
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Die Änderung ist fehlgeschlagen!");
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			botvm.aktualisiereEnderzeugnis(enderzeugnisDarstellung);
+		}
+	}
+	
 	public class erstelleEnderzeugnisCallback implements AsyncCallback<String> {
 
 		Enderzeugnis endproduct = null;

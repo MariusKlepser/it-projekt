@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.team7.client.ClientEinstellungen;
+import de.hdm.team7.client.gui.BenutzerFormular.SpeicherCallback;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
 import de.hdm.team7.shared.geschaeftsobjekte.*;
 
@@ -34,6 +35,9 @@ public class BauteilFormular extends VerticalPanel {
 	 */
 	Label idValueLabel = new Label();
 	TextBox nameTextBox = new TextBox();
+	TextBox materialTextBox = new TextBox();
+	TextBox beschreibungTextBox = new TextBox();
+	Label datumValueLabel = new Label();
 
 	/*
 	 * Im Konstruktor werden die Widgets z.T. erzeugt. Alle werden in einem
@@ -45,7 +49,7 @@ public class BauteilFormular extends VerticalPanel {
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem
 		 * Gitter.
 		 */
-		Grid boGrid = new Grid(3, 2);
+		Grid boGrid = new Grid(5, 2);
 		this.add(boGrid);
 
 		Label idLabel = new Label("ID");
@@ -55,6 +59,18 @@ public class BauteilFormular extends VerticalPanel {
 		Label nameLabel = new Label("Name");
 		boGrid.setWidget(1, 0, nameLabel);
 		boGrid.setWidget(1, 1, nameTextBox);
+		
+		Label beschreibungLabel = new Label("Beschreibung");
+		boGrid.setWidget(2, 0, beschreibungLabel);
+		boGrid.setWidget(2, 1, beschreibungTextBox);
+		
+		Label materialLabel = new Label("Materialbezeichnung");
+		boGrid.setWidget(3, 0, materialLabel);
+		boGrid.setWidget(3, 1, materialTextBox);
+		
+		Label datumLabel = new Label("Änderungsdatum");
+		boGrid.setWidget(4, 0, datumLabel);
+		boGrid.setWidget(4, 1, datumValueLabel);
 
 		HorizontalPanel boButtonsPanel = new HorizontalPanel();
 		this.add(boButtonsPanel);
@@ -118,14 +134,34 @@ public class BauteilFormular extends VerticalPanel {
 		}
 	}
 
-	/*
-	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
-	 * Kontobaum aktualisiert werden. Dafür dient ein privates Attribut und der
-	 * Konstruktor.
-	 * 
-	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
-	 * ergebnis des asynchronen Aufrufs geliefert wird.
-	 */
+	private class EditClickHandler implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+			if (bauteilDarstellung != null) {
+				bauteilDarstellung.setzeName(nameTextBox.getText());
+				bauteilDarstellung.setzeBeschreibung(beschreibungTextBox.getText());
+				bauteilDarstellung.setzeMaterial(materialTextBox.getText());
+				bauteilDarstellung.setzeDatum(datumValueLabel.getText());
+				stuecklistenVerwaltung.speichere(bauteilDarstellung, new SpeicherCallback());
+			} else {
+				Window.alert("kein Bauteil ausgewählt");
+			}
+		}
+	}
+
+	private class SpeicherCallback implements AsyncCallback<Void> {
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Die Änderung ist fehlgeschlagen!");
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			botvm.aktualisiereBauteil(bauteilDarstellung);
+		}
+	}
+	
+	
 	public class erstelleBauteilCallback implements AsyncCallback<String> {
 
 		Bauteil comp = null;

@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
 import de.hdm.team7.shared.geschaeftsobjekte.*;
+import de.hdm.thies.bankProjekt.client.gui.CustomerForm.SaveCallback;
 
 /**
  * Formular für die Darstellung des selektierten Kunden Angelehnt an Thies &
@@ -117,15 +118,31 @@ public class BenutzerFormular extends VerticalPanel {
 			}
 		}
 	}
+	
+	private class EditClickHandler implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+			if (benutzerDarstellung != null) {
+				benutzerDarstellung.setzeName(nameTextBox.getText());
+				stuecklistenVerwaltung.speichere(benutzerDarstellung, new SpeicherCallback());
+			} else {
+				Window.alert("kein Benutzer ausgewählt");
+			}
+		}
+	}
 
-	/*
-	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
-	 * Kontobaum aktualisiert werden. Dafür dient ein privates Attribut und der
-	 * Konstruktor.
-	 * 
-	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
-	 * ergebnis des asynchronen Aufrufs geliefert wird.
-	 */
+	private class SpeicherCallback implements AsyncCallback<Void> {
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Die Änderung ist fehlgeschlagen!");
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			botvm.aktualisiereBenutzer(benutzerDarstellung);
+		}
+	}
+
 	public class ErstelleBenutzerCallback implements AsyncCallback<String> {
 
 		Benutzer b = null;
