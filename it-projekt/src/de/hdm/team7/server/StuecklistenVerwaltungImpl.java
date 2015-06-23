@@ -22,7 +22,7 @@ import de.hdm.team7.shared.geschaeftsobjekte.Stueckliste;
 public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 		StuecklistenVerwaltung {
 
-	private ArrayList<Stueckliste> stücklistenListe = null;
+	private ArrayList<Stueckliste> stuecklistenListe = null;
 	private StuecklisteMapper stuecklisteMapper = null;
 	private BaugruppeMapper baugruppeMapper = null;
 	private BauteilMapper bauteilMapper = null;
@@ -51,11 +51,11 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 	}
 
 	public ArrayList<Stueckliste> getStuecklistenListe() {
-		return stücklistenListe;
+		return stuecklistenListe;
 	}
 
-	public void setStuecklistenListe(ArrayList<Stueckliste> stücklistenListe) {
-		this.stücklistenListe = stücklistenListe;
+	public void setStuecklistenListe(ArrayList<Stueckliste> stuecklistenListe) {
+		this.stuecklistenListe = stuecklistenListe;
 	}
 
 	public String erstelleBauteil(Bauteil bauteil) {
@@ -192,7 +192,7 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 
 	@Override
 	public String ordneBaugruppenZuBaugruppe(
-			ArrayList<Bauteil> ausgewählteBaugruppen,
+			ArrayList<Bauteil> ausgewaehlteBaugruppen,
 			ArrayList<Bauteil> zugewieseneBaugruppe) {
 		// TODO Auto-generated method stub
 		return null;
@@ -214,7 +214,7 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 
 	@Override
 	public String ordneEnderzeugnisseZuEnderzeugnis(
-			ArrayList<Bauteil> ausgewählteEnderzeugnisse,
+			ArrayList<Bauteil> ausgewaehlteEnderzeugnisse,
 			ArrayList<Bauteil> zugewiesenesEnderzeugnis) {
 		// TODO Auto-generated method stub
 		return null;
