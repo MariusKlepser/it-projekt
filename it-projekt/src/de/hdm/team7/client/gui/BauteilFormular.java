@@ -72,7 +72,7 @@ public class BauteilFormular extends VerticalPanel {
 		boButtonsPanel.add(deleteButton);
 
 		Button editButton = new Button("Bearbeiten");
-		editButton.addClickHandler(new EditClickHandler());
+//		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
 	}
 
@@ -171,7 +171,7 @@ public class BauteilFormular extends VerticalPanel {
 		public void onSuccess(Void result) {
 			if (comp != null) {
 				setzeSelektiert(null);
-				botvm.entferneBauteil(comp);
+//				botvm.entferneBauteil(comp);
 			}
 		}
 

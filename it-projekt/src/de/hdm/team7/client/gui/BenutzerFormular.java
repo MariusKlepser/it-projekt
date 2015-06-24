@@ -72,7 +72,7 @@ public class BenutzerFormular extends VerticalPanel {
 		boButtonsPanel.add(deleteButton);
 
 		Button editButton = new Button("Bearbeiten");
-		editButton.addClickHandler(new EditClickHandler());
+//		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
 	}
 
@@ -144,7 +144,7 @@ public class BenutzerFormular extends VerticalPanel {
 
 		public void onSuccess(Benutzer b) {
 			if (b != null) {
-				botvm.fuegeBenutzerHinzu(b);
+//				botvm.fuegeBenutzerHinzu(b);
 			}
 		}
 
@@ -171,7 +171,7 @@ public class BenutzerFormular extends VerticalPanel {
 		public void onSuccess(Void result) {
 			if (b != null) {
 				setzeSelektiert(null);
-				botvm.entferneBenutzer(b);
+//				botvm.entferneBenutzer(b);
 			}
 		}
 

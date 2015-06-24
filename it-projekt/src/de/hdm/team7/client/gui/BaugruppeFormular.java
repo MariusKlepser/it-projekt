@@ -72,7 +72,7 @@ public class BaugruppeFormular extends VerticalPanel {
 		boButtonsPanel.add(deleteButton);
 
 		Button editButton = new Button("Bearbeiten");
-		editButton.addClickHandler(new EditClickHandler());
+//		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
 	}
 
@@ -146,7 +146,7 @@ public class BaugruppeFormular extends VerticalPanel {
 
 		public void onSuccess(Baugruppe compAss) {
 			if (compAss != null) {
-				botvm.fuegeBaugruppeHinzu(compAss);
+//				botvm.fuegeBaugruppeHinzu(compAss);
 			}
 		}
 
@@ -173,7 +173,7 @@ public class BaugruppeFormular extends VerticalPanel {
 		public void onSuccess(Void result) {
 			if (compAss != null) {
 				setzeSelektiert(null);
-				botvm.entferneBaugruppe(compAss);
+//				botvm.entferneBaugruppe(compAss);
 			}
 		}
 

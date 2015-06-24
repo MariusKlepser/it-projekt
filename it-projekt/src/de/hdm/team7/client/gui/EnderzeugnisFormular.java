@@ -72,7 +72,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 		boButtonsPanel.add(deleteButton);
 
 		Button editButton = new Button("Bearbeiten");
-		editButton.addClickHandler(new EditClickHandler());
+//		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
 	}
 
@@ -144,7 +144,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 		public void onSuccess(Enderzeugnis endProduct) {
 			if (endProduct != null) {
-				botvm.fuegeEnderzeugnisHinzu(endProduct);
+//				botvm.fuegeEnderzeugnisHinzu(endProduct);
 			}
 		}
 
@@ -171,7 +171,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 		public void onSuccess(Void result) {
 			if (endProduct != null) {
 				setzeSelektiert(null);
-				botvm.entferneEnderzeugnis(endProduct);
+//				botvm.entferneEnderzeugnis(endProduct);
 			}
 		}
 

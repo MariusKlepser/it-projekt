@@ -6,6 +6,7 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TreeItem;
@@ -121,6 +122,8 @@ public class It_projekt implements EntryPoint {
 		detailsPanel.add(ef);
 
 		detailsPanel.add(sf);
+		
+		detailsPanel.add(bf);
 
 		CellTree.Resources stuecklistenVerwaltungTreeResource = GWT
 				.create(StuecklistenVerwaltungTreeResources.class);
@@ -129,7 +132,7 @@ public class It_projekt implements EntryPoint {
 				stuecklistenVerwaltungTreeResource);
 
 		cellTree.setAnimationEnabled(true);
-
+		
 		RootPanel.get("Navigator").add(cellTree);
 
 		RootPanel.get("Details").add(detailsPanel);

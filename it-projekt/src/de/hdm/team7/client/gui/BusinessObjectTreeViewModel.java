@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.TextCell;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
@@ -18,8 +20,8 @@ import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.client.cell.BaugruppeCell;
 import de.hdm.team7.client.cell.BauteilCell;
 import de.hdm.team7.client.cell.BenutzerCell;
-import de.hdm.team7.client.cell.BusinessObjectCell;
 import de.hdm.team7.client.cell.EnderzeugnisCell;
+import de.hdm.team7.client.cell.GeschaeftsobjektCell;
 import de.hdm.team7.client.cell.StuecklisteCell;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
 import de.hdm.team7.shared.geschaeftsobjekte.*;
@@ -49,7 +51,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 	private StuecklistenVerwaltungAsync stuecklistenVerwaltung = null;
 
 	private BusinessObjectKeyProvider boKeyProvider = null;
-	private SingleSelectionModel<Geschaeftsobjekt> selectionModel = null;
+	private SingleSelectionModel<Category> selectionModel = null;
 
 	private ListDataProvider<Stueckliste> stuecklistenDatenProvider = null;
 	private ListDataProvider<Baugruppe> baugruppenDatenProvider = null;
@@ -96,23 +98,23 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 	 * einer Baumknotenauswahl wird je nach Typ des Business-Objekts der
 	 * "selectedCustomer" bzw. das "selectedAccount" gesetzt.
 	 */
-	private class SelectionChangeEventHandler implements SelectionChangeEvent.Handler {
-		@Override
-		public void onSelectionChange(SelectionChangeEvent event) {
-			Geschaeftsobjekt selection = selectionModel.getSelectedObject();
-			if (selection instanceof Bauteil) {
-				setSelektiertesBauteil((Bauteil) selection);
-			} else if (selection instanceof Baugruppe) {
-				setSelektierteBaugruppe((Baugruppe) selection);
-			} else if (selection instanceof Enderzeugnis) {
-				setSelektiertesEnderzeugnis((Enderzeugnis) selection);
-			} else if (selection instanceof Stueckliste) {
-				setSelektierteStueckliste((Stueckliste) selection);
-			} else if (selection instanceof Benutzer) {
-				setSelektierterBenutzer((Benutzer) selection);
-			}
-		}
-	}
+//	private class SelectionChangeEventHandler implements SelectionChangeEvent.Handler {
+//		@Override
+//		public void onSelectionChange(SelectionChangeEvent event) {
+//			Geschaeftsobjekt selection = selectionModel.getSelectedObject();
+//			if (selection instanceof Bauteil) {
+//				setSelektiertesBauteil((Bauteil) selection);
+//			} else if (selection instanceof Baugruppe) {
+//				setSelektierteBaugruppe((Baugruppe) selection);
+//			} else if (selection instanceof Enderzeugnis) {
+//				setSelektiertesEnderzeugnis((Enderzeugnis) selection);
+//			} else if (selection instanceof Stueckliste) {
+//				setSelektierteStueckliste((Stueckliste) selection);
+//			} else if (selection instanceof Benutzer) {
+//				setSelektierterBenutzer((Benutzer) selection);
+//			}
+//		}
+//	}
 
 	/*
 	 * Im Konstruktor werden die fÃ¼r den Kunden- und Kontobaum wichtigen
@@ -122,10 +124,9 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		stuecklistenVerwaltung = ClientEinstellungen
 				.getStuecklistenVerwaltung();
 		boKeyProvider = new BusinessObjectKeyProvider();
-		selectionModel = new SingleSelectionModel<Geschaeftsobjekt>(
-				boKeyProvider);
-		selectionModel
-				.addSelectionChangeHandler(new SelectionChangeEventHandler());
+		selectionModel = new SingleSelectionModel<Category>();
+//		selectionModel
+//				.addSelectionChangeHandler(new SelectionChangeEventHandler());
 		stuecklistenDatenProviders = new HashMap<Stueckliste,ListDataProvider<Stueckliste>>();
 		baugruppenDatenProviders = new HashMap<Baugruppe,ListDataProvider<Baugruppe>>();
 		bauteilDatenProviders = new HashMap<Bauteil,ListDataProvider<Bauteil>>();
@@ -203,7 +204,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 	 */
 	public void fuegeBauteilZuBaumHinzu(Bauteil bauteil) {
 		bauteilDatenProvider.getList().add(bauteil);
-		selectionModel.setSelected(bauteil, true);
+//		selectionModel.setSelected(bauteil, true);
 	}
 	
 	public void aktualisiereBauteilInBaum(Bauteil bauteil) {
@@ -229,7 +230,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 	 */
 	public void fuegeBaugruppeZuBaumHinzu(Baugruppe baugruppe) {
 		baugruppenDatenProvider.getList().add(baugruppe);
-		selectionModel.setSelected(baugruppe, true);
+//		selectionModel.setSelected(baugruppe, true);
 	}
 	
 	public void aktualisiereBaugruppeInBaum(Baugruppe baugruppe) {
@@ -255,7 +256,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 	 */
 	public void fuegeEnderzeugnisZuBaumHinzu(Enderzeugnis enderzeugnis) {
 		enderzeugnisDatenProvider.getList().add(enderzeugnis);
-		selectionModel.setSelected(enderzeugnis, true);
+//		selectionModel.setSelected(enderzeugnis, true);
 	}
 	
 	public void aktualisiereEnderzeugnisInBaum(Enderzeugnis enderzeugnis) {
@@ -281,7 +282,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 	 */
 	public void fuegeStuecklisteZuBaumHinzu(Stueckliste stueckliste) {
 		stuecklistenDatenProvider.getList().add(stueckliste);
-		selectionModel.setSelected(stueckliste, true);
+//		selectionModel.setSelected(stueckliste, true);
 	}
 	
 	public void aktualisiereStuecklisteInBaum(Stueckliste stueckliste) {
@@ -307,7 +308,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 	 */
 	public void fuegeBenutzerZuBaumHinzu(Benutzer benutzer) {
 		benutzerDatenProvider.getList().add(benutzer);
-		selectionModel.setSelected(benutzer, true);
+//		selectionModel.setSelected(benutzer, true);
 	}
 	
 	public void aktualisiereBenutzerInBaum(Benutzer Benutzer) {
@@ -328,61 +329,68 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		benutzerDatenProvider.getList().remove(benutzer);
 	}
 
+	public static class Category {
+
+		private final String displayName;
+
+		private Category(String displayName) {
+			this.displayName = displayName;
+		}
+
+		public String getDisplayName() {
+			return displayName;
+		}
+	}
+	
+	private static class CategoryCell extends AbstractCell<Category> {
+
+	    @Override
+	    public void render(Context context, Category value, SafeHtmlBuilder sb) {
+	      if (value != null) {
+	        sb.appendEscaped(value.getDisplayName());
+	      }
+	    }
+	  }
+	
 	@Override
 	// Get the NodeInfo that provides the children of the specified value.
 	public <T> NodeInfo<?> getNodeInfo(T value) {
 
 		if (value.equals("Root")) {
 			// Erzeugen eines ListDataproviders fÃ¼r Customerdaten
-//			ListDataProvider<Geschaeftsobjekt> kategorieDatenProvider = new ListDataProvider<Geschaeftsobjekt>();
-			ListDataProvider<Bauteil> dummyBauteilDatenProvider = new ListDataProvider<Bauteil>();
-			ListDataProvider<Baugruppe> dummyBaugruppeDatenProvider = new ListDataProvider<Baugruppe>();
-			ListDataProvider<Enderzeugnis> dummyEnderzeugnisDatenProvider = new ListDataProvider<Enderzeugnis>();
-			ListDataProvider<Stueckliste> dummyStuecklisteDatenProvider = new ListDataProvider<Stueckliste>();
-			ListDataProvider<Benutzer> dummyBenutzerDatenProvider = new ListDataProvider<Benutzer>();
-
-//			List<Geschaeftsobjekt> kategorien = new ArrayList<Geschaeftsobjekt>();
-//			kategorien.add(new Bauteil());
-//			kategorien.add(new Baugruppe());
-//			kategorien.add(new Enderzeugnis());
-//			kategorien.add(new Stueckliste());
-//			kategorien = kategorieDatenProvider.getList();
-//
-//			// Return a node info that pairs the data with a cell.
-//			return new DefaultNodeInfo<Geschaeftsobjekt>(
-//					kategorieDatenProvider, new BusinessObjectCell(),
-//					selectionModel, null);
+			ListDataProvider<Category> kategorieDatenProvider = new ListDataProvider<Category>();
 			
-			for (int i=0; i <=4; i++){
-				if (i == 0){
-					return new DefaultNodeInfo<Bauteil>(
-							dummyBauteilDatenProvider, new BauteilCell(),
-							selectionModel, null); 
-				}
-				else if (i == 1){
-					return new DefaultNodeInfo<Baugruppe>(
-							dummyBaugruppeDatenProvider, new BaugruppeCell(),
-							selectionModel, null);
-				}
-				else if (i == 2){
-					return new DefaultNodeInfo<Enderzeugnis>(
-							dummyEnderzeugnisDatenProvider, new EnderzeugnisCell(),
-							selectionModel, null);
-				}
-				else if (i == 3){
-					return new DefaultNodeInfo<Stueckliste>(
-							dummyStuecklisteDatenProvider, new StuecklisteCell(),
-							selectionModel, null);
-				}
-				else if (i == 4){
-					return new DefaultNodeInfo<Benutzer>(
-							dummyBenutzerDatenProvider, new BenutzerCell(),
-							selectionModel, null);
-				}
+			List<Category> kategorien = new ArrayList<Category>();
+			Category bauteil = new Category("Bauteile");
+//			bauteil.setName("Bauteile");
+			Category baugruppe = new Category("Baugruppen");
+//			baugruppe.setName("Baugruppen");
+			Category enderzeugnis = new Category("Enderzeugnisse");
+//			enderzeugnis.setName("Enderzeugnisse");
+			Category stueckliste = new Category("Stuecklisten");
+//			stueckliste.setName("Stuecklisten");
+			Category benutzer = new Category("Benutzer");
+//			benutzer.setName("Benutzer");
+			kategorien.add(bauteil);
+			kategorien.add(baugruppe);
+			kategorien.add(enderzeugnis);
+			kategorien.add(stueckliste);
+			kategorien.add(benutzer);
+			
+			for (Category c : kategorien) {
+				kategorieDatenProvider.getList().add(c);
 			}
+			
+			ClientEinstellungen.getLogger().severe("getNodeInfo Root Return Start");
+
+			// Return a node info that pairs the data with a cell.
+			return new DefaultNodeInfo<Category>(
+					kategorieDatenProvider, new CategoryCell(),
+					selectionModel, null);
 		}
 
-		if (value instanceof Bauteil) {
+		if (value instanceof Category) {
+			ClientEinstellungen.getLogger().severe("getNodeInfo: First Level Bauteile Start");
 			// Erzeugen eines ListDataproviders fÃ¼r Account-Daten
 			final ListDataProvider<Bauteil> bauteilDatenProvider = new ListDataProvider<Bauteil>();
 			bauteilDatenProviders.put((Bauteil) value, bauteilDatenProvider);
@@ -390,6 +398,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 			stuecklistenVerwaltung.holeAlleBauteile(new AsyncCallback<ArrayList<Bauteil>>() {
 						@Override
 						public void onFailure(Throwable t) {
+							ClientEinstellungen.getLogger().severe("StkVerwaltung.holeAlleBauteile: AsyncCallback Failure!");
 						}
 
 						@Override
@@ -401,10 +410,10 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 					});
 
 			// Return a node info that pairs the data with a cell.
-			return new DefaultNodeInfo<Bauteil>(bauteilDatenProvider,
-					new BauteilCell(), selectionModel, null);
+//			return new DefaultNodeInfo<Bauteil>(bauteilDatenProvider,
+//					new BauteilCell(), selectionModel, null);
 		}
-		if (value instanceof Baugruppe) {
+		if (value instanceof Geschaeftsobjekt && ((Geschaeftsobjekt) value).getName() == "Baugruppen") {
 			// Erzeugen eines ListDataproviders fÃ¼r Account-Daten
 			final ListDataProvider<Baugruppe> baugruppenDatenProvider = new ListDataProvider<Baugruppe>();
 			baugruppenDatenProviders.put((Baugruppe) value, baugruppenDatenProvider);
@@ -423,10 +432,10 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 					});
 
 			// Return a node info that pairs the data with a cell.
-			return new DefaultNodeInfo<Baugruppe>(baugruppenDatenProvider,
-					new BaugruppeCell(), selectionModel, null);
+//			return new DefaultNodeInfo<Baugruppe>(baugruppenDatenProvider,
+//					new BaugruppeCell(), selectionModel, null);
 		}
-		if (value instanceof Enderzeugnis) {
+		if (value instanceof Geschaeftsobjekt && ((Geschaeftsobjekt) value).getName() == "Enderzeugnisse") {
 			// Erzeugen eines ListDataproviders fÃ¼r Account-Daten
 			final ListDataProvider<Enderzeugnis> enderzeugnisDatenProvider = new ListDataProvider<Enderzeugnis>();
 			enderzeugnisDatenProviders.put((Enderzeugnis) value, enderzeugnisDatenProvider);
@@ -445,10 +454,10 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 					});
 
 			// Return a node info that pairs the data with a cell.
-			return new DefaultNodeInfo<Enderzeugnis>(enderzeugnisDatenProvider,
-					new EnderzeugnisCell(), selectionModel, null);
+//			return new DefaultNodeInfo<Enderzeugnis>(enderzeugnisDatenProvider,
+//					new EnderzeugnisCell(), selectionModel, null);
 		}
-		if (value instanceof Stueckliste) {
+		if (value instanceof Geschaeftsobjekt && ((Geschaeftsobjekt) value).getName() == "Stuecklisten") {
 			// Erzeugen eines ListDataproviders fÃ¼r Account-Daten
 			final ListDataProvider<Stueckliste> stuecklistenDatenProvider = new ListDataProvider<Stueckliste>();
 			stuecklistenDatenProviders.put((Stueckliste) value, stuecklistenDatenProvider);
@@ -467,10 +476,10 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 					});
 
 			// Return a node info that pairs the data with a cell.
-			return new DefaultNodeInfo<Stueckliste>(stuecklistenDatenProvider,
-					new StuecklisteCell(), selectionModel, null);
+//			return new DefaultNodeInfo<Stueckliste>(stuecklistenDatenProvider,
+//					new StuecklisteCell(), selectionModel, null);
 		}
-		if (value instanceof Benutzer) {
+		if (value instanceof Geschaeftsobjekt && ((Geschaeftsobjekt) value).getName() == "Benutzer") {
 			// Erzeugen eines ListDataproviders fÃ¼r Account-Daten
 			final ListDataProvider<Benutzer> benutzerDatenProvider = new ListDataProvider<Benutzer>();
 			benutzerDatenProviders.put((Benutzer) value, benutzerDatenProvider);
@@ -489,8 +498,8 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 					});
 
 			// Return a node info that pairs the data with a cell.
-			return new DefaultNodeInfo<Benutzer>(benutzerDatenProvider,
-					new BenutzerCell(), selectionModel, null);
+//			return new DefaultNodeInfo<Benutzer>(benutzerDatenProvider,
+//					new BenutzerCell(), selectionModel, null);
 		}
 		return null;
 	}

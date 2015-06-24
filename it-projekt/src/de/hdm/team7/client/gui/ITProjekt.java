@@ -49,12 +49,12 @@ public class ITProjekt implements EntryPoint {
 			stuecklistenVerwaltung = ClientEinstellungen.getStuecklistenVerwaltung();
 		}
 		
-		StuecklistenVerwaltung stuecklistenVerwaltung = new StuecklistenVerwaltung();
-		stuecklistenVerwaltung.setStuecklistenListe("Stuecklisten Liste");
-		bank.setStreet("Nobelstr. 10");
-		bank.setZip(70569);
-		bank.setCity("Stuttgart");
-		bankVerwaltung.setBank(bank, new SetBankCallback());
+//		StuecklistenVerwaltung stuecklistenVerwaltung = new StuecklistenVerwaltung();
+//		stuecklistenVerwaltung.setStuecklistenListe("Stuecklisten Liste");
+//		bank.setStreet("Nobelstr. 10");
+//		bank.setZip(70569);
+//		bank.setCity("Stuttgart");
+//		bankVerwaltung.setBank(bank, new SetBankCallback());
 		
 		/*
 		 * Die Bankanwendung besteht aus einem Navigationsteil mit Baumstruktur
@@ -70,7 +70,7 @@ public class ITProjekt implements EntryPoint {
 		/*
 		 * Die Formulare und der Kunden- und Kontobaum werden miteinander verlinkt.
 		 */
-		botvm.setzeBaugruppeFormular(bgf);
+//		botvm.setzeBaugruppeFormular(bgf);
 		//bgf.setBusinessObjectTreeViewModel(botvm);
 		
 		botvm.setzeBauteilFormular(btf);
