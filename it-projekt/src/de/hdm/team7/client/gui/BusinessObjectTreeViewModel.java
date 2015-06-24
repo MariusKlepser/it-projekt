@@ -29,11 +29,11 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 	 * 
 	 */
 
-		private UserForm benutzerFormular;
-		private BillOfMaterialForm stuecklisteFormular;
-		private ComponentAssemblyForm baugruppeFormular;
-		private ComponentForm bauteilFormular;
-		private EndProductForm enderzeugnisFormular;
+		private BenutzerFormular benutzerFormular;
+		private StuecklistenFormular stuecklisteFormular;
+		private BaugruppeFormular baugruppeFormular;
+		private BauteilFormular bauteilFormular;
+		private EnderzeugnisFormular enderzeugnisFormular;
 
 		private Benutzer selektierterBenutzer = null;
 		private Stueckliste selektierteStueckliste = null;
@@ -117,23 +117,23 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 			// ListDataProvider<Account>>();
 		}
 
-		void setUserForm(UserForm uf) {
-			benutzerFormular = uf;
+		void setzeBenutzerFormular(BenutzerFormular bf) {
+			benutzerFormular = bf;
 		}
 		
-		void setBillOfMaterialsForm(BillOfMaterialForm bf) {
-			stuecklisteFormular = bf;
+		void setzeStuecklistenFormular(StuecklistenFormular sf) {
+			stuecklisteFormular = sf;
 		}
 		
-		void setComponentAssemblyForm(ComponentAssemblyForm caf) {
-			baugruppeFormular = caf;
+		void setzeBaugruppeFormular(BaugruppeFormular bgf) {
+			baugruppeFormular = bgf;
 		}
 		
-		void setComponentForm(ComponentForm cf) {
-			bauteilFormular = cf;
+		void setzeBauteilFormular(BauteilFormular btf) {
+			bauteilFormular = btf;
 		}
 		
-		void setEndProductForm(EndProductForm ef) {
+		void setzeEnderzeugnisFormular(EnderzeugnisFormular ef) {
 			enderzeugnisFormular = ef;
 		}
 		
@@ -168,7 +168,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		
 		void setSelektierteStueckliste(Stueckliste s) {
 			selektierteStueckliste = s;
-			stuecklisteFormular.setSelected(s);
+			stuecklisteFormular.setzeSelektiert(s);
 		}
 		
 
