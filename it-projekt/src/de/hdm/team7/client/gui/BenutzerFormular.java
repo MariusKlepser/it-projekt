@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
 import de.hdm.team7.shared.geschaeftsobjekte.*;
+import de.hdm.thies.bankProjekt.client.gui.CustomerAccountsTreeViewModel;
 import de.hdm.thies.bankProjekt.client.gui.CustomerForm.SaveCallback;
 
 /**
@@ -193,6 +194,11 @@ public class BenutzerFormular extends VerticalPanel {
 			// TODO Auto-generated method stub
 
 		}
+	}
+	
+	// botvm setter
+	void setCaBotvm(BusinessObjectTreeViewModel botvm) {
+		this.botvm = botvm;
 	}
 
 void setzeSelektiert(Benutzer b) {

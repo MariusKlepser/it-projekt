@@ -212,6 +212,13 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 		}
 	}
+	
+	
+	// botvm setter
+	void setCaBotvm(BusinessObjectTreeViewModel botvm) {
+		this.botvm = botvm;
+	}
+
 
 void setzeSelektiert(Enderzeugnis endProduct) {
 	if (endProduct != null) {

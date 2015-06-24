@@ -201,6 +201,11 @@ public class StuecklistenFormular extends VerticalPanel {
 
 		}
 	}
+	
+	// botvm setter
+	void setCaBotvm(BusinessObjectTreeViewModel botvm) {
+		this.botvm = botvm;
+	}
 
 void setzeSelektiert(Stueckliste bom) {
 	if (bom != null) {

@@ -212,6 +212,13 @@ public class BaugruppeFormular extends VerticalPanel {
 
 		}
 	}
+	
+	
+	// botvm setter
+	void setCaBotvm(BusinessObjectTreeViewModel botvm) {
+		this.botvm = botvm;
+	}
+
 
 void setzeSelektiert(Baugruppe compAss) {
 	if (compAss != null) {

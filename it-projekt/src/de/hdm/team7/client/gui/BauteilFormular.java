@@ -213,6 +213,13 @@ public class BauteilFormular extends VerticalPanel {
 
 		}
 	}
+	
+	
+	// botvm setter
+	void setCaBotvm(BusinessObjectTreeViewModel botvm) {
+		this.botvm = botvm;
+	}
+
 
 void setzeSelektiert(Bauteil comp) {
 	if (comp != null) {
