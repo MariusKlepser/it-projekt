@@ -19,7 +19,7 @@ import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
  */
 public class ITProjekt implements EntryPoint {
 
-	static interface StuecklistenVerwaltungTreeResources extends CellTree.Resources {
+	public static interface StuecklistenVerwaltungTreeResources extends CellTree.Resources {
 		
 	
 //		@Override

@@ -109,7 +109,7 @@ public class BillOfMaterialForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Stueckliste selectedBOM = botvm.getSelektierteStueckliste();
+			Stueckliste selectedBOM = botvm.holeSelektierteStueckliste();
 			if (selectedBOM == null) {
 				Window.alert("keine Stueckliste ausgewählt");
 			} else {

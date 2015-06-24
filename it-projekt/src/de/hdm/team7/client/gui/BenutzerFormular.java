@@ -28,6 +28,10 @@ public class BenutzerFormular extends VerticalPanel {
 
 	Benutzer benutzerDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
+	
+	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
+		this.botvm = botvm;
+	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -108,7 +112,7 @@ public class BenutzerFormular extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Benutzer selektierterBenutzer = botvm.getSelektierterBenutzer();
+			Benutzer selektierterBenutzer = botvm.holeSelektiertenBenutzer();
 			if (selektierterBenutzer == null) {
 				Window.alert("kein Benutzer ausgewählt");
 			} else {

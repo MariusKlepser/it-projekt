@@ -28,6 +28,10 @@ public class StuecklistenFormular extends VerticalPanel {
 
 	Stueckliste stuecklistenDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
+	
+	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
+		this.botvm = botvm;
+	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -109,7 +113,7 @@ public class StuecklistenFormular extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Stueckliste selektierteStueckliste = botvm.getSelektierteStueckliste();
+			Stueckliste selektierteStueckliste = botvm.holeSelektierteStueckliste();
 			if (selektierteStueckliste == null) {
 				Window.alert("keine Stückliste ausgewählt");
 			} else {

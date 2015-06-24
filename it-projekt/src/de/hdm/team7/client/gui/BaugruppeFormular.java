@@ -28,6 +28,10 @@ public class BaugruppeFormular extends VerticalPanel {
 
 	Baugruppe baugruppeDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
+	
+	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
+		this.botvm = botvm;
+	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -109,7 +113,7 @@ public class BaugruppeFormular extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Baugruppe selektierteBaugruppe = botvm.getSelektierteBaugruppe();
+			Baugruppe selektierteBaugruppe = botvm.holeSelektierteBaugruppe();
 			if (selektierteBaugruppe == null) {
 				Window.alert("keine Baugruppe ausgewählt");
 			} else {

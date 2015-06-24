@@ -28,6 +28,10 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 	Enderzeugnis enderzeugnisDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
+	
+	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
+		this.botvm = botvm;
+	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -108,7 +112,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Enderzeugnis selektiertesEnderzeugnis = botvm.getSelektiertesEnderzeugnis();
+			Enderzeugnis selektiertesEnderzeugnis = botvm.holeSelektiertesEnderzeugnis();
 			if (selektiertesEnderzeugnis == null) {
 				Window.alert("kein Enderzeugnis ausgewählt");
 			} else {
