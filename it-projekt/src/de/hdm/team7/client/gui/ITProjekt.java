@@ -13,15 +13,14 @@ import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.shared.StuecklistenVerwaltung;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
 
-
 /**
  * Entry-Point-Klasse des Projekts <b>BankProjekt</b>.
  */
-public class ITProjekt implements EntryPoint {
 
+public class ITProjekt implements EntryPoint{
 	static interface StuecklistenVerwaltungTreeResources extends CellTree.Resources {
 		
-	
+		
 //		@Override
 //		@Source("cellTreeClosedItem.gif")
 //	    ImageResource cellTreeClosedItem();
@@ -39,7 +38,7 @@ public class ITProjekt implements EntryPoint {
 	
 	/**
 	 * Da diese Klasse die Implementierung des Interface <code>EntryPoint</code>
-	 * zusichert, benÃ¶tigen wir eine Methode
+	 * zusichert, benötigen wir eine Methode
 	 * <code>public void onModuleLoad()</code>. Diese ist das GWT-Pendant der
 	 * <code>main()</code>-Methode normaler Java-Applikationen.
 	 */
@@ -49,17 +48,17 @@ public class ITProjekt implements EntryPoint {
 			stuecklistenVerwaltung = ClientEinstellungen.getStuecklistenVerwaltung();
 		}
 		
-		StuecklistenVerwaltung stuecklistenVerwaltung = new StuecklistenVerwaltung();
-		stuecklistenVerwaltung.setStuecklistenListe("Stuecklisten Liste");
-		bank.setStreet("Nobelstr. 10");
-		bank.setZip(70569);
-		bank.setCity("Stuttgart");
-		bankVerwaltung.setBank(bank, new SetBankCallback());
-		
+//		StuecklistenVerwaltung stuecklistenVerwaltung = new StuecklistenVerwaltung();
+//		stuecklistenVerwaltung.setStuecklistenListe("Stuecklisten Liste");
+//		bank.setStreet("Nobelstr. 10");
+//		bank.setZip(70569);
+//		bank.setCity("Stuttgart");
+//		bankVerwaltung.setBank(bank, new SetBankCallback());
+//		
 		/*
 		 * Die Bankanwendung besteht aus einem Navigationsteil mit Baumstruktur
-		 * und einem Datenteil mit Formularen fÃ¼r den ausgewÃ¤hlten Kunden und das
-		 * ausgewÃ¤hlte Konto.
+		 * und einem Datenteil mit Formularen für den ausgewählten Kunden und das
+		 * ausgewählte Konto.
 		 */
 		EnderzeugnisFormular ef = new EnderzeugnisFormular();
 		StuecklistenFormular sf = new StuecklistenFormular();
@@ -83,7 +82,7 @@ public class ITProjekt implements EntryPoint {
 		//sf.setBusinessObjectTreeViewModel(botvm);
 		
 		/*
-		 * Die Panels und der CellTree werden erzeugt und angeordnet und in das RootPanel eingefÃ¼gt.
+		 * Die Panels und der CellTree werden erzeugt und angeordnet und in das RootPanel eingefügt.
 		 */
 		VerticalPanel detailsPanel = new VerticalPanel();
 		detailsPanel.add(bgf);
@@ -99,8 +98,8 @@ public class ITProjekt implements EntryPoint {
 		RootPanel.get("Details").add(detailsPanel);
 }
 	/**
-	 * Diese Nested Class wird als Callback fÃ¼r das Setzen des Bank-Objekts bei
-	 * der BankAdministration und bei dem ReportGenerator benÃ¶tigt.
+	 * Diese Nested Class wird als Callback für das Setzen des Bank-Objekts bei
+	 * der BankAdministration und bei dem ReportGenerator benötigt.
 	 * 
 	 */
 	class SetzeStuecklistenVerwaltungCallback implements AsyncCallback<Void> {
