@@ -28,6 +28,10 @@ public class BenutzerFormular extends VerticalPanel {
 
 	Benutzer benutzerDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
+	
+	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
+		this.botvm = botvm;
+	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -68,7 +72,7 @@ public class BenutzerFormular extends VerticalPanel {
 		boButtonsPanel.add(deleteButton);
 
 		Button editButton = new Button("Bearbeiten");
-		editButton.addClickHandler(new EditClickHandler());
+//		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
 	}
 
@@ -108,7 +112,7 @@ public class BenutzerFormular extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Benutzer selektierterBenutzer = botvm.getSelektierterBenutzer();
+			Benutzer selektierterBenutzer = botvm.holeSelektiertenBenutzer();
 			if (selektierterBenutzer == null) {
 				Window.alert("kein Benutzer ausgewählt");
 			} else {
@@ -140,7 +144,7 @@ public class BenutzerFormular extends VerticalPanel {
 
 		public void onSuccess(Benutzer b) {
 			if (b != null) {
-				botvm.fuegeBenutzerHinzu(b);
+//				botvm.fuegeBenutzerHinzu(b);
 			}
 		}
 
@@ -167,7 +171,7 @@ public class BenutzerFormular extends VerticalPanel {
 		public void onSuccess(Void result) {
 			if (b != null) {
 				setzeSelektiert(null);
-				botvm.entferneBenutzer(b);
+//				botvm.entferneBenutzer(b);
 			}
 		}
 

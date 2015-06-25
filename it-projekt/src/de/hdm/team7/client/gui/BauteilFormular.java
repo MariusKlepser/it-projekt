@@ -28,6 +28,10 @@ public class BauteilFormular extends VerticalPanel {
 
 	Bauteil bauteilDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
+	
+	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
+		this.botvm = botvm;
+	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -68,7 +72,7 @@ public class BauteilFormular extends VerticalPanel {
 		boButtonsPanel.add(deleteButton);
 
 		Button editButton = new Button("Bearbeiten");
-		editButton.addClickHandler(new EditClickHandler());
+//		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
 	}
 
@@ -108,7 +112,7 @@ public class BauteilFormular extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Bauteil selektiertesBauteil = botvm.getSelektiertesBauteil();
+			Bauteil selektiertesBauteil = botvm.holeSelektiertesBauteil();
 			if (selektiertesBauteil == null) {
 				Window.alert("kein Bauteil ausgewählt");
 			} else {
@@ -140,7 +144,7 @@ public class BauteilFormular extends VerticalPanel {
 
 		public void onSuccess(Bauteil comp) {
 			if (comp != null) {
-				botvm.fuegeBauteilHinzu(comp);
+				botvm.fuegeBauteilZuBaumHinzu(comp);
 			}
 		}
 
@@ -167,7 +171,7 @@ public class BauteilFormular extends VerticalPanel {
 		public void onSuccess(Void result) {
 			if (comp != null) {
 				setzeSelektiert(null);
-				botvm.entferneBauteil(comp);
+//				botvm.entferneBauteil(comp);
 			}
 		}
 

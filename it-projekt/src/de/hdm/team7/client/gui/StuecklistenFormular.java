@@ -28,6 +28,10 @@ public class StuecklistenFormular extends VerticalPanel {
 
 	Stueckliste stuecklistenDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
+	
+	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
+		this.botvm = botvm;
+	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -68,7 +72,7 @@ public class StuecklistenFormular extends VerticalPanel {
 		boButtonsPanel.add(deleteButton);
 
 		Button editButton = new Button("Bearbeiten");
-		editButton.addClickHandler(new EditClickHandler());
+//		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
 	}
 
@@ -93,8 +97,8 @@ public class StuecklistenFormular extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (stuecklistenDarstellung != null) {
-				stuecklistenVerwaltung.loescheStueckliste(stuecklistenDarstellung,
-						new LoescheStuecklistenCallback(stuecklistenDarstellung));
+//				stuecklistenVerwaltung.loescheStueckliste(stuecklistenDarstellung,
+//						new LoescheStuecklistenCallback(stuecklistenDarstellung));
 			} else {
 
 			}
@@ -109,7 +113,7 @@ public class StuecklistenFormular extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Stueckliste selektierteStueckliste = botvm.getSelektierteStueckliste();
+			Stueckliste selektierteStueckliste = botvm.holeSelektierteStueckliste();
 			if (selektierteStueckliste == null) {
 				Window.alert("keine Stückliste ausgewählt");
 			} else {
@@ -141,7 +145,7 @@ public class StuecklistenFormular extends VerticalPanel {
 
 		public void onSuccess(Stueckliste bom) {
 			if (bom != null) {
-				botvm.fuegeStuecklisteHinzu(bom);
+//				botvm.fuegeStuecklisteHinzu(bom);
 			}
 		}
 
@@ -168,7 +172,7 @@ public class StuecklistenFormular extends VerticalPanel {
 		public void onSuccess(Void result) {
 			if (bom != null) {
 				setzeSelektiert(null);
-				botvm.entferneStueckliste(bom);
+//				botvm.entferneStueckliste(bom);
 			}
 		}
 

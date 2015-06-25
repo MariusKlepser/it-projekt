@@ -28,6 +28,10 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 	Enderzeugnis enderzeugnisDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
+	
+	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
+		this.botvm = botvm;
+	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -68,7 +72,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 		boButtonsPanel.add(deleteButton);
 
 		Button editButton = new Button("Bearbeiten");
-		editButton.addClickHandler(new EditClickHandler());
+//		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
 	}
 
@@ -108,7 +112,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Enderzeugnis selektiertesEnderzeugnis = botvm.getSelektiertesEnderzeugnis();
+			Enderzeugnis selektiertesEnderzeugnis = botvm.holeSelektiertesEnderzeugnis();
 			if (selektiertesEnderzeugnis == null) {
 				Window.alert("kein Enderzeugnis ausgewählt");
 			} else {
@@ -140,7 +144,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 		public void onSuccess(Enderzeugnis endProduct) {
 			if (endProduct != null) {
-				botvm.fuegeEnderzeugnisHinzu(endProduct);
+//				botvm.fuegeEnderzeugnisHinzu(endProduct);
 			}
 		}
 
@@ -167,7 +171,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 		public void onSuccess(Void result) {
 			if (endProduct != null) {
 				setzeSelektiert(null);
-				botvm.entferneEnderzeugnis(endProduct);
+//				botvm.entferneEnderzeugnis(endProduct);
 			}
 		}
 

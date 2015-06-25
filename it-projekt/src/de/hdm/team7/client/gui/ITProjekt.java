@@ -18,7 +18,7 @@ import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
  */
 
 public class ITProjekt implements EntryPoint{
-	static interface StuecklistenVerwaltungTreeResources extends CellTree.Resources {
+	public static interface StuecklistenVerwaltungTreeResources extends CellTree.Resources {
 		
 		
 //		@Override
@@ -54,7 +54,7 @@ public class ITProjekt implements EntryPoint{
 //		bank.setZip(70569);
 //		bank.setCity("Stuttgart");
 //		bankVerwaltung.setBank(bank, new SetBankCallback());
-//		
+		
 		/*
 		 * Die Bankanwendung besteht aus einem Navigationsteil mit Baumstruktur
 		 * und einem Datenteil mit Formularen für den ausgewählten Kunden und das
@@ -69,7 +69,7 @@ public class ITProjekt implements EntryPoint{
 		/*
 		 * Die Formulare und der Kunden- und Kontobaum werden miteinander verlinkt.
 		 */
-		botvm.setzeBaugruppeFormular(bgf);
+//		botvm.setzeBaugruppeFormular(bgf);
 		//bgf.setBusinessObjectTreeViewModel(botvm);
 		
 		botvm.setzeBauteilFormular(btf);
