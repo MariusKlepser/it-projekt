@@ -17,10 +17,9 @@ import de.hdm.team7.shared.geschaeftsobjekte.*;
  * In Anlehnung an: @author rathke
  *
  */
-
-public class BillOfMaterialCell extends AbstractCell<Stueckliste> {
+public class BaugruppeCell extends AbstractCell<Baugruppe> {
 	@Override
-    public void render(Context context, Stueckliste value, SafeHtmlBuilder sb) {
+    public void render(Context context, Baugruppe value, SafeHtmlBuilder sb) {
       // Value can be null, so do a null check..
       if (value == null) {
         return;

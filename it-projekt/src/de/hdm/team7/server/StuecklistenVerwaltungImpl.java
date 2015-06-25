@@ -190,9 +190,8 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 		return null;
 	}
 
-	@Override
 	public String ordneBaugruppenZuBaugruppe(
-			ArrayList<Bauteil> ausgewählteBaugruppen,
+			ArrayList<Bauteil> ausgewaehlteBaugruppen,
 			ArrayList<Bauteil> zugewieseneBaugruppe) {
 		// TODO Auto-generated method stub
 		return null;
@@ -214,38 +213,38 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 
 	@Override
 	public String ordneEnderzeugnisseZuEnderzeugnis(
-			ArrayList<Bauteil> ausgewählteEnderzeugnisse,
+			ArrayList<Bauteil> ausgewaehlteEnderzeugnisse,
 			ArrayList<Bauteil> zugewiesenesEnderzeugnis) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String löscheBauteil(Bauteil bauteil) {
+	public String loescheBauteil(Bauteil bauteil) {
 		this.bauteilMapper.delete(bauteil);
 		return null;
 	}
 
 	@Override
-	public String löscheBaugruppe(Baugruppe baugruppe) {
+	public String loescheBaugruppe(Baugruppe baugruppe) {
 		this.baugruppeMapper.delete(baugruppe);
 		return null;
 	}
 
 	@Override
-	public String löscheEnderzeugnis(Enderzeugnis enderzeugnis) {
+	public String loescheEnderzeugnis(Enderzeugnis enderzeugnis) {
 		this.enderzeugnisMapper.delete(enderzeugnis);
 		return null;
 	}
 
 	@Override
-	public String löscheStueckliste(Stueckliste stueckliste) {
+	public String loescheStueckliste(Stueckliste stueckliste) {
 		this.stuecklisteMapper.delete(stueckliste);
 		return null;
 	}
 
 	@Override
-	public String löscheBenutzer(Benutzer benutzer) {
+	public String loescheBenutzer(Benutzer benutzer) {
 		this.benutzerMapper.delete(benutzer);
 		return null;
 	}

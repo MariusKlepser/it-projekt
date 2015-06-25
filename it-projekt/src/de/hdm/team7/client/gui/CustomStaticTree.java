@@ -20,7 +20,7 @@ public class CustomStaticTree extends Tree {
 	private static ArrayList<Bauteil> components = new ArrayList<Bauteil>();
 	private static ArrayList<Baugruppe> componentAssemblies = new ArrayList<Baugruppe>();
 	private static ArrayList<Enderzeugnis> endProducts = new ArrayList<Enderzeugnis>();
-	private static ArrayList<Stückliste> billOfMaterials = new ArrayList<Stückliste>();
+	private static ArrayList<Stueckliste> billOfMaterials = new ArrayList<Stueckliste>();
 
 	/**
 	 * @return the new tree
@@ -43,7 +43,7 @@ public class CustomStaticTree extends Tree {
 	public void refreshComponents(TreeItem parent) {
 		AsyncCallbackComponentList componentListCallback = new AsyncCallbackComponentList();
 		componentListCallback.setParentTreeItem(parent);
-		ClientEinstellungen.getStücklistenVerwaltung().holeAlleBauteile(
+		ClientEinstellungen.getStuecklistenVerwaltung().holeAlleBauteile(
 				componentListCallback);
 	}
 }

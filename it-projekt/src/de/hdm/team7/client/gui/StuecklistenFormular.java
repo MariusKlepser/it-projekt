@@ -13,7 +13,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.team7.client.ClientEinstellungen;
-import de.hdm.team7.client.gui.BenutzerFormular.SpeicherCallback;
 import de.hdm.team7.shared.StuecklistenVerwaltung;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
 import de.hdm.team7.shared.geschaeftsobjekte.*;
@@ -29,13 +28,16 @@ public class StuecklistenFormular extends VerticalPanel {
 
 	Stueckliste stuecklistenDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
+	
+	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
+		this.botvm = botvm;
+	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 	 */
 	Label idValueLabel = new Label();
 	TextBox nameTextBox = new TextBox();
-	Label datumValueLabel = new Label();
 
 	/*
 	 * Im Konstruktor werden die Widgets z.T. erzeugt. Alle werden in einem
@@ -47,7 +49,7 @@ public class StuecklistenFormular extends VerticalPanel {
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem
 		 * Gitter.
 		 */
-		Grid boGrid = new Grid(4, 2);
+		Grid boGrid = new Grid(3, 2);
 		this.add(boGrid);
 
 		Label idLabel = new Label("ID");
@@ -57,10 +59,6 @@ public class StuecklistenFormular extends VerticalPanel {
 		Label nameLabel = new Label("Name");
 		boGrid.setWidget(1, 0, nameLabel);
 		boGrid.setWidget(1, 1, nameTextBox);
-		
-		Label datumLabel = new Label("Erstellungsdatum");
-		boGrid.setWidget(2, 0, datumLabel);
-		boGrid.setWidget(2, 1, datumValueLabel);
 
 		HorizontalPanel boButtonsPanel = new HorizontalPanel();
 		this.add(boButtonsPanel);
@@ -74,7 +72,7 @@ public class StuecklistenFormular extends VerticalPanel {
 		boButtonsPanel.add(deleteButton);
 
 		Button editButton = new Button("Bearbeiten");
-		editButton.addClickHandler(new EditClickHandler());
+//		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
 	}
 
@@ -99,8 +97,8 @@ public class StuecklistenFormular extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (stuecklistenDarstellung != null) {
-				stuecklistenVerwaltung.loescheStueckliste(stuecklistenDarstellung,
-						new LoescheStuecklistenCallback(stuecklistenDarstellung));
+//				stuecklistenVerwaltung.loescheStueckliste(stuecklistenDarstellung,
+//						new LoescheStuecklistenCallback(stuecklistenDarstellung));
 			} else {
 
 			}
@@ -115,7 +113,7 @@ public class StuecklistenFormular extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Stueckliste selektierteStueckliste = botvm.getSelektierteStueckliste();
+			Stueckliste selektierteStueckliste = botvm.holeSelektierteStueckliste();
 			if (selektierteStueckliste == null) {
 				Window.alert("keine Stückliste ausgewählt");
 			} else {
@@ -125,31 +123,14 @@ public class StuecklistenFormular extends VerticalPanel {
 		}
 	}
 
-	private class EditClickHandler implements ClickHandler {
-		@Override
-		public void onClick(ClickEvent event) {
-			if (stuecklistenDarstellung != null) {
-				stuecklistenDarstellung.setzeName(nameTextBox.getText());
-				stuecklistenVerwaltung.speichere(stuecklistenDarstellung, new SpeicherCallback());
-			} else {
-				Window.alert("kein Benutzer ausgewählt");
-			}
-		}
-	}
-
-	private class SpeicherCallback implements AsyncCallback<Void> {
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Die Änderung ist fehlgeschlagen!");
-		}
-
-		@Override
-		public void onSuccess(Void result) {
-			botvm.aktualisiereStueckliste(stuecklistenDarstellung);
-		}
-	}
-	
-	
+	/*
+	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
+	 * Kontobaum aktualisiert werden. Dafür dient ein privates Attribut und der
+	 * Konstruktor.
+	 * 
+	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
+	 * ergebnis des asynchronen Aufrufs geliefert wird.
+	 */
 	public class ErstelleStuecklistenCallback implements AsyncCallback<String> {
 
 		Stueckliste bom = null;
@@ -164,7 +145,7 @@ public class StuecklistenFormular extends VerticalPanel {
 
 		public void onSuccess(Stueckliste bom) {
 			if (bom != null) {
-				botvm.fuegeStuecklisteHinzu(bom);
+//				botvm.fuegeStuecklisteHinzu(bom);
 			}
 		}
 
@@ -191,7 +172,7 @@ public class StuecklistenFormular extends VerticalPanel {
 		public void onSuccess(Void result) {
 			if (bom != null) {
 				setzeSelektiert(null);
-				botvm.entferneStueckliste(bom);
+//				botvm.entferneStueckliste(bom);
 			}
 		}
 
@@ -200,11 +181,6 @@ public class StuecklistenFormular extends VerticalPanel {
 			// TODO Auto-generated method stub
 
 		}
-	}
-	
-	// botvm setter
-	void setCaBotvm(BusinessObjectTreeViewModel botvm) {
-		this.botvm = botvm;
 	}
 
 void setzeSelektiert(Stueckliste bom) {

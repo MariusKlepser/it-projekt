@@ -67,16 +67,16 @@ public interface StuecklistenVerwaltungAsync {
 			ArrayList<Bauteil> assignableEndProducts,
 			AsyncCallback<String> callback);
 
-	void löscheBauteil(Bauteil component, AsyncCallback<String> callback);
+	void loescheBauteil(Bauteil component, AsyncCallback<String> callback);
 
-	void löscheBaugruppe(Baugruppe compAssembly,
+	void loescheBaugruppe(Baugruppe compAssembly,
 			AsyncCallback<String> callback);
 
-	void löscheEnderzeugnis(Enderzeugnis endproduct, AsyncCallback<String> callback);
+	void loescheEnderzeugnis(Enderzeugnis endproduct, AsyncCallback<String> callback);
 
-	void löscheStueckliste(Stueckliste bom, AsyncCallback<String> callback);
+	void loescheStueckliste(Stueckliste bom, AsyncCallback<String> callback);
 
-	void löscheBenutzer(Benutzer user, AsyncCallback<String> callback);
+	void loescheBenutzer(Benutzer user, AsyncCallback<String> callback);
 
 	void holeBauteilAnhandId(int id, AsyncCallback<Bauteil> callback)
 			throws IllegalArgumentException;

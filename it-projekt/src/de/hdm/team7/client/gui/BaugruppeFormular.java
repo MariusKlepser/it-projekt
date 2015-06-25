@@ -13,7 +13,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.team7.client.ClientEinstellungen;
-import de.hdm.team7.client.gui.BauteilFormular.SpeicherCallback;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
 import de.hdm.team7.shared.geschaeftsobjekte.*;
 
@@ -23,21 +22,22 @@ import de.hdm.team7.shared.geschaeftsobjekte.*;
  */
 
 public class BaugruppeFormular extends VerticalPanel {
-	
+
 	StuecklistenVerwaltungAsync stuecklistenVerwaltung = ClientEinstellungen
 			.getStuecklistenVerwaltung();
 
 	Baugruppe baugruppeDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
+	
+	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
+		this.botvm = botvm;
+	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 	 */
 	Label idValueLabel = new Label();
 	TextBox nameTextBox = new TextBox();
-	TextBox materialTextBox = new TextBox();
-	TextBox beschreibungTextBox = new TextBox();
-	Label datumValueLabel = new Label();
 
 	/*
 	 * Im Konstruktor werden die Widgets z.T. erzeugt. Alle werden in einem
@@ -59,18 +59,6 @@ public class BaugruppeFormular extends VerticalPanel {
 		Label nameLabel = new Label("Name");
 		boGrid.setWidget(1, 0, nameLabel);
 		boGrid.setWidget(1, 1, nameTextBox);
-		
-		Label beschreibungLabel = new Label("Beschreibung");
-		boGrid.setWidget(2, 0, beschreibungLabel);
-		boGrid.setWidget(2, 1, beschreibungTextBox);
-		
-		Label materialLabel = new Label("Materialbezeichnung");
-		boGrid.setWidget(3, 0, materialLabel);
-		boGrid.setWidget(3, 1, materialTextBox);
-		
-		Label datumLabel = new Label("Änderungsdatum");
-		boGrid.setWidget(4, 0, datumLabel);
-		boGrid.setWidget(4, 1, datumValueLabel);
 
 		HorizontalPanel boButtonsPanel = new HorizontalPanel();
 		this.add(boButtonsPanel);
@@ -84,7 +72,7 @@ public class BaugruppeFormular extends VerticalPanel {
 		boButtonsPanel.add(deleteButton);
 
 		Button editButton = new Button("Bearbeiten");
-		editButton.addClickHandler(new EditClickHandler());
+//		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
 	}
 
@@ -99,8 +87,9 @@ public class BaugruppeFormular extends VerticalPanel {
 	 */
 
 	/*
-	 * TODO: Edit-Methode + ClickHandler müssen eingefügt werden
-	 * TODO: Methoden, auf die im BusinessObjectTreeViewModel zugegriffen wird, müssen ergänzt werden
+	 * TODO: Edit-Methode + ClickHandler müssen eingefügt werden TODO: Methoden,
+	 * auf die im BusinessObjectTreeViewModel zugegriffen wird, müssen ergänzt
+	 * werden
 	 */
 
 	private class DeleteClickHandler implements ClickHandler {
@@ -124,43 +113,25 @@ public class BaugruppeFormular extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Baugruppe selektierteBaugruppe = botvm.getSelektierteBaugruppe();
+			Baugruppe selektierteBaugruppe = botvm.holeSelektierteBaugruppe();
 			if (selektierteBaugruppe == null) {
 				Window.alert("keine Baugruppe ausgewählt");
 			} else {
-				stuecklistenVerwaltung.erstelleBaugruppe(selektierteBaugruppe, null,
-						new erstelleBaugruppeCallback(selektierteBaugruppe));
+				stuecklistenVerwaltung.erstelleBaugruppe(selektierteBaugruppe,
+						null, new erstelleBaugruppeCallback(
+								selektierteBaugruppe));
 			}
 		}
 	}
 
-	private class EditClickHandler implements ClickHandler {
-		@Override
-		public void onClick(ClickEvent event) {
-			if (baugruppeDarstellung != null) {
-				baugruppeDarstellung.setzeName(nameTextBox.getText());
-				baugruppeDarstellung.setzeBeschreibung(beschreibungTextBox.getText());
-				baugruppeDarstellung.setzeMaterial(materialTextBox.getText());
-				baugruppeDarstellung.setzeDatum(datumValueLabel.getText());
-				stuecklistenVerwaltung.speichere(baugruppeDarstellung, new SpeicherCallback());
-			} else {
-				Window.alert("keine Baugruppe ausgewählt");
-			}
-		}
-	}
-
-	private class SpeicherCallback implements AsyncCallback<Void> {
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Die Änderung ist fehlgeschlagen!");
-		}
-
-		@Override
-		public void onSuccess(Void result) {
-			botvm.aktualisiereBaugruppe(baugruppeDarstellung);
-		}
-	}
-	
+	/*
+	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
+	 * Kontobaum aktualisiert werden. Dafür dient ein privates Attribut und der
+	 * Konstruktor.
+	 * 
+	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
+	 * ergebnis des asynchronen Aufrufs geliefert wird.
+	 */
 	public class erstelleBaugruppeCallback implements AsyncCallback<String> {
 
 		Baugruppe compAss = null;
@@ -175,7 +146,7 @@ public class BaugruppeFormular extends VerticalPanel {
 
 		public void onSuccess(Baugruppe compAss) {
 			if (compAss != null) {
-				botvm.fuegeBaugruppeHinzu(compAss);
+//				botvm.fuegeBaugruppeHinzu(compAss);
 			}
 		}
 
@@ -202,7 +173,7 @@ public class BaugruppeFormular extends VerticalPanel {
 		public void onSuccess(Void result) {
 			if (compAss != null) {
 				setzeSelektiert(null);
-				botvm.entferneBaugruppe(compAss);
+//				botvm.entferneBaugruppe(compAss);
 			}
 		}
 
@@ -212,23 +183,16 @@ public class BaugruppeFormular extends VerticalPanel {
 
 		}
 	}
-	
-	
-	// botvm setter
-	void setCaBotvm(BusinessObjectTreeViewModel botvm) {
-		this.botvm = botvm;
+
+	void setzeSelektiert(Baugruppe compAss) {
+		if (compAss != null) {
+			baugruppeDarstellung = compAss;
+			nameTextBox.setText(baugruppeDarstellung.getName());
+			idValueLabel
+					.setText(Integer.toString(baugruppeDarstellung.getId()));
+		} else {
+			nameTextBox.setText("");
+			idValueLabel.setText("");
+		}
 	}
-
-
-void setzeSelektiert(Baugruppe compAss) {
-	if (compAss != null) {
-		baugruppeDarstellung = compAss;
-		nameTextBox.setText(baugruppeDarstellung.getName());
-		idValueLabel.setText(Integer.toString(baugruppeDarstellung.getId()));
-	} else {
-		nameTextBox.setText("");
-		idValueLabel.setText("");
-	}
-}
-
 }

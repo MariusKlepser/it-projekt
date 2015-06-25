@@ -15,8 +15,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
 import de.hdm.team7.shared.geschaeftsobjekte.*;
-import de.hdm.thies.bankProjekt.client.gui.CustomerAccountsTreeViewModel;
-import de.hdm.thies.bankProjekt.client.gui.CustomerForm.SaveCallback;
 
 /**
  * Formular für die Darstellung des selektierten Kunden Angelehnt an Thies &
@@ -30,6 +28,10 @@ public class BenutzerFormular extends VerticalPanel {
 
 	Benutzer benutzerDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
+	
+	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
+		this.botvm = botvm;
+	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -70,7 +72,7 @@ public class BenutzerFormular extends VerticalPanel {
 		boButtonsPanel.add(deleteButton);
 
 		Button editButton = new Button("Bearbeiten");
-		editButton.addClickHandler(new EditClickHandler());
+//		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
 	}
 
@@ -110,7 +112,7 @@ public class BenutzerFormular extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Benutzer selektierterBenutzer = botvm.getSelektierterBenutzer();
+			Benutzer selektierterBenutzer = botvm.holeSelektiertenBenutzer();
 			if (selektierterBenutzer == null) {
 				Window.alert("kein Benutzer ausgewählt");
 			} else {
@@ -119,31 +121,15 @@ public class BenutzerFormular extends VerticalPanel {
 			}
 		}
 	}
-	
-	private class EditClickHandler implements ClickHandler {
-		@Override
-		public void onClick(ClickEvent event) {
-			if (benutzerDarstellung != null) {
-				benutzerDarstellung.setzeName(nameTextBox.getText());
-				stuecklistenVerwaltung.speichere(benutzerDarstellung, new SpeicherCallback());
-			} else {
-				Window.alert("kein Benutzer ausgewählt");
-			}
-		}
-	}
 
-	private class SpeicherCallback implements AsyncCallback<Void> {
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Die Änderung ist fehlgeschlagen!");
-		}
-
-		@Override
-		public void onSuccess(Void result) {
-			botvm.aktualisiereBenutzer(benutzerDarstellung);
-		}
-	}
-
+	/*
+	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
+	 * Kontobaum aktualisiert werden. Dafür dient ein privates Attribut und der
+	 * Konstruktor.
+	 * 
+	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
+	 * ergebnis des asynchronen Aufrufs geliefert wird.
+	 */
 	public class ErstelleBenutzerCallback implements AsyncCallback<String> {
 
 		Benutzer b = null;
@@ -158,7 +144,7 @@ public class BenutzerFormular extends VerticalPanel {
 
 		public void onSuccess(Benutzer b) {
 			if (b != null) {
-				botvm.fuegeBenutzerHinzu(b);
+//				botvm.fuegeBenutzerHinzu(b);
 			}
 		}
 
@@ -185,7 +171,7 @@ public class BenutzerFormular extends VerticalPanel {
 		public void onSuccess(Void result) {
 			if (b != null) {
 				setzeSelektiert(null);
-				botvm.entferneBenutzer(b);
+//				botvm.entferneBenutzer(b);
 			}
 		}
 
@@ -194,11 +180,6 @@ public class BenutzerFormular extends VerticalPanel {
 			// TODO Auto-generated method stub
 
 		}
-	}
-	
-	// botvm setter
-	void setCaBotvm(BusinessObjectTreeViewModel botvm) {
-		this.botvm = botvm;
 	}
 
 void setzeSelektiert(Benutzer b) {

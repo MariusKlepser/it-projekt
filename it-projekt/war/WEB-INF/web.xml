@@ -8,12 +8,12 @@
 
 	<!-- Example servlet loaded into servlet container -->
 	<servlet>
-		<servlet-name>BOMAdministration</servlet-name>
-		<servlet-class>de.hdm.team7.server.BOMAdministrationImpl</servlet-class>
+		<servlet-name>StuecklistenVerwaltung</servlet-name>
+		<servlet-class>de.hdm.team7.server.StuecklistenVerwaltungImpl</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>BOMAdministration</servlet-name>
-		<url-pattern>/it_projekt/bomadministration</url-pattern>
+		<servlet-name>StuecklistenVerwaltung</servlet-name>
+		<url-pattern>/it_projekt/stuecklistenverwaltung</url-pattern>
 	</servlet-mapping>
 
 	<!-- Default page to serve -->

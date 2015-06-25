@@ -13,7 +13,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.team7.client.ClientEinstellungen;
-import de.hdm.team7.client.gui.BaugruppeFormular.SpeicherCallback;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
 import de.hdm.team7.shared.geschaeftsobjekte.*;
 
@@ -29,15 +28,16 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 	Enderzeugnis enderzeugnisDarstellung = null;
 	BusinessObjectTreeViewModel botvm = null;
+	
+	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
+		this.botvm = botvm;
+	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 	 */
 	Label idValueLabel = new Label();
 	TextBox nameTextBox = new TextBox();
-	TextBox materialTextBox = new TextBox();
-	TextBox beschreibungTextBox = new TextBox();
-	Label datumValueLabel = new Label();
 
 	/*
 	 * Im Konstruktor werden die Widgets z.T. erzeugt. Alle werden in einem
@@ -59,18 +59,6 @@ public class EnderzeugnisFormular extends VerticalPanel {
 		Label nameLabel = new Label("Name");
 		boGrid.setWidget(1, 0, nameLabel);
 		boGrid.setWidget(1, 1, nameTextBox);
-		
-		Label beschreibungLabel = new Label("Beschreibung");
-		boGrid.setWidget(2, 0, beschreibungLabel);
-		boGrid.setWidget(2, 1, beschreibungTextBox);
-		
-		Label materialLabel = new Label("Materialbezeichnung");
-		boGrid.setWidget(3, 0, materialLabel);
-		boGrid.setWidget(3, 1, materialTextBox);
-		
-		Label datumLabel = new Label("Änderungsdatum");
-		boGrid.setWidget(4, 0, datumLabel);
-		boGrid.setWidget(4, 1, datumValueLabel);
 
 		HorizontalPanel boButtonsPanel = new HorizontalPanel();
 		this.add(boButtonsPanel);
@@ -84,7 +72,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 		boButtonsPanel.add(deleteButton);
 
 		Button editButton = new Button("Bearbeiten");
-		editButton.addClickHandler(new EditClickHandler());
+//		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
 	}
 
@@ -124,7 +112,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Enderzeugnis selektiertesEnderzeugnis = botvm.getSelektiertesEnderzeugnis();
+			Enderzeugnis selektiertesEnderzeugnis = botvm.holeSelektiertesEnderzeugnis();
 			if (selektiertesEnderzeugnis == null) {
 				Window.alert("kein Enderzeugnis ausgewählt");
 			} else {
@@ -134,33 +122,14 @@ public class EnderzeugnisFormular extends VerticalPanel {
 		}
 	}
 
-	private class EditClickHandler implements ClickHandler {
-		@Override
-		public void onClick(ClickEvent event) {
-			if (enderzeugnisDarstellung != null) {
-				enderzeugnisDarstellung.setzeName(nameTextBox.getText());
-				enderzeugnisDarstellung.setzeBeschreibung(beschreibungTextBox.getText());
-				enderzeugnisDarstellung.setzeMaterial(materialTextBox.getText());
-				enderzeugnisDarstellung.setzeDatum(datumValueLabel.getText());
-				stuecklistenVerwaltung.speichere(enderzeugnisDarstellung, new SpeicherCallback());
-			} else {
-				Window.alert("keine Baugruppe ausgewählt");
-			}
-		}
-	}
-
-	private class SpeicherCallback implements AsyncCallback<Void> {
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Die Änderung ist fehlgeschlagen!");
-		}
-
-		@Override
-		public void onSuccess(Void result) {
-			botvm.aktualisiereEnderzeugnis(enderzeugnisDarstellung);
-		}
-	}
-	
+	/*
+	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
+	 * Kontobaum aktualisiert werden. Dafür dient ein privates Attribut und der
+	 * Konstruktor.
+	 * 
+	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
+	 * ergebnis des asynchronen Aufrufs geliefert wird.
+	 */
 	public class erstelleEnderzeugnisCallback implements AsyncCallback<String> {
 
 		Enderzeugnis endproduct = null;
@@ -175,7 +144,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 		public void onSuccess(Enderzeugnis endProduct) {
 			if (endProduct != null) {
-				botvm.fuegeEnderzeugnisHinzu(endProduct);
+//				botvm.fuegeEnderzeugnisHinzu(endProduct);
 			}
 		}
 
@@ -202,7 +171,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 		public void onSuccess(Void result) {
 			if (endProduct != null) {
 				setzeSelektiert(null);
-				botvm.entferneEnderzeugnis(endProduct);
+//				botvm.entferneEnderzeugnis(endProduct);
 			}
 		}
 
@@ -212,13 +181,6 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 		}
 	}
-	
-	
-	// botvm setter
-	void setCaBotvm(BusinessObjectTreeViewModel botvm) {
-		this.botvm = botvm;
-	}
-
 
 void setzeSelektiert(Enderzeugnis endProduct) {
 	if (endProduct != null) {
