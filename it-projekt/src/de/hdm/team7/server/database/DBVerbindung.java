@@ -59,7 +59,7 @@ public class DBVerbindung {
                 } else {
                     // Local MySQL instance to use during development.
                     Class.forName("com.mysql.jdbc.Driver");
-                    //url = testUrl;
+                    url = googleUrl;
                     
                 }
                 /*
