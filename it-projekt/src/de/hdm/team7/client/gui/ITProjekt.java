@@ -69,7 +69,7 @@ public class ITProjekt implements EntryPoint{
 		/*
 		 * Die Formulare und der Kunden- und Kontobaum werden miteinander verlinkt.
 		 */
-//		botvm.setzeBaugruppeFormular(bgf);
+		botvm.setzeBaugruppeFormular(bgf);
 		//bgf.setBusinessObjectTreeViewModel(botvm);
 		
 		botvm.setzeBauteilFormular(btf);

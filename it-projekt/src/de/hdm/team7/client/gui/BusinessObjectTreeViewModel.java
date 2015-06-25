@@ -142,7 +142,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 		stuecklisteFormular = sf;
 	}
 
-	public void setzeBaugruppenFormular(BaugruppeFormular bgf) {
+	public void setzeBaugruppeFormular(BaugruppeFormular bgf) {
 		baugruppeFormular = bgf;
 	}
 
