@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import de.hdm.team7.shared.geschaeftsobjekte.Baugruppe;
+import de.hdm.team7.shared.geschaeftsobjekte.*;
 
 public class ZuordnungsMapper {
 
@@ -28,7 +28,7 @@ public class ZuordnungsMapper {
 		return baugruppeMapper;
 	}
 
-	public Zuordnung findByKeyEEBG(int id) {
+	/* public Zuordnung findByKeyEEBG(int id) {
 		// DB-Verbindung holen
 		Connection con = DBVerbindung.connection();
 
@@ -45,13 +45,14 @@ public class ZuordnungsMapper {
 			 * Da id Primärschlüssel ist, kann max. nur ein Tupel
 			 * zurückgegeben werden. Prüfe, ob ein Ergebnis vorliegt.
 			 */
+	/*
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
-				Zuordnung zo = new Baugruppe();
+				ZuordnungEEBG zo = new ZuordnungEEBG();
 				zo.setId(rs.getInt("zuordnungsID"));
-				zo.setName(rs.getString("name"));
-				zo.setDescription(rs.getString("beschreibung"));
-				zo.setAenderungsDatum(rs.getDate("aenderungsdatum"));
+				zo.setEnderzeugnisID(rs.getInt("enderzeugnisID"));
+				zo.findeAlleKinder();
+				zo.setAenderungsdatum(rs.getDate("aenderungsdatum"));
 				zo.setMenge(rs.getInt("menge"));
 				zo.set
 

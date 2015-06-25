@@ -38,6 +38,11 @@ public class Zuordnung {
 	/**
 	 * @param aenderungsDatum the aenderungsDatum to set
 	 */
+	
+	public void setId(int id)	{
+		this.id = id;
+	}
+	
 	public void setMenge(int menge) {
 		this.menge = menge;
 	}
