@@ -85,7 +85,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 			if (bo == null) {
 				return null;
 			}
-			if (bo instanceof Benutzer) {
+			if (bo instanceof Enderzeugnis) {
 				return new Integer(bo.getId());
 			} else {
 				return new Integer(-bo.getId());
@@ -362,7 +362,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 			
 			List<Category> kategorien = new ArrayList<Category>();
 			Category bauteil = new Category("Bauteile");
-//			bauteil.setName("Bauteile");
+			bauteil.setzeName("Bauteile");
 			Category baugruppe = new Category("Baugruppen");
 //			baugruppe.setName("Baugruppen");
 			Category enderzeugnis = new Category("Enderzeugnisse");
