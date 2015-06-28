@@ -251,7 +251,7 @@ public class BaugruppeMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM benutzer " + "WHERE id="
+			stmt.executeUpdate("DELETE FROM baugruppe " + "WHERE id="
 					+ ca.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
