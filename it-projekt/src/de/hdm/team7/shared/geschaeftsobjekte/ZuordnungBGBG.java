@@ -10,17 +10,28 @@ import com.google.cloud.sql.jdbc.Statement;
 public class ZuordnungBGBG extends Zuordnung {
 
 	private int baugruppeID;
+	private int baugruppe2ID;
 	private ArrayList<Integer> baugruppenIDS;
+	//@Marius: baugruppe2ID eingefügt, um ein einzelnes Kind-Element zu identifizieren - baugruppenIDS enthält alle Kind-Elemente(?)
 	
 	
 	public ZuordnungBGBG() {
 		// TODO Auto-generated constructor stub
 	}
 
+	//@Marius: Methode, um die ID des Eltern-Elements zu erfragen
+	
 	public int getBaugruppeID()	{
 		return baugruppeID;
 	}
 	
+	//@Marius: Methode, um die ID eines einzelnen Kind-Elements zu erfragen
+	
+	public int getBaugruppe2ID()	{
+		return baugruppe2ID;
+	}
+
+	//@Marius: Methode, um die IDs aller Kind-Elemente zu erfragen
 	
 	public ArrayList<Integer> getBaugruppenIDS()	{
 		return baugruppenIDS;
@@ -33,7 +44,6 @@ public class ZuordnungBGBG extends Zuordnung {
 	public void addBaugruppe(int kinderteilID)	{
 		baugruppenIDS.add(kinderteilID);
 	}
-
 
 public void findeAlleKinder(Connection con)	{
 	

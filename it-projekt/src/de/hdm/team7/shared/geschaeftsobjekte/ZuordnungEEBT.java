@@ -10,6 +10,7 @@ import com.google.cloud.sql.jdbc.Statement;
 public class ZuordnungEEBT extends Zuordnung {
 
 	private int enderzeugnisID;
+	private int bauteilID;
 	private ArrayList<Integer> bauteileIDS;
 	
 	
@@ -17,9 +18,14 @@ public class ZuordnungEEBT extends Zuordnung {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getEnderzeugnis()	{
+	public int getEnderzeugnisID()	{
 		return enderzeugnisID;
 	}
+	
+	public int getBauteilID()	{
+		return bauteilID;
+	}
+	
 	
 	public ArrayList<Integer> getBauteile()	{
 		return bauteileIDS;

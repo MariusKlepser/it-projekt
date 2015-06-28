@@ -10,6 +10,7 @@ import com.google.cloud.sql.jdbc.Statement;
 public class ZuordnungBGBT extends Zuordnung {
 
 	private int baugruppeID;
+	private int bauteilID;
 	private ArrayList<Integer> bauteile;
 	
 	
@@ -19,6 +20,10 @@ public class ZuordnungBGBT extends Zuordnung {
 
 	public int getBaugruppeID()	{
 		return baugruppeID;
+	}
+	
+	public int getBauteilID()	{
+		return bauteilID;
 	}
 	
 	public ArrayList<Integer> getBauteile()	{

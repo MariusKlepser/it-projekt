@@ -159,7 +159,7 @@ public class ZuordnungsMapper {
 	 * @return das bereits übergebene Objekt, jedoch mit ggf. korrigierter
 	 *         <code>id</code>.
 	 */
-	public Baugruppe insert(Baugruppe ca) {
+	public ZuordnungBGBG insert(ZuordnungBGBG zBGBG) {
 		Connection con = DBVerbindung.connection();
 
 		try {
@@ -169,8 +169,8 @@ public class ZuordnungsMapper {
 			 * Zunächst schauen wir nach, welches der momentan höchste
 			 * Primärschlüsselwert ist.
 			 */
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid "
-					+ "FROM benutzer ");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(zuordnungsID) AS maxid "
+					+ "FROM z_baugruppeBaugruppe ");
 
 			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
@@ -178,22 +178,24 @@ public class ZuordnungsMapper {
 				 * u erhält den bisher maximalen, nun um 1 inkrementierten
 				 * Primärschlüssel.
 				 */
-				ca.setId(rs.getInt("maxid") + 1);
+				zBGBG.setId(rs.getInt("maxid") + 1);
 
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsächliche Einfügeoperation
-				stmt.executeUpdate("INSERT INTO baugruppe (id, name, beschreibung,aenderungsdatum,materialbezeichnung) "
+				stmt.executeUpdate("INSERT INTO z_baugruppeBaugruppe (zuordnungsID, baugruppeID, baugruppe2ID, menge, aenderungsdatum, benutzerID) "
 						+ "VALUES ("
-						+ ca.getId()
+						+ zBGBG.getId()
 						+ ",'"
-						+ ca.getName()
+						+ zBGBG.getBaugruppeID()
 						+ "','"
-						+ ca.getAenderungsDatum()
+						+ zBGBG.getBaugruppe2ID()
 						+ ",'"
-						+ ca.getMaterialBezeichnung()
+						+ zBGBG.getMenge()
+						+ ",'"
+						+ zBGBG.getAenderungsdatum()
 						+ "','"
-						+ ca.getName()
+						+ zBGBG.getAenderer()
 						+ "')");
 			}
 		} catch (SQLException e) {
@@ -210,9 +212,179 @@ public class ZuordnungsMapper {
 		 * signalisieren, dass sich das Objekt evtl. im Laufe der Methode
 		 * verändert hat.
 		 */
-		return ca;
+		return zBGBG;
 	}
 
+	public ZuordnungBGBT insert(ZuordnungBGBT zBGBT) {
+		Connection con = DBVerbindung.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			/*
+			 * Zunächst schauen wir nach, welches der momentan höchste
+			 * Primärschlüsselwert ist.
+			 */
+			ResultSet rs = stmt.executeQuery("SELECT MAX(zuordnungsID) AS maxid "
+					+ "FROM z_baugruppeBauteil ");
+
+			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+			if (rs.next()) {
+				/*
+				 * u erhält den bisher maximalen, nun um 1 inkrementierten
+				 * Primärschlüssel.
+				 */
+				zBGBT.setId(rs.getInt("maxid") + 1);
+
+				stmt = con.createStatement();
+
+				// Jetzt erst erfolgt die tatsächliche Einfügeoperation
+				stmt.executeUpdate("INSERT INTO z_baugruppeBaugruppe (zuordnungsID, baugruppeID, bauteilID, menge, aenderungsdatum, benutzerID) "
+						+ "VALUES ("
+						+ zBGBT.getId()
+						+ ",'"
+						+ zBGBT.getBaugruppeID()
+						+ "','"
+						+ zBGBT.getBauteilID()
+						+ ",'"
+						+ zBGBT.getMenge()
+						+ ",'"
+						+ zBGBT.getAenderungsdatum()
+						+ "','"
+						+ zBGBT.getAenderer()
+						+ "')");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		/*
+		 * Rückgabe, des evtl. korrigierten Users.
+		 * 
+		 * HINWEIS: Da in Java nur Referenzen auf Objekte und keine physischen
+		 * Objekte übergeben werden, wäre die Anpassung des User-Objekts auch
+		 * ohne diese explizite Rückgabe au�erhalb dieser Methode sichtbar.
+		 * Die explizite Rückgabe von c ist eher ein Stilmittel, um zu
+		 * signalisieren, dass sich das Objekt evtl. im Laufe der Methode
+		 * verändert hat.
+		 */
+		return zBGBT;
+	}
+	
+	public ZuordnungEEBG insert(ZuordnungEEBG zEEBG) {
+		Connection con = DBVerbindung.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			/*
+			 * Zunächst schauen wir nach, welches der momentan höchste
+			 * Primärschlüsselwert ist.
+			 */
+			ResultSet rs = stmt.executeQuery("SELECT MAX(zuordnungsID) AS maxid "
+					+ "FROM z_enderzeugnisBaugruppe ");
+
+			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+			if (rs.next()) {
+				/*
+				 * u erhält den bisher maximalen, nun um 1 inkrementierten
+				 * Primärschlüssel.
+				 */
+				zEEBG.setId(rs.getInt("maxid") + 1);
+
+				stmt = con.createStatement();
+
+				// Jetzt erst erfolgt die tatsächliche Einfügeoperation
+				stmt.executeUpdate("INSERT INTO z_baugruppeBaugruppe (zuordnungsID, baugruppeID, bauteilID, menge, aenderungsdatum, benutzerID) "
+						+ "VALUES ("
+						+ zEEBG.getId()
+						+ ",'"
+						+ zEEBG.getEnderzeugnisID()
+						+ "','"
+						+ zEEBG.getBaugruppeID()
+						+ ",'"
+						+ zEEBG.getMenge()
+						+ ",'"
+						+ zEEBG.getAenderungsdatum()
+						+ "','"
+						+ zEEBG.getAenderer()
+						+ "')");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		/*
+		 * Rückgabe, des evtl. korrigierten Users.
+		 * 
+		 * HINWEIS: Da in Java nur Referenzen auf Objekte und keine physischen
+		 * Objekte übergeben werden, wäre die Anpassung des User-Objekts auch
+		 * ohne diese explizite Rückgabe au�erhalb dieser Methode sichtbar.
+		 * Die explizite Rückgabe von c ist eher ein Stilmittel, um zu
+		 * signalisieren, dass sich das Objekt evtl. im Laufe der Methode
+		 * verändert hat.
+		 */
+		return zEEBG;
+	}
+	
+	
+	public ZuordnungEEBT insert(ZuordnungEEBT zEEBT) {
+		Connection con = DBVerbindung.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			/*
+			 * Zunächst schauen wir nach, welches der momentan höchste
+			 * Primärschlüsselwert ist.
+			 */
+			ResultSet rs = stmt.executeQuery("SELECT MAX(zuordnungsID) AS maxid "
+					+ "FROM z_enderzeugnisBauteil ");
+
+			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+			if (rs.next()) {
+				/*
+				 * u erhält den bisher maximalen, nun um 1 inkrementierten
+				 * Primärschlüssel.
+				 */
+				zEEBT.setId(rs.getInt("maxid") + 1);
+
+				stmt = con.createStatement();
+
+				// Jetzt erst erfolgt die tatsächliche Einfügeoperation
+				stmt.executeUpdate("INSERT INTO z_baugruppeBaugruppe (zuordnungsID, baugruppeID, bauteilID, menge, aenderungsdatum, benutzerID) "
+						+ "VALUES ("
+						+ zEEBT.getId()
+						+ ",'"
+						+ zEEBT.getEnderzeugnisID()
+						+ "','"
+						+ zEEBT.getBauteilID()
+						+ ",'"
+						+ zEEBT.getMenge()
+						+ ",'"
+						+ zEEBT.getAenderungsdatum()
+						+ "','"
+						+ zEEBT.getAenderer()
+						+ "')");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		/*
+		 * Rückgabe, des evtl. korrigierten Users.
+		 * 
+		 * HINWEIS: Da in Java nur Referenzen auf Objekte und keine physischen
+		 * Objekte übergeben werden, wäre die Anpassung des User-Objekts auch
+		 * ohne diese explizite Rückgabe au�erhalb dieser Methode sichtbar.
+		 * Die explizite Rückgabe von c ist eher ein Stilmittel, um zu
+		 * signalisieren, dass sich das Objekt evtl. im Laufe der Methode
+		 * verändert hat.
+		 */
+		return zEEBT;
+	}
+
+	
 	/**
 	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
 	 * 
