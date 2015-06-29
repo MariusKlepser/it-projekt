@@ -405,7 +405,7 @@ public class ZuordnungsMapper {
 					+ "aenderungsdatum=\"" + zBGBG.getAenderungsdatum()
 					+ "\" "
 					+ "benutzerID=\"" + zBGBG.getAenderer()
-					+ "\" " + "WHERE id=" + zBGBG.getId());
+					+ "\" " + "WHERE zuordnungsID=" + zBGBG.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -427,7 +427,7 @@ public class ZuordnungsMapper {
 					+ "aenderungsdatum=\"" + zBGBT.getAenderungsdatum()
 					+ "\" "
 					+ "benutzerID=\"" + zBGBT.getAenderer()
-					+ "\" " + "WHERE id=" + zBGBT.getId());
+					+ "\" " + "WHERE zuordnungsID=" + zBGBT.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -449,7 +449,7 @@ public class ZuordnungsMapper {
 					+ "aenderungsdatum=\"" + zEEBG.getAenderungsdatum()
 					+ "\" "
 					+ "benutzerID=\"" + zEEBG.getAenderer()
-					+ "\" " + "WHERE id=" + zEEBG.getId());
+					+ "\" " + "WHERE zuordnungsID=" + zEEBG.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -471,7 +471,7 @@ public class ZuordnungsMapper {
 					+ "aenderungsdatum=\"" + zEEBT.getAenderungsdatum()
 					+ "\" "
 					+ "benutzerID=\"" + zEEBT.getAenderer()
-					+ "\" " + "WHERE id=" + zEEBT.getId());
+					+ "\" " + "WHERE zuordnungsID=" + zEEBT.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -486,22 +486,66 @@ public class ZuordnungsMapper {
 	 * @param u
 	 *            das aus der DB zu löschende "Objekt"
 	 */
-	public void delete(Baugruppe ca) {
+	public void loesche(ZuordnungBGBG zBGBG) {
 		Connection con = DBVerbindung.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM benutzer " + "WHERE id="
-					+ ca.getId());
+			stmt.executeUpdate("DELETE FROM z_baugruppeBaugruppe " + "WHERE zuordnungsID="
+					+ zBGBG.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public String getLog() {
-		// TODO Auto-generated method stub
-		return log;
+
+public void loesche(ZuordnungBGBT zBGBT) {
+	Connection con = DBVerbindung.connection();
+
+	try {
+		Statement stmt = con.createStatement();
+
+		stmt.executeUpdate("DELETE FROM z_baugruppeBauteil " + "WHERE zuordnungsID="
+				+ zBGBT.getId());
+	} catch (SQLException e) {
+		e.printStackTrace();
 	}
+}
+
+
+
+
+public void loesche(ZuordnungEEBG zEEBG) {
+	Connection con = DBVerbindung.connection();
+
+	try {
+		Statement stmt = con.createStatement();
+
+		stmt.executeUpdate("DELETE FROM z_enderzeugnisBaugruppe " + "WHERE zuordnungsID="
+				+ zEEBG.getId());
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+}
+
+
+public void loesche(ZuordnungEEBT zEEBT) {
+	Connection con = DBVerbindung.connection();
+
+	try {
+		Statement stmt = con.createStatement();
+
+		stmt.executeUpdate("DELETE FROM z_enderzeugnisBauteil " + "WHERE zuordnungsID="
+				+ zEEBT.getId());
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+}
+
+public String getLog() {
+	// TODO Auto-generated method stub
+	return log;
+}
 
 }
