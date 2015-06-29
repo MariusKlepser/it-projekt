@@ -362,7 +362,7 @@ public class BusinessObjectTreeViewModel implements TreeViewModel {
 			
 			List<Category> kategorien = new ArrayList<Category>();
 			Category bauteil = new Category("Bauteile");
-			bauteil.setzeName("Bauteile");
+//			bauteil.setName("Bauteile");
 			Category baugruppe = new Category("Baugruppen");
 //			baugruppe.setName("Baugruppen");
 			Category enderzeugnis = new Category("Enderzeugnisse");
