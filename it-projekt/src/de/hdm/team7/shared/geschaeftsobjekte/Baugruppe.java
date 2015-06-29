@@ -8,6 +8,11 @@ public class Baugruppe extends Bauteil {
 	
 	protected ArrayList<Bauteil> kinderKomponenten;
 
+	
+	public Baugruppe(int id, String name, String beschreibung, String materialBezeichnung, String aenderungsDatum){
+		super(id, name, beschreibung, materialBezeichnung, aenderungsDatum);
+	}
+	
 	/**
 	 * @return the childrenComponents
 	 */

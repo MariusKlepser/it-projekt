@@ -12,6 +12,13 @@ public class Bauteil extends Geschaeftsobjekt {
 	
 	protected String aenderungsDatum;
 	protected Date dtAenderungsDatum;
+	
+	public Bauteil(int id, String name, String beschreibung, String materialBezeichnung, String aenderungsDatum){
+		super(id, name);
+		this.beschreibung = beschreibung;
+		this.materialBezeichnung = materialBezeichnung;
+		this.aenderungsDatum = aenderungsDatum;
+	}
 
 	/**
 	 * @return the materialIdentifier
