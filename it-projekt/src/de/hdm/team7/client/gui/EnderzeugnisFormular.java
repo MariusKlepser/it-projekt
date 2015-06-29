@@ -27,11 +27,11 @@ public class EnderzeugnisFormular extends VerticalPanel {
 			.getStuecklistenVerwaltung();
 
 	Enderzeugnis enderzeugnisDarstellung = null;
-	BusinessObjectTreeViewModel botvm = null;
+//	BusinessObjectTreeViewModel botvm = null;
 	
-	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
-		this.botvm = botvm;
-	}
+//	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
+//		this.botvm = botvm;
+//	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -64,7 +64,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 		this.add(boButtonsPanel);
 
 		Button newButton = new Button("Neu");
-		newButton.addClickHandler(new NewClickHandler());
+//		newButton.addClickHandler(new NewClickHandler());
 		boButtonsPanel.add(newButton);
 
 		Button deleteButton = new Button("Löschen");
@@ -108,19 +108,19 @@ public class EnderzeugnisFormular extends VerticalPanel {
 	 * Ein neues Objekt wird erzeugt.
 	 * 
 	 */
-	private class NewClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			Enderzeugnis selektiertesEnderzeugnis = botvm.holeSelektiertesEnderzeugnis();
-			if (selektiertesEnderzeugnis == null) {
-				Window.alert("kein Enderzeugnis ausgewählt");
-			} else {
-				stuecklistenVerwaltung.erstelleEnderzeugnis(selektiertesEnderzeugnis, null,
-						new erstelleEnderzeugnisCallback(selektiertesEnderzeugnis));
-			}
-		}
-	}
+//	private class NewClickHandler implements ClickHandler {
+//
+//		@Override
+//		public void onClick(ClickEvent event) {
+//			Enderzeugnis selektiertesEnderzeugnis = botvm.holeSelektiertesEnderzeugnis();
+//			if (selektiertesEnderzeugnis == null) {
+//				Window.alert("kein Enderzeugnis ausgewählt");
+//			} else {
+//				stuecklistenVerwaltung.erstelleEnderzeugnis(selektiertesEnderzeugnis, null,
+//						new erstelleEnderzeugnisCallback(selektiertesEnderzeugnis));
+//			}
+//		}
+//	}
 
 	/*
 	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
@@ -182,7 +182,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 		}
 	}
 
-void setzeSelektiert(Enderzeugnis endProduct) {
+public void setzeSelektiert(Enderzeugnis endProduct) {
 	if (endProduct != null) {
 		enderzeugnisDarstellung = endProduct;
 		nameTextBox.setText(enderzeugnisDarstellung.getName());

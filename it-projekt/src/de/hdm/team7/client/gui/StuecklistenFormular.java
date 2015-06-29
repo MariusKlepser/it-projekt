@@ -27,11 +27,11 @@ public class StuecklistenFormular extends VerticalPanel {
 	StuecklistenVerwaltungAsync stuecklistenVerwaltung = ClientEinstellungen.getStuecklistenVerwaltung();
 
 	Stueckliste stuecklistenDarstellung = null;
-	BusinessObjectTreeViewModel botvm = null;
+//	BusinessObjectTreeViewModel botvm = null;
 	
-	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
-		this.botvm = botvm;
-	}
+//	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
+//		this.botvm = botvm;
+//	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -64,11 +64,11 @@ public class StuecklistenFormular extends VerticalPanel {
 		this.add(boButtonsPanel);
 
 		Button newButton = new Button("Neu");
-		newButton.addClickHandler(new NewClickHandler());
+//		newButton.addClickHandler(new NewClickHandler());
 		boButtonsPanel.add(newButton);
 
 		Button deleteButton = new Button("Löschen");
-		deleteButton.addClickHandler(new DeleteClickHandler());
+//		deleteButton.addClickHandler(new DeleteClickHandler());
 		boButtonsPanel.add(deleteButton);
 
 		Button editButton = new Button("Bearbeiten");
@@ -92,36 +92,36 @@ public class StuecklistenFormular extends VerticalPanel {
 	 * TODO: rootElement bei Erstellung einer neuen BOM muss mitgegeben werden
 	 */
 
-	private class DeleteClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			if (stuecklistenDarstellung != null) {
+//	private class DeleteClickHandler implements ClickHandler {
+//
+//		@Override
+//		public void onClick(ClickEvent event) {
+//			if (stuecklistenDarstellung != null) {
 //				stuecklistenVerwaltung.loescheStueckliste(stuecklistenDarstellung,
 //						new LoescheStuecklistenCallback(stuecklistenDarstellung));
-			} else {
-
-			}
-		}
-	}
+//			} else {
+//
+//			}
+//		}
+//	}
 
 	/**
 	 * Ein neues Objekt wird erzeugt.
 	 * 
 	 */
-	private class NewClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			Stueckliste selektierteStueckliste = botvm.holeSelektierteStueckliste();
-			if (selektierteStueckliste == null) {
-				Window.alert("keine Stückliste ausgewählt");
-			} else {
-				stuecklistenVerwaltung.erstelleStueckliste(selektierteStueckliste, null,
-						new ErstelleStuecklistenCallback(selektierteStueckliste));
-			}
-		}
-	}
+//	private class NewClickHandler implements ClickHandler {
+//
+//		@Override
+//		public void onClick(ClickEvent event) {
+//			Stueckliste selektierteStueckliste = botvm.holeSelektierteStueckliste();
+//			if (selektierteStueckliste == null) {
+//				Window.alert("keine Stückliste ausgewählt");
+//			} else {
+//				stuecklistenVerwaltung.erstelleStueckliste(selektierteStueckliste, null,
+//						new ErstelleStuecklistenCallback(selektierteStueckliste));
+//			}
+//		}
+//	}
 
 	/*
 	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
@@ -183,7 +183,7 @@ public class StuecklistenFormular extends VerticalPanel {
 		}
 	}
 
-void setzeSelektiert(Stueckliste bom) {
+public void setzeSelektiert(Stueckliste bom) {
 	if (bom != null) {
 		stuecklistenDarstellung = bom;
 		nameTextBox.setText(stuecklistenDarstellung.getName());

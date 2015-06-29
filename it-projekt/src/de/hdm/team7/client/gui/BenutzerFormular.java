@@ -27,11 +27,11 @@ public class BenutzerFormular extends VerticalPanel {
 			.getStuecklistenVerwaltung();
 
 	Benutzer benutzerDarstellung = null;
-	BusinessObjectTreeViewModel botvm = null;
+//	BusinessObjectTreeViewModel botvm = null;
 	
-	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
-		this.botvm = botvm;
-	}
+//	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
+//		this.botvm = botvm;
+//	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -64,7 +64,7 @@ public class BenutzerFormular extends VerticalPanel {
 		this.add(boButtonsPanel);
 
 		Button newButton = new Button("Neu");
-		newButton.addClickHandler(new NewClickHandler());
+//		newButton.addClickHandler(new NewClickHandler());
 		boButtonsPanel.add(newButton);
 
 		Button deleteButton = new Button("Löschen");
@@ -108,19 +108,19 @@ public class BenutzerFormular extends VerticalPanel {
 	 * Ein neues Objekt wird erzeugt.
 	 * 
 	 */
-	private class NewClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			Benutzer selektierterBenutzer = botvm.holeSelektiertenBenutzer();
-			if (selektierterBenutzer == null) {
-				Window.alert("kein Benutzer ausgewählt");
-			} else {
-				stuecklistenVerwaltung.erstelleBenutzer(selektierterBenutzer,
-						new ErstelleBenutzerCallback(selektierterBenutzer));
-			}
-		}
-	}
+//	private class NewClickHandler implements ClickHandler {
+//
+//		@Override
+//		public void onClick(ClickEvent event) {
+//			Benutzer selektierterBenutzer = botvm.holeSelektiertenBenutzer();
+//			if (selektierterBenutzer == null) {
+//				Window.alert("kein Benutzer ausgewählt");
+//			} else {
+//				stuecklistenVerwaltung.erstelleBenutzer(selektierterBenutzer,
+//						new ErstelleBenutzerCallback(selektierterBenutzer));
+//			}
+//		}
+//	}
 
 	/*
 	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
@@ -182,7 +182,7 @@ public class BenutzerFormular extends VerticalPanel {
 		}
 	}
 
-void setzeSelektiert(Benutzer b) {
+public void setzeSelektiert(Benutzer b) {
 	if (b != null) {
 		benutzerDarstellung = b;
 		nameTextBox.setText(benutzerDarstellung.getName());

@@ -27,11 +27,11 @@ public class BaugruppeFormular extends VerticalPanel {
 			.getStuecklistenVerwaltung();
 
 	Baugruppe baugruppeDarstellung = null;
-	BusinessObjectTreeViewModel botvm = null;
+//	BusinessObjectTreeViewModel botvm = null;
 	
-	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
-		this.botvm = botvm;
-	}
+//	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
+//		this.botvm = botvm;
+//	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -64,7 +64,7 @@ public class BaugruppeFormular extends VerticalPanel {
 		this.add(boButtonsPanel);
 
 		Button newButton = new Button("Neu");
-		newButton.addClickHandler(new NewClickHandler());
+//		newButton.addClickHandler(new NewClickHandler());
 		boButtonsPanel.add(newButton);
 
 		Button deleteButton = new Button("Löschen");
@@ -109,20 +109,20 @@ public class BaugruppeFormular extends VerticalPanel {
 	 * Ein neues Objekt wird erzeugt.
 	 * 
 	 */
-	private class NewClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			Baugruppe selektierteBaugruppe = botvm.holeSelektierteBaugruppe();
-			if (selektierteBaugruppe == null) {
-				Window.alert("keine Baugruppe ausgewählt");
-			} else {
-				stuecklistenVerwaltung.erstelleBaugruppe(selektierteBaugruppe,
-						null, new erstelleBaugruppeCallback(
-								selektierteBaugruppe));
-			}
-		}
-	}
+//	private class NewClickHandler implements ClickHandler {
+//
+//		@Override
+//		public void onClick(ClickEvent event) {
+//			Baugruppe selektierteBaugruppe = botvm.holeSelektierteBaugruppe();
+//			if (selektierteBaugruppe == null) {
+//				Window.alert("keine Baugruppe ausgewählt");
+//			} else {
+//				stuecklistenVerwaltung.erstelleBaugruppe(selektierteBaugruppe,
+//						null, new erstelleBaugruppeCallback(
+//								selektierteBaugruppe));
+//			}
+//		}
+//	}
 
 	/*
 	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
@@ -184,7 +184,7 @@ public class BaugruppeFormular extends VerticalPanel {
 		}
 	}
 
-	void setzeSelektiert(Baugruppe compAss) {
+	public void setzeSelektiert(Baugruppe compAss) {
 		if (compAss != null) {
 			baugruppeDarstellung = compAss;
 			nameTextBox.setText(baugruppeDarstellung.getName());

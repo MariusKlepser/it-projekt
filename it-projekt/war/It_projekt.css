@@ -1,50 +1,34 @@
-* {
-	box-sizing: border-box;
-}
+/** Add css rules here for your application. */
 
-html, body {
-	height: 100%;
-	width: 100%;
-	padding: 0;
-	margin: 0;
-}
 
+/** Example rules used by the template application (remove for your app) */
 h1 {
-    font-size: 30px;
-  	font-weight: bold;
-  	color: #d51a1a;
+  font-size: 2em;
+  font-weight: bold;
+  color: #777777;
+  margin: 40px 0px 70px;
+  text-align: center;
 }
 
-h2 {
-	font-size: 20px;
-  	font-weight: bold;
-  	color: #000000;
+.sendButton {
+  display: block;
+  font-size: 16pt;
 }
 
-.wrapper {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	background-color: #e4e4e4;
+/** Most GWT widgets already have a style name defined */
+.gwt-DialogBox {
+  width: 400px;
 }
 
-.content {
-	z-index: 50;
-	position: absolute;
-	height: 100%;
-	width: 100%;
-	padding: 20px;
-	padding-top: 60px;
+.dialogVPanel {
+  margin: 5px;
 }
 
-.menu {
-	z-index: 100;
-	width: 100%;
-	position: fixed;
+.serverResponseLabelError {
+  color: red;
 }
 
-	.gwt-MenuBar-horizontal .gwt-MenuItem, .gwt-MenuBar-horizontal .gwt-MenuItemSeparator {
-		height: 36px;
-  		text-align: center;
-  		vertical-align: middle;
-	}
+/** Set ids using widget.getElement().setId("idOfElement") */
+#closeButton {
+  margin: 15px 6px 6px;
+}

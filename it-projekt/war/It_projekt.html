@@ -1,16 +1,37 @@
 <!doctype html>
+<!-- The DOCTYPE declaration above will set the     -->
+<!-- browser's rendering engine into                -->
+<!-- "Standards Mode". Replacing this declaration   -->
+<!-- with a "Quirks Mode" doctype is not supported. -->
 
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Stücklistenverwaltung</title>
+
+    <!--                                                               -->
+    <!-- Consider inlining CSS to reduce the number of requested files -->
+    <!--                                                               -->
+    <link type="text/css" rel="stylesheet" href="It_projekt.css">
+
+    <!--                                           -->
+    <!-- Any title is fine                         -->
+    <!--                                           -->
+    <title>Web Application Starter Project</title>
+    
+    <!--                                           -->
+    <!-- This script loads your compiled module.   -->
+    <!-- If you add any GWT meta tags, they must   -->
+    <!-- be added before this line.                -->
+    <!--                                           -->
     <script type="text/javascript" language="javascript" src="it_projekt/it_projekt.nocache.js"></script>
   </head>
-  
+
+  <!--                                           -->
+  <!-- The body can have arbitrary html, or      -->
+  <!-- you can leave the body empty if you want  -->
+  <!-- to create a completely dynamic UI.        -->
+  <!--                                           -->
   <body>
-  <div class="wrapper">
-  	<div id="menu" class="menu"></div>
-  	<div id="content" class="content"></div>
 
     <!-- OPTIONAL: include this if you want history support -->
     <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
@@ -21,15 +42,12 @@
         Your web browser must have JavaScript enabled
         in order for this application to display correctly.
       </div>
-      
     </noscript>
-    
-	<div id="TopLevelFrame">
+
+    <div id="TopLevelFrame">
 		<div id="Header"><h1>Stücklistenverwaltung</h1></div>
-		<div id="Navigator"></div>
-		<div id="Details"></div>
+		<div id="Container"></div>
 		<div id="Trailer">Team 7, Hochschule der Medien Stuttgart</div>
 	</div>
-  </div>
   </body>
 </html>
