@@ -159,7 +159,7 @@ public class ZuordnungsMapper {
 	 * @return das bereits übergebene Objekt, jedoch mit ggf. korrigierter
 	 *         <code>id</code>.
 	 */
-	public ZuordnungBGBG insert(ZuordnungBGBG zBGBG) {
+	public ZuordnungBGBG einfuegen(ZuordnungBGBG zBGBG) {
 		Connection con = DBVerbindung.connection();
 
 		try {
@@ -215,7 +215,7 @@ public class ZuordnungsMapper {
 		return zBGBG;
 	}
 
-	public ZuordnungBGBT insert(ZuordnungBGBT zBGBT) {
+	public ZuordnungBGBT einfuegen(ZuordnungBGBT zBGBT) {
 		Connection con = DBVerbindung.connection();
 
 		try {
@@ -271,7 +271,7 @@ public class ZuordnungsMapper {
 		return zBGBT;
 	}
 	
-	public ZuordnungEEBG insert(ZuordnungEEBG zEEBG) {
+	public ZuordnungEEBG einfuegen(ZuordnungEEBG zEEBG) {
 		Connection con = DBVerbindung.connection();
 
 		try {
@@ -328,7 +328,7 @@ public class ZuordnungsMapper {
 	}
 	
 	
-	public ZuordnungEEBT insert(ZuordnungEEBT zEEBT) {
+	public ZuordnungEEBT einfuegen(ZuordnungEEBT zEEBT) {
 		Connection con = DBVerbindung.connection();
 
 		try {
@@ -392,25 +392,92 @@ public class ZuordnungsMapper {
 	 *            das Objekt, das in die DB geschrieben werden soll
 	 * @return das als Parameter übergebene Objekt
 	 */
-	public Baugruppe update(Baugruppe ca) {
+	public ZuordnungBGBG aktualisiere(ZuordnungBGBG zBGBG) {
 		Connection con = DBVerbindung.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE baugruppe " + "SET name=\""
-					+ ca.getName() + "\", " + "beschreibung=\""
-					+ ca.getDescription() + "\" " + "aenderungsdatum=\""
-					+ ca.getAenderungsDatum() + "\" "
-					+ "materialbezeichnung=\"" + ca.getMaterialBezeichnung()
-					+ "\" " + "WHERE id=" + ca.getId());
+			stmt.executeUpdate("UPDATE z_baugruppeBaugruppe " + "SET baugruppeID=\""
+					+ zBGBG.getBaugruppeID() + "\" " + "baugruppe2ID=\""
+					+ zBGBG.getBaugruppe2ID() + "\" "
+					+ "menge=\"" + zBGBG.getMenge() + "\" "
+					+ "aenderungsdatum=\"" + zBGBG.getAenderungsdatum()
+					+ "\" "
+					+ "benutzerID=\"" + zBGBG.getAenderer()
+					+ "\" " + "WHERE id=" + zBGBG.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		// Um Analogie zu insert(User u) zu wahren, geben wir u zurück
-		return ca;
+		return zBGBG;
+	}
+
+	public ZuordnungBGBT aktualisiere(ZuordnungBGBT zBGBT) {
+		Connection con = DBVerbindung.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("UPDATE z_baugruppeBauteil " + "SET baugruppeID=\""
+					+ zBGBT.getBaugruppeID() + "\" " + "bauteilID=\""
+					+ zBGBT.getBauteilID() + "\" "
+					+ "menge=\"" + zBGBT.getMenge() + "\" "
+					+ "aenderungsdatum=\"" + zBGBT.getAenderungsdatum()
+					+ "\" "
+					+ "benutzerID=\"" + zBGBT.getAenderer()
+					+ "\" " + "WHERE id=" + zBGBT.getId());
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return zBGBT;
+	}
+	
+	public ZuordnungEEBG aktualisiere(ZuordnungEEBG zEEBG) {
+		Connection con = DBVerbindung.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("UPDATE z_enderzeugnisBaugruppe " + "SET enderzeugnisID=\""
+					+ zEEBG.getEnderzeugnisID() + "\" " + "baugruppeID=\""
+					+ zEEBG.getBaugruppeID() + "\" "
+					+ "menge=\"" + zEEBG.getMenge() + "\" "
+					+ "aenderungsdatum=\"" + zEEBG.getAenderungsdatum()
+					+ "\" "
+					+ "benutzerID=\"" + zEEBG.getAenderer()
+					+ "\" " + "WHERE id=" + zEEBG.getId());
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return zEEBG;
+	}
+
+	public ZuordnungEEBT aktualisiere(ZuordnungEEBT zEEBT) {
+		Connection con = DBVerbindung.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("UPDATE z_enderzeugnisBauteil " + "SET enderzeugnisID=\""
+					+ zEEBT.getEnderzeugnisID() + "\" " + "bauteilID=\""
+					+ zEEBT.getBauteilID() + "\" "
+					+ "menge=\"" + zEEBT.getMenge() + "\" "
+					+ "aenderungsdatum=\"" + zEEBT.getAenderungsdatum()
+					+ "\" "
+					+ "benutzerID=\"" + zEEBT.getAenderer()
+					+ "\" " + "WHERE id=" + zEEBT.getId());
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return zEEBT;
 	}
 
 	/**
