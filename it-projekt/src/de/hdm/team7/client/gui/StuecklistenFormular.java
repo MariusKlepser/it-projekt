@@ -67,7 +67,7 @@ public class StuecklistenFormular extends VerticalPanel {
 //		newButton.addClickHandler(new NewClickHandler());
 		boButtonsPanel.add(newButton);
 
-		Button deleteButton = new Button("Löschen");
+		Button deleteButton = new Button("Loeschen");
 //		deleteButton.addClickHandler(new DeleteClickHandler());
 		boButtonsPanel.add(deleteButton);
 
@@ -92,19 +92,31 @@ public class StuecklistenFormular extends VerticalPanel {
 	 * TODO: rootElement bei Erstellung einer neuen BOM muss mitgegeben werden
 	 */
 
-//	private class DeleteClickHandler implements ClickHandler {
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//			if (stuecklistenDarstellung != null) {
-//				stuecklistenVerwaltung.loescheStueckliste(stuecklistenDarstellung,
-//						new LoescheStuecklistenCallback(stuecklistenDarstellung));
-//			} else {
-//
-//			}
-//		}
-//	}
+	private class DeleteClickHandler implements ClickHandler {
 
+		@Override
+		public void onClick(ClickEvent event) {
+			if (stuecklistenDarstellung != null) {
+				stuecklistenVerwaltung.loescheStueckliste(stuecklistenDarstellung,
+						new loescheStuecklisteCallback(stuecklistenDarstellung));
+			} else {
+				Window.alert("Keine Stueckliste ausgewaehlt");
+			}
+		}
+	}
+
+	private class EditClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (stuecklistenDarstellung != null) {
+				stuecklistenVerwaltung.loescheStueckliste(stuecklistenDarstellung,
+						new bearbeiteStuecklisteCallback(stuecklistenDarstellung));
+			} else {
+				Window.alert("Keine Stueckliste ausgewaehlt");
+			}
+		}
+	}
 	/**
 	 * Ein neues Objekt wird erzeugt.
 	 * 
@@ -141,6 +153,7 @@ public class StuecklistenFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
+			Window.alert("Das Erstellen der Stueckliste ist fehlgeschlagen.");
 		}
 
 		public void onSuccess(Stueckliste bom) {
@@ -166,7 +179,34 @@ public class StuecklistenFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Löschen der Stückliste ist fehlgeschlagen!");
+			Window.alert("Das Loeschen der Stueckliste ist fehlgeschlagen!");
+		}
+
+		public void onSuccess(Void result) {
+			if (bom != null) {
+				setzeSelektiert(null);
+//				botvm.entferneStueckliste(bom);
+			}
+		}
+
+		@Override
+		public void onSuccess(String result) {
+			// TODO Auto-generated method stub
+
+		}
+	}
+
+	public class bearbeiteStuecklisteCallback implements AsyncCallback<String> {
+
+		Stueckliste bom = null;
+
+		bearbeiteStuecklisteCallback(Stueckliste bom) {
+			this.bom = bom;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Das Bearbeiten der Stueckliste ist fehlgeschlagen!");
 		}
 
 		public void onSuccess(Void result) {

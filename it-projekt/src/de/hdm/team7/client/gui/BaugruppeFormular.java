@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.StackLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -27,11 +28,11 @@ public class BaugruppeFormular extends VerticalPanel {
 			.getStuecklistenVerwaltung();
 
 	Baugruppe baugruppeDarstellung = null;
-//	BusinessObjectTreeViewModel botvm = null;
+	StackLayoutPanel stackLayoutPanel = null;
 	
-//	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
-//		this.botvm = botvm;
-//	}
+	public void setzeStackLayoutPanel(StackLayoutPanel stackLayoutPanel){
+		this.stackLayoutPanel = stackLayoutPanel;
+	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -63,16 +64,16 @@ public class BaugruppeFormular extends VerticalPanel {
 		HorizontalPanel boButtonsPanel = new HorizontalPanel();
 		this.add(boButtonsPanel);
 
-		Button newButton = new Button("Neu");
+//		Button newButton = new Button("Neu");
 //		newButton.addClickHandler(new NewClickHandler());
-		boButtonsPanel.add(newButton);
+//		boButtonsPanel.add(newButton);
 
-		Button deleteButton = new Button("Löschen");
+		Button deleteButton = new Button("Loeschen");
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		boButtonsPanel.add(deleteButton);
 
 		Button editButton = new Button("Bearbeiten");
-//		editButton.addClickHandler(new EditClickHandler());
+		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
 	}
 
@@ -100,11 +101,23 @@ public class BaugruppeFormular extends VerticalPanel {
 				stuecklistenVerwaltung.loescheBaugruppe(baugruppeDarstellung,
 						new loescheBaugruppeCallback(baugruppeDarstellung));
 			} else {
-
+					Window.alert("Keine Baugruppe ausgewaehlt");
 			}
 		}
 	}
 
+	private class EditClickHandler implements ClickHandler {
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			if (baugruppeDarstellung != null) {
+				stuecklistenVerwaltung.aktualisiereBaugruppe(baugruppeDarstellung, null,
+						new bearbeiteBaugruppeCallback(baugruppeDarstellung));
+			} else {
+				Window.alert("Keine Baugruppe ausgewaehlt");
+			}
+		}
+	}
 	/**
 	 * Ein neues Objekt wird erzeugt.
 	 * 
@@ -113,7 +126,7 @@ public class BaugruppeFormular extends VerticalPanel {
 //
 //		@Override
 //		public void onClick(ClickEvent event) {
-//			Baugruppe selektierteBaugruppe = botvm.holeSelektierteBaugruppe();
+//			Baugruppe selektierteBaugruppe = stackLayoutPanel.holeSelektierteBaugruppe();
 //			if (selektierteBaugruppe == null) {
 //				Window.alert("keine Baugruppe ausgewählt");
 //			} else {
@@ -132,6 +145,7 @@ public class BaugruppeFormular extends VerticalPanel {
 	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
 	 * ergebnis des asynchronen Aufrufs geliefert wird.
 	 */
+
 	public class erstelleBaugruppeCallback implements AsyncCallback<String> {
 
 		Baugruppe compAss = null;
@@ -142,6 +156,33 @@ public class BaugruppeFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
+			Window.alert("Das Erstellen der Baugruppe ist fehlgeschlagen.");
+		}
+
+		public void onSuccess(Baugruppe compAss) {
+			if (compAss != null) {
+//				botvm.fuegeBaugruppeHinzu(compAss);
+			}
+		}
+
+		@Override
+		public void onSuccess(String result) {
+			// TODO Auto-generated method stub
+
+		}
+	}
+
+	public class bearbeiteBaugruppeCallback implements AsyncCallback<String> {
+
+		Baugruppe compAss = null;
+
+		bearbeiteBaugruppeCallback(Baugruppe compAss) {
+			this.compAss = compAss;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Das Bearbeiten der Baugruppe ist fehlgeschlagen.");
 		}
 
 		public void onSuccess(Baugruppe compAss) {
@@ -167,7 +208,7 @@ public class BaugruppeFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Löschen der Baugruppe ist fehlgeschlagen!");
+			Window.alert("Das Loeschen der Baugruppe ist fehlgeschlagen!");
 		}
 
 		public void onSuccess(Void result) {

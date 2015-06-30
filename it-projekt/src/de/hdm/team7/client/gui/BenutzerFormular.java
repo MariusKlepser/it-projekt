@@ -67,7 +67,7 @@ public class BenutzerFormular extends VerticalPanel {
 //		newButton.addClickHandler(new NewClickHandler());
 		boButtonsPanel.add(newButton);
 
-		Button deleteButton = new Button("Löschen");
+		Button deleteButton = new Button("Loeschen");
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		boButtonsPanel.add(deleteButton);
 
@@ -99,7 +99,20 @@ public class BenutzerFormular extends VerticalPanel {
 				stuecklistenVerwaltung.loescheBenutzer(benutzerDarstellung,
 						new LoescheBenutzerCallback(benutzerDarstellung));
 			} else {
-
+					Window.alert("Kein Benutzer ausgewaehlt");
+			}
+		}
+	}
+	
+	private class EditClickHandler implements ClickHandler {
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			if (benutzerDarstellung != null) {
+				stuecklistenVerwaltung.aktualisiereBenutzer(benutzerDarstellung,
+						new BearbeiteBenutzerCallback(benutzerDarstellung));
+			} else {
+				Window.alert("Kein Benutzer ausgewaehlt");
 			}
 		}
 	}
@@ -140,6 +153,7 @@ public class BenutzerFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
+			Window.alert("Das Erstellen des Benutzers ist fehlgeschlagen.");
 		}
 
 		public void onSuccess(Benutzer b) {
@@ -165,7 +179,34 @@ public class BenutzerFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Löschen des Benutzers ist fehlgeschlagen!");
+			Window.alert("Das Loeschen des Benutzers ist fehlgeschlagen!");
+		}
+
+		public void onSuccess(Void result) {
+			if (b != null) {
+				setzeSelektiert(null);
+//				botvm.entferneBenutzer(b);
+			}
+		}
+
+		@Override
+		public void onSuccess(String result) {
+			// TODO Auto-generated method stub
+
+		}
+	}
+
+	public class BearbeiteBenutzerCallback implements AsyncCallback<String> {
+
+		Benutzer b = null;
+
+		BearbeiteBenutzerCallback(Benutzer b) {
+			this.b = b;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Das Bearbeiten des Benutzers ist fehlgeschlagen!");
 		}
 
 		public void onSuccess(Void result) {

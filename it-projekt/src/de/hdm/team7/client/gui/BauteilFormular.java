@@ -99,7 +99,7 @@ public class BauteilFormular extends VerticalPanel {
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		boButtonsPanel.add(deleteButton);
 
-//		editButton.addClickHandler(new EditClickHandler());
+		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
 		
 //		decoPanel.add(boButtonsPanel);
@@ -130,7 +130,20 @@ public class BauteilFormular extends VerticalPanel {
 				stuecklistenVerwaltung.loescheBauteil(bauteilDarstellung,
 						new loescheBauteilCallback(bauteilDarstellung));
 			} else {
-
+					Window.alert("Kein Bauteil ausgewaehlt");
+			}
+		}
+	}
+	
+	private class EditClickHandler implements ClickHandler {
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			if (bauteilDarstellung != null) {
+				stuecklistenVerwaltung.aktualisiereBauteil(bauteilDarstellung, 
+						new bearbeiteBauteilCallback(bauteilDarstellung));
+			} else {
+				Window.alert("Kein Bauteil ausgewaehlt");
 			}
 		}
 	}
@@ -171,6 +184,7 @@ public class BauteilFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
+			Window.alert("Das Erstellen des Bauteils ist fehlgeschlagen.");
 		}
 
 		public void onSuccess(Bauteil comp) {
@@ -196,7 +210,34 @@ public class BauteilFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Löschen des Bauteils ist fehlgeschlagen!");
+			Window.alert("Das Loeschen des Bauteils ist fehlgeschlagen!");
+		}
+
+		public void onSuccess(Void result) {
+			if (comp != null) {
+				setzeSelektiert(null);
+//				botvm.entferneBauteil(comp);
+			}
+		}
+
+		@Override
+		public void onSuccess(String result) {
+			// TODO Auto-generated method stub
+
+		}
+	}
+
+	public class bearbeiteBauteilCallback implements AsyncCallback<String> {
+
+		Bauteil comp = null;
+
+		bearbeiteBauteilCallback(Bauteil comp) {
+			this.comp = comp;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Das Bearbeiten des Bauteils ist fehlgeschlagen!");
 		}
 
 		public void onSuccess(Void result) {

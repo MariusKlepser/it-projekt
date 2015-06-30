@@ -67,7 +67,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 //		newButton.addClickHandler(new NewClickHandler());
 		boButtonsPanel.add(newButton);
 
-		Button deleteButton = new Button("Löschen");
+		Button deleteButton = new Button("Loeschen");
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		boButtonsPanel.add(deleteButton);
 
@@ -99,11 +99,23 @@ public class EnderzeugnisFormular extends VerticalPanel {
 				stuecklistenVerwaltung.loescheEnderzeugnis(enderzeugnisDarstellung,
 						new loescheEnderzeugnisCallback(enderzeugnisDarstellung));
 			} else {
-
+				Window.alert("Kein Enderzeugnis ausgewaehlt");
 			}
 		}
 	}
-
+	
+	private class EditClickHandler implements ClickHandler {
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			if (enderzeugnisDarstellung != null) {
+				stuecklistenVerwaltung.aktualisiereEnderzeugnis(enderzeugnisDarstellung, null,
+						new bearbeiteEnderzeugnisCallback(enderzeugnisDarstellung));
+			} else {
+				Window.alert("Kein Enderzeugnis ausgewaehlt");
+			}
+		}
+	}
 	/**
 	 * Ein neues Objekt wird erzeugt.
 	 * 
@@ -140,6 +152,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
+			Window.alert("Das Erstellen des Enderzeugnisses ist fehlgeschlagen.");
 		}
 
 		public void onSuccess(Enderzeugnis endProduct) {
@@ -165,7 +178,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Löschen des Endprodukts ist fehlgeschlagen!");
+			Window.alert("Das Loeschen des Endprodukts ist fehlgeschlagen!");
 		}
 
 		public void onSuccess(Void result) {
@@ -181,6 +194,33 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 		}
 	}
+	public class bearbeiteEnderzeugnisCallback implements AsyncCallback<String> {
+
+		Enderzeugnis endProduct = null;
+
+		bearbeiteEnderzeugnisCallback(Enderzeugnis endProduct) {
+			this.endProduct = endProduct;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Das Bearbeiten des Endprodukts ist fehlgeschlagen!");
+		}
+
+		public void onSuccess(Void result) {
+			if (endProduct != null) {
+				setzeSelektiert(null);
+//				botvm.entferneEnderzeugnis(endProduct);
+			}
+		}
+
+		@Override
+		public void onSuccess(String result) {
+			// TODO Auto-generated method stub
+
+		}
+	}
+
 
 public void setzeSelektiert(Enderzeugnis endProduct) {
 	if (endProduct != null) {
