@@ -19,6 +19,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.client.rpc.*;
 import de.hdm.team7.shared.geschaeftsobjekte.*;
+import de.hdm.team7.server.database.BauteilMapper;
 
 public class EditView extends ClientEinstellungen {
 	
@@ -67,7 +68,7 @@ public class EditView extends ClientEinstellungen {
 		//Absenden Button
 		Button bauteilanlegenbtn = new Button("Anlegen", new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				Bauteil c = new Bauteil();
+				Bauteil c = new Bauteil(BauteilMapper.getmaxIDBT(), null, null, null, null);
 				c.setName(baugruppenname.getText());
 				c.setDescription(beschreibungtxt.getText());
 				c.setMaterialBezeichnung(materialbezeichnungtxt.getText());

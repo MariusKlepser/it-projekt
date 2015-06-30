@@ -2,6 +2,11 @@ package de.hdm.team7.shared.geschaeftsobjekte;
 
 public class Benutzer extends Geschaeftsobjekt {
 
+
+	public Benutzer(int id, String name) {
+		super(id, name);
+	}
+
 	private static final long serialVersionUID = 1L;
 	
 	private String passwort = "";

@@ -88,7 +88,7 @@ public class ZuordnungsMapper {
 			// Für jeden Eintrag im Suchergebnis wird nun ein User-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Baugruppe ca = new Baugruppe();
+				Baugruppe ca = new Baugruppe(0, null, null, null, null);
 				ca.setId(rs.getInt("id"));
 				ca.setName(rs.getString("name"));
 				ca.setDescription(rs.getString("beschreibung"));
@@ -131,7 +131,7 @@ public class ZuordnungsMapper {
 			// Für jeden Eintrag im Suchergebnis wird nun ein User-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Baugruppe ca = new Baugruppe();
+				Baugruppe ca = new Baugruppe(0, null, null, null, null);
 				ca.setId(rs.getInt("id"));
 				ca.setName(rs.getString("name"));
 				ca.setDescription(rs.getString("beschreibung"));

@@ -12,6 +12,8 @@ public class BaugruppeMapper {
 
 	private static BaugruppeMapper baugruppeMapper = null;
 	private String log;
+	
+	public static int maxIDBG;
 
 	/**
 	 * Geschützter Konstruktor - verhindert die Möglichkeit, mit
@@ -26,6 +28,10 @@ public class BaugruppeMapper {
 		}
 
 		return baugruppeMapper;
+	}
+	
+	public static int getmaxIDBT()	{
+		return maxIDBG;
 	}
 
 	public Baugruppe findByKey(int id) {
@@ -47,7 +53,7 @@ public class BaugruppeMapper {
 			 */
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
-				Baugruppe ca = new Baugruppe();
+				Baugruppe ca = new Baugruppe(BaugruppeMapper.getmaxIDBT(), null, null, null, null);
 				ca.setId(rs.getInt("id"));
 				ca.setName(rs.getString("name"));
 				ca.setDescription(rs.getString("beschreibung"));
@@ -86,7 +92,7 @@ public class BaugruppeMapper {
 			// Für jeden Eintrag im Suchergebnis wird nun ein User-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Baugruppe ca = new Baugruppe();
+				Baugruppe ca = new Baugruppe(0, null, null, null, null);
 				ca.setId(rs.getInt("id"));
 				ca.setName(rs.getString("name"));
 				ca.setDescription(rs.getString("beschreibung"));
@@ -129,7 +135,7 @@ public class BaugruppeMapper {
 			// Für jeden Eintrag im Suchergebnis wird nun ein User-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Baugruppe ca = new Baugruppe();
+				Baugruppe ca = new Baugruppe(0, null, null, null, null);
 				ca.setId(rs.getInt("id"));
 				ca.setName(rs.getString("name"));
 				ca.setDescription(rs.getString("beschreibung"));
@@ -193,6 +199,8 @@ public class BaugruppeMapper {
 						+ "','"
 						+ ca.getName()
 						+ "')");
+				
+				maxIDBG++;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

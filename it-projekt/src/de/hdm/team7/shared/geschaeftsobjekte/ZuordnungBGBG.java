@@ -47,8 +47,6 @@ public class ZuordnungBGBG extends Zuordnung {
 
 public void findeAlleKinder(Connection con)	{
 	
-//	String query = "SELECT * FROM ZuordnungEEBG WHERE 'enderzeugnisID'" + this.enderzeugnisID;
-//	ResultSet rs = stmt.executeQuery("SELECT baugruppenID, menge FROM ZuordnungEEBG" + "WHERE id=" + enderzeugnisID + "ORDER BY baugruppenID");
 	
 	String query = "SELECT * FROM z_baugruppeBaugruppe WHERE id=" + this.baugruppeID;
 	

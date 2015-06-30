@@ -58,7 +58,7 @@ public class EnderzeugnisMapper {
 			 */
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
-				Enderzeugnis e = new Enderzeugnis();
+				Enderzeugnis e = new Enderzeugnis(0, null, null, null, null);
 				e.setId(rs.getInt("id"));
 				e.setName(rs.getString("name"));
 				e.setDescription(rs.getString("beschreibung"));
@@ -97,7 +97,7 @@ public class EnderzeugnisMapper {
 			// Für jeden Eintrag im Suchergebnis wird nun ein EndProject-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Enderzeugnis e = new Enderzeugnis();
+				Enderzeugnis e = new Enderzeugnis(0, null, null, null, null);
 				e.setId(rs.getInt("id"));
 				e.setName(rs.getString("name"));
 				e.setDescription(rs.getString("beschreibung"));
@@ -142,7 +142,7 @@ public class EnderzeugnisMapper {
 			// Für jeden Eintrag im Suchergebnis wird nun ein EndProduct-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Enderzeugnis e = new Enderzeugnis();
+				Enderzeugnis e = new Enderzeugnis(0, null, null, null, null);
 				e.setId(rs.getInt("id"));
 				e.setName(rs.getString("name"));
 				e.setDescription(rs.getString("beschreibung"));

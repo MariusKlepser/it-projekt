@@ -58,7 +58,7 @@ public class BenutzerMapper {
 			 */
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
-				Benutzer u = new Benutzer();
+				Benutzer u = new Benutzer(0, null);
 				u.setId(rs.getInt("id"));
 				u.setPasswort(rs.getString("password"));
 				u.setName(rs.getString("name"));
@@ -94,7 +94,7 @@ public class BenutzerMapper {
 			// Für jeden Eintrag im Suchergebnis wird nun ein User-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Benutzer u = new Benutzer();
+				Benutzer u = new Benutzer(0, null);
 				u.setId(rs.getInt("id"));
 				u.setPasswort(rs.getString("password"));
 				u.setName(rs.getString("name"));
@@ -133,7 +133,7 @@ public class BenutzerMapper {
 			// Für jeden Eintrag im Suchergebnis wird nun ein User-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Benutzer u = new Benutzer();
+				Benutzer u = new Benutzer(0, null);
 				u.setId(rs.getInt("id"));
 				u.setPasswort(rs.getString("password"));
 				u.setName(rs.getString("name"));

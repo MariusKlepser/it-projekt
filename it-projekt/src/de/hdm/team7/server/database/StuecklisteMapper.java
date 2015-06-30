@@ -58,7 +58,7 @@ public class StuecklisteMapper {
 			 */
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
-				Stueckliste b = new Stueckliste();
+				Stueckliste b = new Stueckliste(0, null);
 				b.setId(rs.getInt("id"));
 				b.setErstellungsDatum(rs.getDate("erstellungsdatum").toString());
 				b.setName(rs.getString("name"));
@@ -95,7 +95,7 @@ public class StuecklisteMapper {
 			// Für jeden Eintrag im Suchergebnis wird nun ein BOM-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Stueckliste b = new Stueckliste();
+				Stueckliste b = new Stueckliste(0, null);
 				b.setId(rs.getInt("id"));
 				b.setErstellungsDatum(rs.getDate("erstellungsdatum").toString());
 				b.setName(rs.getString("name"));
@@ -135,7 +135,7 @@ public class StuecklisteMapper {
 			// Für jeden Eintrag im Suchergebnis wird nun ein User-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Stueckliste b = new Stueckliste();
+				Stueckliste b = new Stueckliste(0, null);
 				b.setId(rs.getInt("id"));
 				b.setErstellungsDatum(rs.getDate("erstellungsdatum").toString());
 				b.setName(rs.getString("name"));

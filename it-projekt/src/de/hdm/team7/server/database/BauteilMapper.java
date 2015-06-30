@@ -12,7 +12,8 @@ public class BauteilMapper {
 
 	private static BauteilMapper bauteilMapper = null;
 	private String log;
-
+	
+	private static int maxIDBT;
 	/**
 	 * GeschÃ¼tzter Konstruktor - verhindert die MÃ¶glichkeit, mit
 	 * <code>new</code> neue Instanzen dieser Klasse zu erzeugen.
@@ -32,6 +33,11 @@ public class BauteilMapper {
 		return log;
 	}
 
+	
+	public static int getmaxIDBT()	{
+		return maxIDBT;
+	}
+	
 	/**
 	 * Suchen eines Components mit vorgegebener ID. Da diese eindeutig ist, wird
 	 * genau ein Objekt zurï¿½ckgegeben.
@@ -60,7 +66,7 @@ public class BauteilMapper {
 			 */
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
-				Bauteil u = new Bauteil();
+				Bauteil u = new Bauteil(0, null, null, null, null);
 				u.setId(rs.getInt("id"));
 				u.setName(rs.getString("name"));
 				u.setDescription(rs.getString("beschreibung"));
@@ -100,7 +106,7 @@ public class BauteilMapper {
 			// Component-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Bauteil u = new Bauteil();
+				Bauteil u = new Bauteil(0, null, null, null, null);
 				u.setId(rs.getInt("id"));
 				u.setName(rs.getString("name"));
 				u.setDescription(rs.getString("beschreibung"));
@@ -146,7 +152,7 @@ public class BauteilMapper {
 			// Component-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Bauteil u = new Bauteil();
+				Bauteil u = new Bauteil(0, null, null, null, null);
 				u.setId(rs.getInt("id"));
 				u.setName(rs.getString("name"));
 				u.setDescription(rs.getString("beschreibung"));
@@ -218,6 +224,8 @@ public class BauteilMapper {
 						+ u.getAenderungsDatum()
 						+ "','" + u.getMaterialBezeichnung() + "')");
 				log = log + "SQL query executed; ";
+				
+				maxIDBT++;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

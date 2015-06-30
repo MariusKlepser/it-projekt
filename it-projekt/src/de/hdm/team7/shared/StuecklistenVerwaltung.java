@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import de.hdm.team7.server.database.EnderzeugnisMapper;
 import de.hdm.team7.shared.geschaeftsobjekte.*;
 
 @RemoteServiceRelativePath("stuecklistenverwaltung")
@@ -140,4 +141,5 @@ public interface StuecklistenVerwaltung extends RemoteService {
 
 	public ArrayList<Bauteil> holeKinderKomponentenVon(Enderzeugnis enderzeugnis)
 			throws IllegalArgumentException;
+	
 }
