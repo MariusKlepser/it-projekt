@@ -4,9 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.shared.DateTimeFormat;
+import com.google.gwt.i18n.shared.DefaultDateTimeFormatInfo;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -52,7 +53,9 @@ public class StuecklistenFormular extends VerticalPanel {
 	static Button editButton = new Button("Bearbeiten");
 	static Button deleteButton = new Button("Loeschen");
 	
-	static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	static String pattern = "yyyy-MM-dd";
+	DefaultDateTimeFormatInfo info = new DefaultDateTimeFormatInfo();
+	DateTimeFormat dtf = new DateTimeFormat(pattern, info) {};  // <= trick here
 
 	/*
 	 * Im Konstruktor werden die Widgets z.T. erzeugt. Alle werden in einem
@@ -142,7 +145,7 @@ public class StuecklistenFormular extends VerticalPanel {
 			} else {
 				stuecklistenDarstellung.setName(nameTextBox.getText());
 				Date aktuell = new Date();
-				stuecklistenDarstellung.setErstellungsDatum(simpleDateFormat.format(aktuell));
+				stuecklistenDarstellung.setErstellungsDatum(dtf.format(aktuell));
 //				stuecklistenDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
 				stuecklistenVerwaltung.erstelleStueckliste(stuecklistenDarstellung, null,
 						new ErstelleStuecklistenCallback(stuecklistenDarstellung));
