@@ -107,7 +107,7 @@ public class It_projekt implements EntryPoint {
 		ScrollPanel scrollPanelStueckliste = new ScrollPanel();
 		scrollPanelStueckliste.add(stuecklisteList);
 		StackLayoutPanel stackLayoutPanel = new StackLayoutPanel(Unit.EM);
-		stackLayoutPanel.setPixelSize(400, 400);
+		stackLayoutPanel.setPixelSize(300, 550);
 		stackLayoutPanel.add(stuecklisteList, "Stuecklisten", 3);
 		stackLayoutPanel.addSelectionHandler(new SelectionHandler<Integer>() {
 		    @Override
@@ -545,7 +545,7 @@ public class It_projekt implements EntryPoint {
 
 		// Create a stack panel containing three labels.
 		StackLayoutPanel stackLayoutPanel = new StackLayoutPanel(Unit.EM);
-		stackLayoutPanel.setPixelSize(400, 400);
+		stackLayoutPanel.setPixelSize(300, 550);
 		stackLayoutPanel.add(scrollPanelBauteil, bauteilLink, 3);
 		stackLayoutPanel.add(scrollPanelBaugruppe, baugruppeLink, 3);
 		stackLayoutPanel.add(scrollPanelEnderzeugnis, enderzeugnisLink, 3);
