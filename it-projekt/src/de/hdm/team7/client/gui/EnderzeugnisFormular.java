@@ -144,7 +144,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 				enderzeugnisDarstellung.setMaterialBezeichnung(materialTextBox
 						.getText());
 				enderzeugnisDarstellung.setDescription(beschreibung.getText());
-				enderzeugnisDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
+//				enderzeugnisDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
 				stuecklistenVerwaltung.erstelleEnderzeugnis(enderzeugnisDarstellung, null,
 						new erstelleEnderzeugnisCallback(enderzeugnisDarstellung));
 			}

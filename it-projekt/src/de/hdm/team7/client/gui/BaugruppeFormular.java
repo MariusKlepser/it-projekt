@@ -151,7 +151,7 @@ public class BaugruppeFormular extends VerticalPanel {
 				baugruppeDarstellung.setMaterialBezeichnung(materialTextBox
 						.getText());
 				baugruppeDarstellung.setDescription(beschreibung.getText());
-				baugruppeDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
+//				baugruppeDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
 				stuecklistenVerwaltung.erstelleBaugruppe(baugruppeDarstellung, null,
 						new erstelleBaugruppeCallback(baugruppeDarstellung));
 			}
@@ -173,7 +173,7 @@ public class BaugruppeFormular extends VerticalPanel {
 				baugruppeDarstellung.setMaterialBezeichnung(materialTextBox
 						.getText());
 				baugruppeDarstellung.setDescription(beschreibung.getText());
-				baugruppeDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
+//				baugruppeDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
 				stuecklistenVerwaltung.aktualisiereBaugruppe(baugruppeDarstellung, null,
 						new bearbeiteBaugruppeCallback(baugruppeDarstellung));
 			}

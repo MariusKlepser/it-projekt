@@ -143,7 +143,7 @@ public class StuecklistenFormular extends VerticalPanel {
 				stuecklistenDarstellung.setName(nameTextBox.getText());
 				Date aktuell = new Date();
 				stuecklistenDarstellung.setErstellungsDatum(simpleDateFormat.format(aktuell));
-				stuecklistenDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
+//				stuecklistenDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
 				stuecklistenVerwaltung.erstelleStueckliste(stuecklistenDarstellung, null,
 						new ErstelleStuecklistenCallback(stuecklistenDarstellung));
 			}

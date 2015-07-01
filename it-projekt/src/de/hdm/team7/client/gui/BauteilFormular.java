@@ -146,7 +146,7 @@ public class BauteilFormular extends VerticalPanel {
 				bauteilDarstellung.setMaterialBezeichnung(materialTextBox
 						.getText());
 				bauteilDarstellung.setDescription(beschreibung.getText());
-				bauteilDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
+//				bauteilDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
 				stuecklistenVerwaltung.erstelleBauteil(bauteilDarstellung,
 						new erstelleBauteilCallback(bauteilDarstellung));
 			}
@@ -168,7 +168,7 @@ public class BauteilFormular extends VerticalPanel {
 				bauteilDarstellung.setMaterialBezeichnung(materialTextBox
 						.getText());
 				bauteilDarstellung.setDescription(beschreibung.getText());
-				bauteilDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
+//				bauteilDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
 				stuecklistenVerwaltung.aktualisiereBauteil(bauteilDarstellung,
 						new bearbeiteBauteilCallback(bauteilDarstellung));
 			}
