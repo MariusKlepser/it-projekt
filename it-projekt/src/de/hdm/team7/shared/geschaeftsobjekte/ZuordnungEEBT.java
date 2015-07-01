@@ -1,5 +1,6 @@
 package de.hdm.team7.shared.geschaeftsobjekte;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -9,13 +10,17 @@ import com.google.cloud.sql.jdbc.Statement;
 
 public class ZuordnungEEBT extends Zuordnung {
 
+	private int zuordnungsID;
 	private int enderzeugnisID;
 	private int bauteilID;
 	private ArrayList<Integer> bauteileIDS;
 	
 	
-	public ZuordnungEEBT() {
-		// TODO Auto-generated constructor stub
+	public ZuordnungEEBT(int zuordnungsID, int menge, String aenderungsdatum, Benutzer aenderer, int enderzeugnisID, int bauteilID) {
+		super(zuordnungsID, menge, aenderungsdatum, aenderer);
+		this.zuordnungsID = zuordnungsID;
+		this.enderzeugnisID = enderzeugnisID;
+		this.bauteilID = bauteilID;
 	}
 
 	public int getEnderzeugnisID()	{

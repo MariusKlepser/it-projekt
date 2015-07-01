@@ -9,14 +9,18 @@ import com.google.cloud.sql.jdbc.Statement;
 
 public class ZuordnungBGBG extends Zuordnung {
 
+	private int zuordnungsID;
 	private int baugruppeID;
 	private int baugruppe2ID;
 	private ArrayList<Integer> baugruppenIDS;
 	//@Marius: baugruppe2ID eingefügt, um ein einzelnes Kind-Element zu identifizieren - baugruppenIDS enthält alle Kind-Elemente(?)
 	
 	
-	public ZuordnungBGBG() {
-		// TODO Auto-generated constructor stub
+	public ZuordnungBGBG(int zuordnungsID, int menge, String aenderungsdatum, Benutzer aenderer, int baugruppeID, int baugruppe2ID) {
+		super(zuordnungsID, menge, aenderungsdatum, aenderer);
+		this.zuordnungsID = zuordnungsID;
+		this.baugruppe2ID = baugruppe2ID;
+		this.baugruppeID = baugruppeID;
 	}
 
 	//@Marius: Methode, um die ID des Eltern-Elements zu erfragen

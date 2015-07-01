@@ -10,8 +10,8 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TreeItem;
-
 import com.google.gwt.user.client.ui.VerticalPanel;
+
 import de.hdm.team7.client.gui.BaugruppeFormular;
 import de.hdm.team7.client.gui.BauteilFormular;
 import de.hdm.team7.client.gui.BenutzerFormular;
@@ -21,8 +21,17 @@ import de.hdm.team7.client.gui.EnderzeugnisFormular;
 import de.hdm.team7.client.gui.StuecklistenFormular;
 import de.hdm.team7.client.gui.ITProjekt.StuecklistenVerwaltungTreeResources;
 import de.hdm.team7.client.rpc.AsyncCallbackComponentList;
+import de.hdm.team7.server.database.BaugruppeMapper;
+import de.hdm.team7.server.database.BauteilMapper;
+import de.hdm.team7.server.database.EnderzeugnisMapper;
 import de.hdm.team7.shared.StuecklistenVerwaltung;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
+import de.hdm.team7.shared.geschaeftsobjekte.Baugruppe;
+import de.hdm.team7.shared.geschaeftsobjekte.Bauteil;
+import de.hdm.team7.shared.geschaeftsobjekte.Enderzeugnis;
+import de.hdm.team7.shared.geschaeftsobjekte.ZuordnungBGBT;
+import de.hdm.team7.shared.geschaeftsobjekte.ZuordnungEEBG;
+import de.hdm.team7.shared.geschaeftsobjekte.ZuordnungEEBT;
 
 public class It_projekt implements EntryPoint {
 
@@ -62,7 +71,33 @@ public class It_projekt implements EntryPoint {
 					.getStuecklistenVerwaltung();
 
 		}
+		
+		EnderzeugnisMapper eem = EnderzeugnisMapper.enderzeugnisMapper();
+		BauteilMapper btm = BauteilMapper.bauteilMapper();
+		BaugruppeMapper bgm = BaugruppeMapper.baugruppeMapper();
+		Enderzeugnis testVentilator = new Enderzeugnis(0, "Ventilator", "Testobjekt Ventilator.", "Plastik", "01.07.2015");
+		Bauteil testSchraube = new Bauteil(0, "Schraube", "Testbauteil Schraube", "Metall", "01.07.2015");
+		Bauteil testMotorblock = new Bauteil(0, "Motorblock", "Testbauteil Motorblock", "Metall", "01.07.2015");
+		Bauteil testKolben = new Bauteil(0, "Kolben", "Testbauteil Kolben", "Metall", "01.07.2015");
+		Bauteil testVerdeck = new Bauteil(0, "Verdeck", "Testbauteil Verdeck", "Plastik", "01.07.2015");
+		Baugruppe testMotor = new Baugruppe(0, "Motor", "Testbauteil Motor", "Metall", "01.07.2015");
+		Baugruppe testGehaeuse = new Baugruppe(0, "Gehaeuse", "Testbauteil Gehäuse", "Plastik", "01.07.2015");
+		eem.insert(testVentilator);
+		btm.insert(testSchraube);
+		btm.insert(testMotorblock);
+		btm.insert(testKolben);
+		btm.insert(testVerdeck);
+		bgm.insert(testMotor);
+		bgm.insert(testGehaeuse);
+		ZuordnungEEBT testVentilatorSchraube = new ZuordnungEEBT(0, 4, "01.07.2015", null, testVentilator.getId(), testSchraube.getId());
+		ZuordnungBGBT testMotorMotorblock = new ZuordnungBGBT(0, 1, "01.07.2015", null, testMotor.getId(), testMotorblock.getId());
+		ZuordnungBGBT testMotorKolben = new ZuordnungBGBT(0, 1, "01.07.2015", null, testMotor.getId(), testKolben.getId());
+		ZuordnungBGBT testGehaeuseSchraube = new ZuordnungBGBT(0, 6, "01.07.2015", null, testGehaeuse.getId(), testSchraube.getId());
+		ZuordnungBGBT testGehaeuseVerdeck = new ZuordnungBGBT(0, 1, "01.07.2015", null, testGehaeuse.getId(), testVerdeck.getId());
+		ZuordnungEEBG testVentilatorMotor = new ZuordnungEEBG(0, 1, "01.07.2015", null, testVentilator.getId(), testMotor.getId());
+		ZuordnungEEBG testVentilatorGehaeuse = new ZuordnungEEBG(0, 1, "01.07.2015", null, testVentilator.getId(), testGehaeuse.getId());
 
+		
 		/*
 		 * 
 		 * Die Bankanwendung besteht aus einem Navigationsteil mit Baumstruktur

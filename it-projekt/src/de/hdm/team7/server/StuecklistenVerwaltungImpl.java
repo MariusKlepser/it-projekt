@@ -17,6 +17,9 @@ import de.hdm.team7.shared.geschaeftsobjekte.Bauteil;
 import de.hdm.team7.shared.geschaeftsobjekte.Benutzer;
 import de.hdm.team7.shared.geschaeftsobjekte.Enderzeugnis;
 import de.hdm.team7.shared.geschaeftsobjekte.Stueckliste;
+import de.hdm.team7.shared.geschaeftsobjekte.ZuordnungBGBT;
+import de.hdm.team7.shared.geschaeftsobjekte.ZuordnungEEBG;
+import de.hdm.team7.shared.geschaeftsobjekte.ZuordnungEEBT;
 
 @SuppressWarnings("serial")
 public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
@@ -350,5 +353,9 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void testVentilatorEinfuegen() {
 	}
 }

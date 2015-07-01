@@ -9,13 +9,17 @@ import com.google.cloud.sql.jdbc.Statement;
 
 public class ZuordnungBGBT extends Zuordnung {
 
+	private int zuordnungsID;
 	private int baugruppeID;
 	private int bauteilID;
 	private ArrayList<Integer> bauteile;
 	
 	
-	public ZuordnungBGBT() {
-		// TODO Auto-generated constructor stub
+	public ZuordnungBGBT(int zuordnungsID, int menge, String aenderungsdatum, Benutzer aenderer, int baugruppeID, int bauteilID) {
+		super(zuordnungsID, menge, aenderungsdatum, aenderer);
+		this.zuordnungsID = zuordnungsID;
+		this.bauteilID = bauteilID;
+		this.baugruppeID = baugruppeID;
 	}
 
 	public int getBaugruppeID()	{

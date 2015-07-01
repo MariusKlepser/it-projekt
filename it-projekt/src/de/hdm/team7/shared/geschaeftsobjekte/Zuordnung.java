@@ -4,14 +4,20 @@ import java.util.Date;
 
 public class Zuordnung {
 
-	private int id;
+	private int zuordnungsID;
 	private int menge;
-	private Date aenderungsdatum;
+	private String aenderungsdatum;
 	private Benutzer aenderer;
 	
+	public Zuordnung(int zuordnungsID, int menge, String aenderungsdatum, Benutzer aenderer){
+		this.zuordnungsID = zuordnungsID;
+		this.menge = menge;
+		this.aenderungsdatum = aenderungsdatum;
+		this.aenderer = aenderer;
+	}
 	
 	public int getId() {
-		return id;
+		return zuordnungsID;
 	}
 
 	/**
@@ -24,7 +30,7 @@ public class Zuordnung {
 	/**
 	 * @return the description
 	 */
-	public Date getAenderungsdatum() {
+	public String getAenderungsdatum() {
 		return aenderungsdatum;
 	}
 
@@ -39,8 +45,8 @@ public class Zuordnung {
 	 * @param aenderungsDatum the aenderungsDatum to set
 	 */
 	
-	public void setId(int id)	{
-		this.id = id;
+	public void setId(int zuordnungsID)	{
+		this.zuordnungsID = zuordnungsID;
 	}
 	
 	public void setMenge(int menge) {
@@ -50,7 +56,7 @@ public class Zuordnung {
 	/**
 	 * @param aenderungsDatum the aenderungsDatum to set
 	 */
-	public void setAenderungsdatum(Date aenderungsdatum) {
+	public void setAenderungsdatum(String aenderungsdatum) {
 		this.aenderungsdatum = aenderungsdatum;
 	}
 	

@@ -9,13 +9,17 @@ import com.google.cloud.sql.jdbc.Statement;
 
 public class ZuordnungEEBG extends Zuordnung {
 
+	private int zuordnungsID;
 	private int enderzeugnisID;
 	private int baugruppeID;
 	private ArrayList<Integer> baugruppenIDS;
 	
 	
-	public ZuordnungEEBG() {
-		// TODO Auto-generated constructor stub
+	public ZuordnungEEBG(int zuordnungsID, int menge, String aenderungsdatum, Benutzer aenderer, int enderzeugnisID, int baugruppeID) {
+		super(zuordnungsID, menge, aenderungsdatum, aenderer);
+		this.zuordnungsID = zuordnungsID;
+		this.enderzeugnisID = enderzeugnisID;
+		this.baugruppeID = baugruppeID;
 	}
 
 	public int getEnderzeugnisID()	{

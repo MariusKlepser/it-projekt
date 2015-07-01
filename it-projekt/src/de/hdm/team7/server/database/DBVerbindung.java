@@ -17,7 +17,7 @@ public class DBVerbindung {
      * Software neu komilieren zu mÃ¼ssen.
      */
  private static String googleUrl = "jdbc:google:mysql://it-projekt:it-projekt?user=root";
- //   private static String testUrl = "jdbc:mysql://213.165.82.134:3306/whatsgoes";
+ private static String testUrl = "jdbc:mysql://213.165.82.134:3306/whatsgoes";
 
     /**
      * Diese statische Methode kann aufgrufen werden durch
@@ -59,7 +59,7 @@ public class DBVerbindung {
                 } else {
                     // Local MySQL instance to use during development.
                     Class.forName("com.mysql.jdbc.Driver");
-                    url = googleUrl;
+                    url = testUrl;
                     
                 }
                 /*

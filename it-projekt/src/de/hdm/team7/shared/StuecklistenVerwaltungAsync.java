@@ -136,4 +136,6 @@ public interface StuecklistenVerwaltungAsync {
 	void holeKinderKomponentenVon(Enderzeugnis endproduct,
 			AsyncCallback<ArrayList<Bauteil>> callback)
 			throws IllegalArgumentException;
+
+	void testVentilatorEinfuegen(AsyncCallback<Void> callback);
 }
