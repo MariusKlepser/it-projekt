@@ -1,7 +1,5 @@
 package de.hdm.team7.client.gui;
 
-//import com.google.appengine.api.users.UserServiceFactory;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -12,6 +10,7 @@ import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.dom.client.Style.Unit;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
@@ -70,6 +69,8 @@ public class BauteilFormular extends VerticalPanel {
 	static Button newButton = new Button("Erstellen");
 	static Button editButton = new Button("Bearbeiten");
 	static Button deleteButton = new Button("Loeschen");
+	
+	
 
 	private ListDataProvider<Bauteil> dataProvider = new ListDataProvider<Bauteil>();
 	// Create a CellTable.
@@ -129,6 +130,7 @@ public class BauteilFormular extends VerticalPanel {
 		boGrid.setWidget(9, 1, letzterBearbeiterLabel);
 
 		HorizontalPanel boButtonsPanel = new HorizontalPanel();
+
 		newButton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -172,7 +174,48 @@ public class BauteilFormular extends VerticalPanel {
 				}
 
 			}
+		});
 
+		newButton.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				final String bauteilname = nameTextBox.getText().toUpperCase().trim();
+				final String materialbezeichnung = materialTextBox.getText().toUpperCase().trim();
+				final String beschreibung1 = beschreibung.getText().toUpperCase().trim();
+				if (nameTextBox.getText() == null) {
+					fehlerLabelName.setVisible(true);
+				} else if (materialTextBox.getValue() == null) {
+					fehlerLabelMaterial.setVisible(true);
+				} else if (beschreibung.getValue() == null) {
+					fehlerLabelBeschreibung.setVisible(true);
+				} else if (!bauteilname.matches("^[0-9A-Z]{0,30}$")) {
+				    Window.alert("Es sind nur Buchstaben und Zahlen im Bauteilname erlaubt!");
+				    nameTextBox.selectAll();
+				    return;
+				
+			    } else if (!materialbezeichnung.matches("^[0-9A-Z]{0,30}$")) {
+			    	Window.alert("Es sind nur Buchstaben und Zahlen in der Materialbezeichnung erlaubt!");
+			    	nameTextBox.selectAll();
+			    	return;
+			
+			    } else if (!beschreibung1.matches("^[0-9A-Z]{0,30}$")) {
+			    	Window.alert("Es sind nur Buchstaben und Zahlen in der Beschreibung erlaubt!");
+			    	nameTextBox.selectAll();
+			    	return;
+			
+			    } else{
+					bauteilDarstellung.setName(nameTextBox.getText());
+					bauteilDarstellung.setMaterialBezeichnung(materialTextBox
+							.getText());
+					bauteilDarstellung.setDescription(beschreibung.getText());
+//					bauteilDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
+					stuecklistenVerwaltung.erstelleBauteil(bauteilDarstellung,
+							new erstelleBauteilCallback(bauteilDarstellung));
+				}
+				
+			}
+			
 		});
 		boButtonsPanel.add(newButton);
 
@@ -282,6 +325,21 @@ public class BauteilFormular extends VerticalPanel {
 //						.getText());
 //				bauteilDarstellung.setDescription(beschreibung.getText());
 //				// bauteilDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
+
+//		@Override
+//		public void onClick(ClickEvent event) {
+//			if (nameTextBox.getValue() == null) {
+//				fehlerLabelName.setVisible(true);
+//			} else if (materialTextBox.getValue() == null) {
+//				fehlerLabelMaterial.setVisible(true);
+//			} else if (beschreibung.getValue() == null) {
+//				fehlerLabelBeschreibung.setVisible(true);
+//			} else {
+//				bauteilDarstellung.setName(nameTextBox.getText());
+//				bauteilDarstellung.setMaterialBezeichnung(materialTextBox
+//						.getText());
+//				bauteilDarstellung.setDescription(beschreibung.getText());
+//				bauteilDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
 //				stuecklistenVerwaltung.erstelleBauteil(bauteilDarstellung,
 //						new erstelleBauteilCallback(bauteilDarstellung));
 //			}
