@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.team7.client.ClientEinstellungen;
+import de.hdm.team7.client.gui.BaugruppeFormular.erstelleBaugruppeCallback;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
 import de.hdm.team7.shared.geschaeftsobjekte.*;
 
@@ -29,11 +30,7 @@ public class BauteilFormular extends VerticalPanel {
 			.getStuecklistenVerwaltung();
 
 	static Bauteil bauteilDarstellung = null;
-//	BusinessObjectTreeViewModel botvm = null;
-	
-//	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
-//		this.botvm = botvm;
-//	}
+	Bauteil selektiertesBauteil = null;
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -93,7 +90,8 @@ public class BauteilFormular extends VerticalPanel {
 		boGrid.setWidget(6, 1, letzterBearbeiterLabel);
 
 		HorizontalPanel boButtonsPanel = new HorizontalPanel();
-//		newButton.addClickHandler(new NewClickHandler());
+		
+		newButton.addClickHandler(new NewClickHandler());
 		boButtonsPanel.add(newButton);
 		
 		deleteButton.addClickHandler(new DeleteClickHandler());
@@ -152,19 +150,19 @@ public class BauteilFormular extends VerticalPanel {
 	 * Ein neues Objekt wird erzeugt.
 	 * 
 	 */
-//	private class NewClickHandler implements ClickHandler {
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//			Bauteil selektiertesBauteil = botvm.holeSelektiertesBauteil();
-//			if (selektiertesBauteil == null) {
-//				Window.alert("kein Bauteil ausgewählt");
-//			} else {
-//				stuecklistenVerwaltung.erstelleBauteil(selektiertesBauteil,
-//						new erstelleBauteilCallback(selektiertesBauteil));
-//			}
-//		}
-//	}
+	private class NewClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (bauteilDarstellung != null) {
+				stuecklistenVerwaltung.erstelleBauteil(bauteilDarstellung,
+					new erstelleBauteilCallback(bauteilDarstellung));
+			} else {
+				stuecklistenVerwaltung.erstelleBauteil(selektiertesBauteil,
+						new erstelleBauteilCallback(selektiertesBauteil));
+		}
+	}
+	}
 
 	/*
 	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
@@ -279,5 +277,4 @@ public void setzeSelektiert(Bauteil comp) {
 		deleteButton.setVisible(false);
 	}
 }
-
-}
+	}

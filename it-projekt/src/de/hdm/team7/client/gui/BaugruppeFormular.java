@@ -29,6 +29,7 @@ public class BaugruppeFormular extends VerticalPanel {
 
 	Baugruppe baugruppeDarstellung = null;
 	StackLayoutPanel stackLayoutPanel = null;
+	Baugruppe selektierteBaugruppe = null;
 	
 	public void setzeStackLayoutPanel(StackLayoutPanel stackLayoutPanel){
 		this.stackLayoutPanel = stackLayoutPanel;
@@ -122,20 +123,20 @@ public class BaugruppeFormular extends VerticalPanel {
 	 * Ein neues Objekt wird erzeugt.
 	 * 
 	 */
-//	private class NewClickHandler implements ClickHandler {
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//			Baugruppe selektierteBaugruppe = stackLayoutPanel.holeSelektierteBaugruppe();
-//			if (selektierteBaugruppe == null) {
-//				Window.alert("keine Baugruppe ausgewählt");
-//			} else {
-//				stuecklistenVerwaltung.erstelleBaugruppe(selektierteBaugruppe,
-//						null, new erstelleBaugruppeCallback(
-//								selektierteBaugruppe));
-//			}
-//		}
-//	}
+	private class NewClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (baugruppeDarstellung != null) {
+				stuecklistenVerwaltung.erstelleBaugruppe(baugruppeDarstellung, null,
+					new erstelleBaugruppeCallback(baugruppeDarstellung));
+			} else {
+				stuecklistenVerwaltung.erstelleBaugruppe(selektierteBaugruppe,
+						null, new erstelleBaugruppeCallback(
+								selektierteBaugruppe));
+			}
+		}
+	}
 
 	/*
 	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
