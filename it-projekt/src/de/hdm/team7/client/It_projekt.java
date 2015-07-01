@@ -175,6 +175,9 @@ public class It_projekt implements EntryPoint {
 			}
 		});
 		
+		stockStore.clear();
+		stockStore.setItem("Editor", "true");
+		
 		loginPanel.add(signInLink);
 		RootPanel.get("Container").add(loginPanel);
 	}
@@ -735,7 +738,13 @@ public class It_projekt implements EntryPoint {
 		// Add it to the root panel.
 		// RootPanel.get("Navigator").add(stackPanel);
 		// RootPanel.get("Details").add(detailsPanel);
-		RootPanel.get("LinkContainer").add(signOutLink);
+		
+		Label nickname = new Label("Hallo, " + loginInfo.getNickname() + "!  ");
+		HorizontalPanel hoPanel = new HorizontalPanel();
+		hoPanel.setSpacing(5);
+		hoPanel.add(nickname);
+		hoPanel.add(signOutLink);
+		RootPanel.get("LinkContainer").add(hoPanel);
 		RootPanel.get("Container").add(hPanel);
 	}
 }
