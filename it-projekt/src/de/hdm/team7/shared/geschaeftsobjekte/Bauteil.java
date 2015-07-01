@@ -14,6 +14,7 @@ public class Bauteil extends Geschaeftsobjekt {
 	/**
 	 * @return the materialIdentifier
 	 */
+	
 	public String getMaterialBezeichnung() {
 		return materialBezeichnung;
 	}

@@ -1,7 +1,7 @@
 package de.hdm.team7.client.gui;
 
 //import com.google.appengine.api.users.UserServiceFactory;
-import java_cup.symbol;
+
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -107,24 +107,23 @@ public class BauteilFormular extends VerticalPanel {
 				final String bauteilname = nameTextBox.getText().toUpperCase().trim();
 				final String materialbezeichnung = materialTextBox.getText().toUpperCase().trim();
 				final String beschreibung1 = beschreibung.getText().toUpperCase().trim();
-				nameTextBox.setFocus(true);
-				if (nameTextBox.getValue() == null) {
+				if (nameTextBox.getText() == null) {
 					fehlerLabelName.setVisible(true);
 				} else if (materialTextBox.getValue() == null) {
 					fehlerLabelMaterial.setVisible(true);
 				} else if (beschreibung.getValue() == null) {
 					fehlerLabelBeschreibung.setVisible(true);
-				} else if (!bauteilname.matches("^[0-9A-Z]{1,30}$")) {
+				} else if (!bauteilname.matches("^[0-9A-Z]{0,30}$")) {
 				    Window.alert("Es sind nur Buchstaben und Zahlen im Bauteilname erlaubt!");
 				    nameTextBox.selectAll();
 				    return;
 				
-			    } else if (!materialbezeichnung.matches("^[0-9A-Z]{1,30}$")) {
+			    } else if (!materialbezeichnung.matches("^[0-9A-Z]{0,30}$")) {
 			    	Window.alert("Es sind nur Buchstaben und Zahlen in der Materialbezeichnung erlaubt!");
 			    	nameTextBox.selectAll();
 			    	return;
 			
-			    } else if (!beschreibung1.matches("^[0-9A-Z]{1,30}$")) {
+			    } else if (!beschreibung1.matches("^[0-9A-Z]{0,30}$")) {
 			    	Window.alert("Es sind nur Buchstaben und Zahlen in der Beschreibung erlaubt!");
 			    	nameTextBox.selectAll();
 			    	return;
