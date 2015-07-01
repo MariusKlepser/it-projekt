@@ -7,9 +7,7 @@ public class Bauteil extends Geschaeftsobjekt {
 	private static final long serialVersionUID = 1L;
 	
 	protected String beschreibung = "";
-	
 	protected String materialBezeichnung = "";
-	
 	protected String aenderungsDatum;
 	protected Date dtAenderungsDatum;
 
@@ -68,7 +66,7 @@ public class Bauteil extends Geschaeftsobjekt {
 	public void setDtAenderungsDatum(Date aenderungsDatum) {
 		this.dtAenderungsDatum = aenderungsDatum;
 	}
-	
+
 	public String toString(){
 		return this.getName()+", "+this.getMaterialBezeichnung()+", "+this.getDescription();
 	}

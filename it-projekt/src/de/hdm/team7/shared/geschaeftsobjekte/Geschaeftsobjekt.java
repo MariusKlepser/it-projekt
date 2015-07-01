@@ -6,6 +6,16 @@ public abstract class Geschaeftsobjekt implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	protected String name = "";
+	
+	protected String letzterBearbeiter = "";
+
+	public String getLetzterBearbeiter() {
+		return letzterBearbeiter;
+	}
+
+	public void setLetzterBearbeiter(String letzterBearbeiter) {
+		this.letzterBearbeiter = letzterBearbeiter;
+	}
 
 	public String getName() {
 		return this.name;

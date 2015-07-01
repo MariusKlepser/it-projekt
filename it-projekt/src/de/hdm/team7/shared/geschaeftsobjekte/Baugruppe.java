@@ -22,4 +22,9 @@ public class Baugruppe extends Bauteil {
 		this.kinderKomponenten = kinderKomponenten;
 	}
 
+	public String toStringList(){
+		return this.getId() + ", " + this.getName() + " (Baugruppe)";
+		
+	}
+	
 }

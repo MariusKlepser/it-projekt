@@ -5,7 +5,17 @@ public class Stueckliste extends Geschaeftsobjekt {
 
 	private static final long serialVersionUID = 1L;
 
-	private String erstellungsDatum;
+	protected String erstellungsDatum;
+	
+	protected Baugruppe wurzelKomponente;
+
+	public Baugruppe getWurzelKomponente() {
+		return wurzelKomponente;
+	}
+
+	public void setWurzelKomponente(Baugruppe wurzelKomponente) {
+		this.wurzelKomponente = wurzelKomponente;
+	}
 
 	/**
 	 * @return the creationDate

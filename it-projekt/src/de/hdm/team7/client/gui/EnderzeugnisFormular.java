@@ -1,20 +1,21 @@
 package de.hdm.team7.client.gui;
 
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
-import de.hdm.team7.shared.geschaeftsobjekte.*;
+import de.hdm.team7.shared.geschaeftsobjekte.Enderzeugnis;
 
 /**
  * Formular für die Darstellung des selektierten Kunden Angelehnt an Thies &
@@ -26,18 +27,26 @@ public class EnderzeugnisFormular extends VerticalPanel {
 	StuecklistenVerwaltungAsync stuecklistenVerwaltung = ClientEinstellungen
 			.getStuecklistenVerwaltung();
 
-	Enderzeugnis enderzeugnisDarstellung = null;
-//	BusinessObjectTreeViewModel botvm = null;
-	
-//	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
-//		this.botvm = botvm;
-//	}
+	static Enderzeugnis enderzeugnisDarstellung = null;
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 	 */
-	Label idValueLabel = new Label();
-	TextBox nameTextBox = new TextBox();
+	static Label idValueLabel = new Label();
+	static Label aenderungsValueLabel = new Label();
+	static Label letzterBearbeiterLabel = new Label();
+	Label fehlerLabelName = new Label("Bitte geben Sie einen Namen ein!");
+	Label fehlerLabelMaterial = new Label("Bitte geben Sie ein Material ein!");
+	Label fehlerLabelBeschreibung = new Label(
+			"Bitte geben Sie eine Beschreibung ein!");
+	
+	static TextBox nameTextBox = new TextBox();
+	static TextBox materialTextBox = new TextBox();
+	static TextArea beschreibung = new TextArea();
+
+	static Button newButton = new Button("Erstellen");
+	static Button editButton = new Button("Bearbeiten");
+	static Button deleteButton = new Button("Loeschen");
 
 	/*
 	 * Im Konstruktor werden die Widgets z.T. erzeugt. Alle werden in einem
@@ -49,30 +58,52 @@ public class EnderzeugnisFormular extends VerticalPanel {
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem
 		 * Gitter.
 		 */
-		Grid boGrid = new Grid(3, 2);
+		Grid boGrid = new Grid(10, 2);
 		this.add(boGrid);
 
-		Label idLabel = new Label("ID");
-		boGrid.setWidget(0, 0, idLabel);
-		boGrid.setWidget(0, 1, idValueLabel);
+		Label ueberschrift = new Label("Enderzeugnis Info");
+		boGrid.setWidget(0, 0, ueberschrift);
 
-		Label nameLabel = new Label("Name");
-		boGrid.setWidget(1, 0, nameLabel);
-		boGrid.setWidget(1, 1, nameTextBox);
+		Label idLabel = new Label("ID:");
+		boGrid.setWidget(1, 0, idLabel);
+		boGrid.setWidget(1, 1, idValueLabel);
+
+		Label nameLabel = new Label("Name:");
+		boGrid.setWidget(2, 0, nameLabel);
+		boGrid.setWidget(2, 1, nameTextBox);
+		boGrid.setWidget(3, 1, fehlerLabelName);
+		fehlerLabelName.setVisible(false);
+
+		Label materialLabel = new Label("Materialbezeichnung:");
+		boGrid.setWidget(4, 0, materialLabel);
+		boGrid.setWidget(4, 1, materialTextBox);
+		boGrid.setWidget(5, 1, fehlerLabelMaterial);
+		fehlerLabelMaterial.setVisible(false);
+
+		Label beschreibungLabel = new Label("Beschreibung:");
+		boGrid.setWidget(6, 0, beschreibungLabel);
+		boGrid.setWidget(6, 1, beschreibung);
+		boGrid.setWidget(7, 1, fehlerLabelBeschreibung);
+		fehlerLabelBeschreibung.setVisible(false);
+
+		Label aenderungsDatumLabel = new Label("Aenderungsdatum:");
+		boGrid.setWidget(8, 0, aenderungsDatumLabel);
+		boGrid.setWidget(8, 1, aenderungsValueLabel);
+
+		Label letzterBearbeiter = new Label("Letzter Bearbeiter:");
+		boGrid.setWidget(9, 0, letzterBearbeiter);
+		boGrid.setWidget(9, 1, letzterBearbeiterLabel);
 
 		HorizontalPanel boButtonsPanel = new HorizontalPanel();
 		this.add(boButtonsPanel);
 
-		Button newButton = new Button("Neu");
-//		newButton.addClickHandler(new NewClickHandler());
+		newButton.addClickHandler(new NewClickHandler());
 		boButtonsPanel.add(newButton);
 
-		Button deleteButton = new Button("Löschen");
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		boButtonsPanel.add(deleteButton);
 
-		Button editButton = new Button("Bearbeiten");
-//		editButton.addClickHandler(new EditClickHandler());
+		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
 	}
 
@@ -85,22 +116,12 @@ public class EnderzeugnisFormular extends VerticalPanel {
 	 * Callback eine Löschung durchgeführt wird.
 	 * 
 	 */
-
-	/*
-	 * TODO: Edit-Methode + ClickHandler müssen eingefügt werden
-	 * TODO: Methoden, auf die im BusinessObjectTreeViewModel zugegriffen wird, müssen ergänzt werden
-	 */
-
 	private class DeleteClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (enderzeugnisDarstellung != null) {
 				stuecklistenVerwaltung.loescheEnderzeugnis(enderzeugnisDarstellung,
 						new loescheEnderzeugnisCallback(enderzeugnisDarstellung));
-			} else {
-
-			}
 		}
 	}
 
@@ -108,19 +129,48 @@ public class EnderzeugnisFormular extends VerticalPanel {
 	 * Ein neues Objekt wird erzeugt.
 	 * 
 	 */
-//	private class NewClickHandler implements ClickHandler {
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//			Enderzeugnis selektiertesEnderzeugnis = botvm.holeSelektiertesEnderzeugnis();
-//			if (selektiertesEnderzeugnis == null) {
-//				Window.alert("kein Enderzeugnis ausgewählt");
-//			} else {
-//				stuecklistenVerwaltung.erstelleEnderzeugnis(selektiertesEnderzeugnis, null,
-//						new erstelleEnderzeugnisCallback(selektiertesEnderzeugnis));
-//			}
-//		}
-//	}
+	private class NewClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (nameTextBox.getValue() == null) {
+				fehlerLabelName.setVisible(true);
+			} else if (materialTextBox.getValue() == null) {
+				fehlerLabelMaterial.setVisible(true);
+			} else if (beschreibung.getValue() == null) {
+				fehlerLabelBeschreibung.setVisible(true);
+			} else {
+				enderzeugnisDarstellung.setName(nameTextBox.getText());
+				enderzeugnisDarstellung.setMaterialBezeichnung(materialTextBox
+						.getText());
+				enderzeugnisDarstellung.setDescription(beschreibung.getText());
+				enderzeugnisDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
+				stuecklistenVerwaltung.erstelleEnderzeugnis(enderzeugnisDarstellung, null,
+						new erstelleEnderzeugnisCallback(enderzeugnisDarstellung));
+			}
+		}
+	}
+	
+	private class EditClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (nameTextBox.getValue() == null) {
+				fehlerLabelName.setVisible(true);
+			} else if (materialTextBox.getValue() == null) {
+				fehlerLabelMaterial.setVisible(true);
+			} else if (beschreibung.getValue() == null) {
+				fehlerLabelBeschreibung.setVisible(true);
+			} else {
+				enderzeugnisDarstellung.setName(nameTextBox.getText());
+				enderzeugnisDarstellung.setMaterialBezeichnung(materialTextBox
+						.getText());
+				enderzeugnisDarstellung.setDescription(beschreibung.getText());
+				stuecklistenVerwaltung.aktualisiereEnderzeugnis(enderzeugnisDarstellung, null,
+						new bearbeiteEnderzeugnisCallback(enderzeugnisDarstellung));
+			}
+		}
+	}
 
 	/*
 	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
@@ -140,12 +190,6 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-		}
-
-		public void onSuccess(Enderzeugnis endProduct) {
-			if (endProduct != null) {
-//				botvm.fuegeEnderzeugnisHinzu(endProduct);
-			}
 		}
 
 		@Override
@@ -168,11 +212,24 @@ public class EnderzeugnisFormular extends VerticalPanel {
 			Window.alert("Das Löschen des Endprodukts ist fehlgeschlagen!");
 		}
 
-		public void onSuccess(Void result) {
-			if (endProduct != null) {
-				setzeSelektiert(null);
-//				botvm.entferneEnderzeugnis(endProduct);
-			}
+		@Override
+		public void onSuccess(String result) {
+			// TODO Auto-generated method stub
+
+		}
+	}
+	
+	public class bearbeiteEnderzeugnisCallback implements AsyncCallback<String> {
+
+		Enderzeugnis endProduct = null;
+
+		bearbeiteEnderzeugnisCallback(Enderzeugnis endProduct) {
+			this.endProduct = endProduct;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Das Bearbeiten des Bauteils ist fehlgeschlagen!");
 		}
 
 		@Override
@@ -182,15 +239,34 @@ public class EnderzeugnisFormular extends VerticalPanel {
 		}
 	}
 
-public void setzeSelektiert(Enderzeugnis endProduct) {
-	if (endProduct != null) {
-		enderzeugnisDarstellung = endProduct;
-		nameTextBox.setText(enderzeugnisDarstellung.getName());
-		idValueLabel.setText(Integer.toString(enderzeugnisDarstellung.getId()));
-	} else {
-		nameTextBox.setText("");
-		idValueLabel.setText("");
+	public void setzeSelektiert(Enderzeugnis endProduct) {
+		if (endProduct != null) {
+			enderzeugnisDarstellung = endProduct;
+			nameTextBox.setText(enderzeugnisDarstellung.getName());
+			idValueLabel.setText(Integer.toString(enderzeugnisDarstellung.getId()));
+			materialTextBox
+					.setText(enderzeugnisDarstellung.getMaterialBezeichnung());
+			beschreibung.setText(enderzeugnisDarstellung.getDescription());
+			aenderungsValueLabel.setText(enderzeugnisDarstellung
+					.getAenderungsDatum());
+			letzterBearbeiterLabel.setText(enderzeugnisDarstellung
+					.getLetzterBearbeiter());
+			
+			newButton.setVisible(false);
+			editButton.setVisible(true);
+			deleteButton.setVisible(true);
+		} else {
+			nameTextBox.setText("");
+			idValueLabel.setText("");
+			materialTextBox.setText("");
+			beschreibung.setText("");
+			aenderungsValueLabel.setText("");
+			letzterBearbeiterLabel.setText("");
+
+			newButton.setVisible(true);
+			editButton.setVisible(false);
+			deleteButton.setVisible(false);
+		}
 	}
-}
 
 }

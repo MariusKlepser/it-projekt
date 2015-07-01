@@ -1,12 +1,11 @@
 package de.hdm.team7.client.gui;
 
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -16,7 +15,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
-import de.hdm.team7.shared.geschaeftsobjekte.*;
+import de.hdm.team7.shared.geschaeftsobjekte.Bauteil;
 
 /**
  * Formular für die Darstellung des selektierten Kunden Angelehnt an Thies &
@@ -24,16 +23,11 @@ import de.hdm.team7.shared.geschaeftsobjekte.*;
  */
 
 public class BauteilFormular extends VerticalPanel {
-	
+
 	StuecklistenVerwaltungAsync stuecklistenVerwaltung = ClientEinstellungen
 			.getStuecklistenVerwaltung();
 
 	static Bauteil bauteilDarstellung = null;
-//	BusinessObjectTreeViewModel botvm = null;
-	
-//	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
-//		this.botvm = botvm;
-//	}
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -41,11 +35,16 @@ public class BauteilFormular extends VerticalPanel {
 	static Label idValueLabel = new Label();
 	static Label aenderungsValueLabel = new Label();
 	static Label letzterBearbeiterLabel = new Label();
+	Label fehlerLabelName = new Label("Bitte geben Sie einen Namen ein!");
+	Label fehlerLabelMaterial = new Label("Bitte geben Sie ein Material ein!");
+	Label fehlerLabelBeschreibung = new Label(
+			"Bitte geben Sie eine Beschreibung ein!");
+
 	static TextBox nameTextBox = new TextBox();
 	static TextBox materialTextBox = new TextBox();
 	static TextArea beschreibung = new TextArea();
-	
-	static Button newButton = new Button("Neu");
+
+	static Button newButton = new Button("Erstellen");
 	static Button editButton = new Button("Bearbeiten");
 	static Button deleteButton = new Button("Loeschen");
 
@@ -59,12 +58,10 @@ public class BauteilFormular extends VerticalPanel {
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem
 		 * Gitter.
 		 */
-//		DecoratorPanel decoPanel = new DecoratorPanel(); 
-		
-		Grid boGrid = new Grid(7, 2);
-//		decoPanel.add(boGrid);
+
+		Grid boGrid = new Grid(10, 2);
 		this.add(boGrid);
-		
+
 		Label ueberschrift = new Label("Bauteil Info");
 		boGrid.setWidget(0, 0, ueberschrift);
 
@@ -75,36 +72,40 @@ public class BauteilFormular extends VerticalPanel {
 		Label nameLabel = new Label("Name:");
 		boGrid.setWidget(2, 0, nameLabel);
 		boGrid.setWidget(2, 1, nameTextBox);
-		
+		boGrid.setWidget(3, 1, fehlerLabelName);
+		fehlerLabelName.setVisible(false);
+
 		Label materialLabel = new Label("Materialbezeichnung:");
-		boGrid.setWidget(3, 0, materialLabel);
-		boGrid.setWidget(3, 1, materialTextBox);
-		
+		boGrid.setWidget(4, 0, materialLabel);
+		boGrid.setWidget(4, 1, materialTextBox);
+		boGrid.setWidget(5, 1, fehlerLabelMaterial);
+		fehlerLabelMaterial.setVisible(false);
+
 		Label beschreibungLabel = new Label("Beschreibung:");
-		boGrid.setWidget(4, 0, beschreibungLabel);
-		boGrid.setWidget(4, 1, beschreibung);
-		
+		boGrid.setWidget(6, 0, beschreibungLabel);
+		boGrid.setWidget(6, 1, beschreibung);
+		boGrid.setWidget(7, 1, fehlerLabelBeschreibung);
+		fehlerLabelBeschreibung.setVisible(false);
+
 		Label aenderungsDatumLabel = new Label("Aenderungsdatum:");
-		boGrid.setWidget(5, 0, aenderungsDatumLabel);
-		boGrid.setWidget(5, 1, aenderungsValueLabel);
-		
+		boGrid.setWidget(8, 0, aenderungsDatumLabel);
+		boGrid.setWidget(8, 1, aenderungsValueLabel);
+
 		Label letzterBearbeiter = new Label("Letzter Bearbeiter:");
-		boGrid.setWidget(6, 0, letzterBearbeiter);
-		boGrid.setWidget(6, 1, letzterBearbeiterLabel);
+		boGrid.setWidget(9, 0, letzterBearbeiter);
+		boGrid.setWidget(9, 1, letzterBearbeiterLabel);
 
 		HorizontalPanel boButtonsPanel = new HorizontalPanel();
-//		newButton.addClickHandler(new NewClickHandler());
+		newButton.addClickHandler(new NewClickHandler());
 		boButtonsPanel.add(newButton);
-		
+
 		deleteButton.addClickHandler(new DeleteClickHandler());
 		boButtonsPanel.add(deleteButton);
 
-//		editButton.addClickHandler(new EditClickHandler());
+		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
-		
-//		decoPanel.add(boButtonsPanel);
+
 		this.add(boButtonsPanel);
-//		this.add(decoPanel);
 	}
 
 	/*
@@ -117,21 +118,12 @@ public class BauteilFormular extends VerticalPanel {
 	 * 
 	 */
 
-	/*
-	 * TODO: Edit-Methode + ClickHandler müssen eingefügt werden
-	 * TODO: Methoden, auf die im BusinessObjectTreeViewModel zugegriffen wird, müssen ergänzt werden
-	 */
-
 	private class DeleteClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (bauteilDarstellung != null) {
-				stuecklistenVerwaltung.loescheBauteil(bauteilDarstellung,
-						new loescheBauteilCallback(bauteilDarstellung));
-			} else {
-
-			}
+			stuecklistenVerwaltung.loescheBauteil(bauteilDarstellung,
+					new loescheBauteilCallback(bauteilDarstellung));
 		}
 	}
 
@@ -139,19 +131,49 @@ public class BauteilFormular extends VerticalPanel {
 	 * Ein neues Objekt wird erzeugt.
 	 * 
 	 */
-//	private class NewClickHandler implements ClickHandler {
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//			Bauteil selektiertesBauteil = botvm.holeSelektiertesBauteil();
-//			if (selektiertesBauteil == null) {
-//				Window.alert("kein Bauteil ausgewählt");
-//			} else {
-//				stuecklistenVerwaltung.erstelleBauteil(selektiertesBauteil,
-//						new erstelleBauteilCallback(selektiertesBauteil));
-//			}
-//		}
-//	}
+	private class NewClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (nameTextBox.getValue() == null) {
+				fehlerLabelName.setVisible(true);
+			} else if (materialTextBox.getValue() == null) {
+				fehlerLabelMaterial.setVisible(true);
+			} else if (beschreibung.getValue() == null) {
+				fehlerLabelBeschreibung.setVisible(true);
+			} else {
+				bauteilDarstellung.setName(nameTextBox.getText());
+				bauteilDarstellung.setMaterialBezeichnung(materialTextBox
+						.getText());
+				bauteilDarstellung.setDescription(beschreibung.getText());
+				bauteilDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
+				stuecklistenVerwaltung.erstelleBauteil(bauteilDarstellung,
+						new erstelleBauteilCallback(bauteilDarstellung));
+			}
+		}
+	}
+
+	private class EditClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (nameTextBox.getValue() == null) {
+				fehlerLabelName.setVisible(true);
+			} else if (materialTextBox.getValue() == null) {
+				fehlerLabelMaterial.setVisible(true);
+			} else if (beschreibung.getValue() == null) {
+				fehlerLabelBeschreibung.setVisible(true);
+			} else {
+				bauteilDarstellung.setName(nameTextBox.getText());
+				bauteilDarstellung.setMaterialBezeichnung(materialTextBox
+						.getText());
+				bauteilDarstellung.setDescription(beschreibung.getText());
+				bauteilDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
+				stuecklistenVerwaltung.aktualisiereBauteil(bauteilDarstellung,
+						new bearbeiteBauteilCallback(bauteilDarstellung));
+			}
+		}
+	}
 
 	/*
 	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
@@ -171,12 +193,7 @@ public class BauteilFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-		}
-
-		public void onSuccess(Bauteil comp) {
-			if (comp != null) {
-//				botvm.fuegeBauteilZuBaumHinzu(comp);
-			}
+			Window.alert("Das Erstellen des Bauteils ist fehlgeschlagen!");
 		}
 
 		@Override
@@ -199,11 +216,24 @@ public class BauteilFormular extends VerticalPanel {
 			Window.alert("Das Löschen des Bauteils ist fehlgeschlagen!");
 		}
 
-		public void onSuccess(Void result) {
-			if (comp != null) {
-				setzeSelektiert(null);
-//				botvm.entferneBauteil(comp);
-			}
+		@Override
+		public void onSuccess(String result) {
+			// TODO Auto-generated method stub
+
+		}
+	}
+
+	public class bearbeiteBauteilCallback implements AsyncCallback<String> {
+
+		Bauteil comp = null;
+
+		bearbeiteBauteilCallback(Bauteil comp) {
+			this.comp = comp;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Das Bearbeiten des Bauteils ist fehlgeschlagen!");
 		}
 
 		@Override
@@ -213,30 +243,34 @@ public class BauteilFormular extends VerticalPanel {
 		}
 	}
 
-public void setzeSelektiert(Bauteil comp) {
-	if (comp != null) {
-		bauteilDarstellung = comp;
-		nameTextBox.setText(bauteilDarstellung.getName());
-		idValueLabel.setText(Integer.toString(bauteilDarstellung.getId()));
-		materialTextBox.setText(bauteilDarstellung.getMaterialBezeichnung());
-		beschreibung.setText(bauteilDarstellung.getDescription());
-		aenderungsValueLabel.setText(bauteilDarstellung.getAenderungsDatum());
-//		letzterBearbeiterLabel.setText(bauteilDarstellung.);
-		
-		newButton.setVisible(false);
-		editButton.setEnabled(true);
-	} else {
-		nameTextBox.setText("");
-		idValueLabel.setText("");
-		materialTextBox.setText("");
-		beschreibung.setText("");
-		aenderungsValueLabel.setText("");
-//		letzterBearbeiterLabel.setText(bauteilDarstellung.);
-		
-		newButton.setEnabled(true);
-		editButton.setVisible(false);
-		deleteButton.setVisible(false);
+	public void setzeSelektiert(Bauteil comp) {
+		if (comp != null) {
+			bauteilDarstellung = comp;
+			nameTextBox.setText(bauteilDarstellung.getName());
+			idValueLabel.setText(Integer.toString(bauteilDarstellung.getId()));
+			materialTextBox
+					.setText(bauteilDarstellung.getMaterialBezeichnung());
+			beschreibung.setText(bauteilDarstellung.getDescription());
+			aenderungsValueLabel.setText(bauteilDarstellung
+					.getAenderungsDatum());
+			letzterBearbeiterLabel.setText(bauteilDarstellung
+					.getLetzterBearbeiter());
+
+			newButton.setVisible(false);
+			editButton.setVisible(true);
+			deleteButton.setVisible(true);
+		} else {
+			nameTextBox.setText("");
+			idValueLabel.setText("");
+			materialTextBox.setText("");
+			beschreibung.setText("");
+			aenderungsValueLabel.setText("");
+			letzterBearbeiterLabel.setText("");
+
+			newButton.setVisible(true);
+			editButton.setVisible(false);
+			deleteButton.setVisible(false);
+		}
 	}
-}
 
 }

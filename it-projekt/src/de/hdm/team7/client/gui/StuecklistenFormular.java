@@ -1,21 +1,27 @@
 package de.hdm.team7.client.gui;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.team7.client.ClientEinstellungen;
-import de.hdm.team7.shared.StuecklistenVerwaltung;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
-import de.hdm.team7.shared.geschaeftsobjekte.*;
+import de.hdm.team7.shared.geschaeftsobjekte.Baugruppe;
+import de.hdm.team7.shared.geschaeftsobjekte.Enderzeugnis;
+import de.hdm.team7.shared.geschaeftsobjekte.Stueckliste;
 
 /**
  * Formular für die Darstellung des selektierten Kunden Angelehnt an Thies &
@@ -26,18 +32,27 @@ public class StuecklistenFormular extends VerticalPanel {
 	
 	StuecklistenVerwaltungAsync stuecklistenVerwaltung = ClientEinstellungen.getStuecklistenVerwaltung();
 
-	Stueckliste stuecklistenDarstellung = null;
-//	BusinessObjectTreeViewModel botvm = null;
-	
-//	public void setzeBusinessObjectTreeViewModel(BusinessObjectTreeViewModel botvm){
-//		this.botvm = botvm;
-//	}
+	static Stueckliste stuecklistenDarstellung = null;
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 	 */
-	Label idValueLabel = new Label();
-	TextBox nameTextBox = new TextBox();
+	static Label idValueLabel = new Label();
+	static Label aenderungsValueLabel = new Label();
+	static Label wurzelKomponenteValueLabel = new Label();
+	static Label komponenteLabel = new Label("Derzeitige Komponente:");
+	static Label letzterBearbeiterLabel = new Label();
+	Label fehlerLabelName = new Label("Bitte geben Sie einen Namen ein!");
+	
+	static TextBox nameTextBox = new TextBox();
+	
+	static ListBox komponenteListBox = new ListBox();
+	
+	static Button newButton = new Button("Erstellen");
+	static Button editButton = new Button("Bearbeiten");
+	static Button deleteButton = new Button("Loeschen");
+	
+	static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 	/*
 	 * Im Konstruktor werden die Widgets z.T. erzeugt. Alle werden in einem
@@ -49,31 +64,51 @@ public class StuecklistenFormular extends VerticalPanel {
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem
 		 * Gitter.
 		 */
-		Grid boGrid = new Grid(3, 2);
+		Grid boGrid = new Grid(8, 2);
 		this.add(boGrid);
 
-		Label idLabel = new Label("ID");
-		boGrid.setWidget(0, 0, idLabel);
-		boGrid.setWidget(0, 1, idValueLabel);
+		Label ueberschrift = new Label("Stueckliste Info");
+		boGrid.setWidget(0, 0, ueberschrift);
 
-		Label nameLabel = new Label("Name");
-		boGrid.setWidget(1, 0, nameLabel);
-		boGrid.setWidget(1, 1, nameTextBox);
+		Label idLabel = new Label("ID:");
+		boGrid.setWidget(1, 0, idLabel);
+		boGrid.setWidget(1, 1, idValueLabel);
+
+		Label nameLabel = new Label("Name:");
+		boGrid.setWidget(2, 0, nameLabel);
+		boGrid.setWidget(2, 1, nameTextBox);
+		boGrid.setWidget(3, 1, fehlerLabelName);
+		fehlerLabelName.setVisible(false);
+		
+		Label komponenteAuswahlLabel = new Label("Wurzelkomponente:");
+		boGrid.setWidget(4, 0, komponenteAuswahlLabel);
+		boGrid.setWidget(4, 1, komponenteListBox);
+		boGrid.setWidget(5, 0, komponenteLabel);
+		boGrid.setWidget(5, 1, wurzelKomponenteValueLabel);
+		
+		ladeBaugruppenInKomponenteListBox();
+		
+		Label aenderungsDatumLabel = new Label("Erstellungsdatum:");
+		boGrid.setWidget(6, 0, aenderungsDatumLabel);
+		boGrid.setWidget(6, 1, aenderungsValueLabel);
+
+		Label letzterBearbeiter = new Label("Letzter Bearbeiter:");
+		boGrid.setWidget(7, 0, letzterBearbeiter);
+		boGrid.setWidget(7, 1, letzterBearbeiterLabel);
 
 		HorizontalPanel boButtonsPanel = new HorizontalPanel();
 		this.add(boButtonsPanel);
 
-		Button newButton = new Button("Neu");
-//		newButton.addClickHandler(new NewClickHandler());
+		newButton.addClickHandler(new NewClickHandler());
 		boButtonsPanel.add(newButton);
 
-		Button deleteButton = new Button("Löschen");
-//		deleteButton.addClickHandler(new DeleteClickHandler());
+		deleteButton.addClickHandler(new DeleteClickHandler());
 		boButtonsPanel.add(deleteButton);
 
-		Button editButton = new Button("Bearbeiten");
-//		editButton.addClickHandler(new EditClickHandler());
+		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
+		
+		ladeEnderzeugnisInKomponenteListBox();
 	}
 
 	/*
@@ -85,43 +120,49 @@ public class StuecklistenFormular extends VerticalPanel {
 	 * Callback eine Löschung durchgeführt wird.
 	 * 
 	 */
+	private class DeleteClickHandler implements ClickHandler {
 
-	/*
-	 * TODO: Edit-Methode + ClickHandler müssen eingefügt werden
-	 * TODO: Methoden, auf die im BusinessObjectTreeViewModel zugegriffen wird, müssen ergänzt werden
-	 * TODO: rootElement bei Erstellung einer neuen BOM muss mitgegeben werden
-	 */
-
-//	private class DeleteClickHandler implements ClickHandler {
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//			if (stuecklistenDarstellung != null) {
-//				stuecklistenVerwaltung.loescheStueckliste(stuecklistenDarstellung,
-//						new LoescheStuecklistenCallback(stuecklistenDarstellung));
-//			} else {
-//
-//			}
-//		}
-//	}
+		@Override
+		public void onClick(ClickEvent event) {
+				stuecklistenVerwaltung.loescheStueckliste(stuecklistenDarstellung,
+						new loescheStuecklisteCallback(stuecklistenDarstellung));
+		}
+	}
 
 	/**
 	 * Ein neues Objekt wird erzeugt.
 	 * 
 	 */
-//	private class NewClickHandler implements ClickHandler {
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//			Stueckliste selektierteStueckliste = botvm.holeSelektierteStueckliste();
-//			if (selektierteStueckliste == null) {
-//				Window.alert("keine Stückliste ausgewählt");
-//			} else {
-//				stuecklistenVerwaltung.erstelleStueckliste(selektierteStueckliste, null,
-//						new ErstelleStuecklistenCallback(selektierteStueckliste));
-//			}
-//		}
-//	}
+	private class NewClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (nameTextBox.getValue() == null) {
+				fehlerLabelName.setVisible(true);
+			} else {
+				stuecklistenDarstellung.setName(nameTextBox.getText());
+				Date aktuell = new Date();
+				stuecklistenDarstellung.setErstellungsDatum(simpleDateFormat.format(aktuell));
+				stuecklistenDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
+				stuecklistenVerwaltung.erstelleStueckliste(stuecklistenDarstellung, null,
+						new ErstelleStuecklistenCallback(stuecklistenDarstellung));
+			}
+		}
+	}
+	
+	private class EditClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (nameTextBox.getValue() == null) {
+				fehlerLabelName.setVisible(true);
+			} else {
+				stuecklistenDarstellung.setName(nameTextBox.getText());
+				stuecklistenVerwaltung.aktualisiereStueckliste(stuecklistenDarstellung, null,
+						new bearbeiteStuecklisteCallback(stuecklistenDarstellung));
+			}
+		}
+	}
 
 	/*
 	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
@@ -141,12 +182,6 @@ public class StuecklistenFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-		}
-
-		public void onSuccess(Stueckliste bom) {
-			if (bom != null) {
-//				botvm.fuegeStuecklisteHinzu(bom);
-			}
 		}
 
 		@Override
@@ -169,11 +204,24 @@ public class StuecklistenFormular extends VerticalPanel {
 			Window.alert("Das Löschen der Stückliste ist fehlgeschlagen!");
 		}
 
-		public void onSuccess(Void result) {
-			if (bom != null) {
-				setzeSelektiert(null);
-//				botvm.entferneStueckliste(bom);
-			}
+		@Override
+		public void onSuccess(String result) {
+			// TODO Auto-generated method stub
+
+		}
+	}
+	
+	public class bearbeiteStuecklisteCallback implements AsyncCallback<String> {
+
+		Stueckliste bom = null;
+
+		bearbeiteStuecklisteCallback(Stueckliste bom) {
+			this.bom = bom;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Das Bearbeiten der Stueckliste ist fehlgeschlagen!");
 		}
 
 		@Override
@@ -183,15 +231,72 @@ public class StuecklistenFormular extends VerticalPanel {
 		}
 	}
 
-public void setzeSelektiert(Stueckliste bom) {
-	if (bom != null) {
-		stuecklistenDarstellung = bom;
-		nameTextBox.setText(stuecklistenDarstellung.getName());
-		idValueLabel.setText(Integer.toString(stuecklistenDarstellung.getId()));
-	} else {
-		nameTextBox.setText("");
-		idValueLabel.setText("");
-	}
-}
+	public void setzeSelektiert(Stueckliste bom) {
+		if (bom != null) {
+			stuecklistenDarstellung = bom;
+			ladeBaugruppenInKomponenteListBox();
+			nameTextBox.setText(stuecklistenDarstellung.getName());
+			idValueLabel.setText(Integer.toString(stuecklistenDarstellung
+					.getId()));
+			aenderungsValueLabel.setText(stuecklistenDarstellung
+					.getErstellungsDatum());
+			letzterBearbeiterLabel.setText(stuecklistenDarstellung
+					.getLetzterBearbeiter());
+			ladeEnderzeugnisInKomponenteListBox();
+			komponenteLabel.setVisible(false);
+			wurzelKomponenteValueLabel.setVisible(false);
+			wurzelKomponenteValueLabel.setText(stuecklistenDarstellung.getWurzelKomponente().toStringList());
+			
+			newButton.setVisible(false);
+			editButton.setVisible(true);
+			deleteButton.setVisible(true);
+		} else {
+			nameTextBox.setText("");
+			idValueLabel.setText("");
+			aenderungsValueLabel.setText("");
+			letzterBearbeiterLabel.setText("");
+			komponenteLabel.setVisible(false);
+			wurzelKomponenteValueLabel.setVisible(false);
 
+			newButton.setVisible(true);
+			editButton.setVisible(false);
+			deleteButton.setVisible(false);
+		}
+	}
+	
+	private void ladeBaugruppenInKomponenteListBox(){
+		stuecklistenVerwaltung.holeAlleBaugruppen(new AsyncCallback<ArrayList<Baugruppe>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(ArrayList<Baugruppe> result) {
+				for (Baugruppe b : result){
+					komponenteListBox.addItem(b.toStringList());
+				}
+			}
+			
+		});
+	}
+	
+	private void ladeEnderzeugnisInKomponenteListBox(){
+		stuecklistenVerwaltung.holeAlleEnderzeugnisse(new AsyncCallback<ArrayList<Enderzeugnis>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void onSuccess(ArrayList<Enderzeugnis> result) {
+				for (Enderzeugnis e : result){
+					komponenteListBox.addItem(e.toStringList());
+				}
+			}
+		});
+	}
 }

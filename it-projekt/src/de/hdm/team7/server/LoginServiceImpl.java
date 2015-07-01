@@ -1,32 +1,31 @@
 package de.hdm.team7.server;
 
-import javax.servlet.http.HttpSession;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet; 
-
+import de.hdm.team7.client.LoginInfo;
 import de.hdm.team7.client.LoginService;
-import de.hdm.team7.client.User;
 
 public class LoginServiceImpl extends RemoteServiceServlet implements
 		LoginService {
-	private static final long serialVersionUID = 270628040929463623L;
-
-	public String login(User user) {
-		if (user != null && user.getUser().equalsIgnoreCase("vagner")
-				&& user.getPasswd().equals("Javagner")) {
-			HttpSession httpSession = getThreadLocalRequest().getSession();
-			httpSession.setMaxInactiveInterval(1000 * 60 * 2);
-			return httpSession.getId();
-		}// end if
-		return null;
-	}// end login
+//	private static final long serialVersionUID = 270628040929463623L;
+//
+//	public String login(User user) {
+//		if (user != null && user.getUser().equalsIgnoreCase("vagner")
+//				&& user.getPasswd().equals("Javagner")) {
+//			HttpSession httpSession = getThreadLocalRequest().getSession();
+//			httpSession.setMaxInactiveInterval(1000 * 60 * 2);
+//			return httpSession.getId();
+//		}// end if
+//		return null;
+//	}// end login
  
-//private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-	/*
 	public LoginInfo login(String requestUri) {
 		UserService userService = UserServiceFactory.getUserService();
-		User user = userService.getCurrentUser();
+		com.google.appengine.api.users.User user = userService.getCurrentUser();
 		LoginInfo loginInfo = new LoginInfo();
 
 		if (user != null) {
@@ -40,5 +39,5 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 		}
 		return loginInfo;
 	}
-	*/
+
 }
