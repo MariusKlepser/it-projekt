@@ -1,5 +1,6 @@
 package de.hdm.team7.shared.geschaeftsobjekte;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -7,7 +8,7 @@ import com.google.cloud.sql.jdbc.Connection;
 import com.google.cloud.sql.jdbc.ResultSet;
 import com.google.cloud.sql.jdbc.Statement;
 
-public class ZuordnungEEBG extends Zuordnung {
+public class ZuordnungEEBG extends Zuordnung implements Serializable{
 
 	private int zuordnungsID;
 	private int enderzeugnisID;

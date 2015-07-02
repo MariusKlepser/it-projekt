@@ -1,8 +1,9 @@
 package de.hdm.team7.shared.geschaeftsobjekte;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Zuordnung {
+public class Zuordnung implements Serializable{
 
 	private int zuordnungsID;
 	private int menge;
