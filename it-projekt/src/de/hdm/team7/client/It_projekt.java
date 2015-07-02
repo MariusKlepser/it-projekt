@@ -186,6 +186,7 @@ public class It_projekt implements EntryPoint {
 		// Set up sign out hyperlink.
 	    signOutLink.setHref(loginInfo.getLogoutUrl());
 		
+	    final Button neuButton = new Button("Neues Element +");   
 		final EnderzeugnisFormular ef = new EnderzeugnisFormular();
 		final StuecklistenFormular sf = new StuecklistenFormular();
 		final BaugruppeFormular bgf = new BaugruppeFormular();
@@ -329,7 +330,7 @@ public class It_projekt implements EntryPoint {
 		final PopupPanel bauteilPopup = new PopupPanel(true, false);
 		final Button neuesBauteil = new Button("Neues Bauteil");
 
-		neuesBauteil.addClickHandler(new ClickHandler() {
+		neuButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				btf.setVisible(true);
@@ -724,17 +725,22 @@ public class It_projekt implements EntryPoint {
 		detailsPanel.add(ef);
 		detailsPanel.add(sf);
 		detailsPanel.add(bf);
-
+		
 		btf.setVisible(false);
 		bgf.setVisible(false);
 		ef.setVisible(false);
 		sf.setVisible(false);
 		bf.setVisible(false);
 
+		HorizontalPanel bPanel = new HorizontalPanel();
+		bPanel.add(neuButton);
+		
+		
 		HorizontalPanel hPanel = new HorizontalPanel();
 		hPanel.add(stackLayoutPanel);
 		hPanel.add(detailsPanel);
 
+		
 		// Add it to the root panel.
 		// RootPanel.get("Navigator").add(stackPanel);
 		// RootPanel.get("Details").add(detailsPanel);
@@ -745,6 +751,7 @@ public class It_projekt implements EntryPoint {
 		hoPanel.add(nickname);
 		hoPanel.add(signOutLink);
 		RootPanel.get("LinkContainer").add(hoPanel);
+		RootPanel.get("Container").add(bPanel);
 		RootPanel.get("Container").add(hPanel);
 	}
 }

@@ -189,18 +189,18 @@ public class BauteilFormular extends VerticalPanel {
 					fehlerLabelMaterial.setVisible(true);
 				} else if (beschreibung.getValue() == null) {
 					fehlerLabelBeschreibung.setVisible(true);
-				} else if (!bauteilname.matches("^[0-9A-Z]{0,30}$")) {
-				    Window.alert("Es sind nur Buchstaben und Zahlen im Bauteilname erlaubt!");
+				} else if (!bauteilname.matches("^[0-9A-Z]{1,30}$")) {
+				    Window.alert("Bitte geben Sie etwas in das Feld (Name) ein und verwenden dabei nur Buchstaben und Zahlen.");
 				    nameTextBox.selectAll();
 				    return;
 				
-			    } else if (!materialbezeichnung.matches("^[0-9A-Z]{0,30}$")) {
-			    	Window.alert("Es sind nur Buchstaben und Zahlen in der Materialbezeichnung erlaubt!");
+			    } else if (!materialbezeichnung.matches("^[0-9A-Z]{1,30}$")) {
+			    	Window.alert("Bitte geben Sie etwas in das Feld (Materialbezeichnung) ein und verwenden dabei nur Buchstaben und Zahlen.");
 			    	nameTextBox.selectAll();
 			    	return;
 			
-			    } else if (!beschreibung1.matches("^[0-9A-Z]{0,30}$")) {
-			    	Window.alert("Es sind nur Buchstaben und Zahlen in der Beschreibung erlaubt!");
+			    } else if (!beschreibung1.matches("^[0-9A-Z]{1,30}$")) {
+			    	Window.alert("Bitte geben Sie etwas in das Feld (Beschreibung) ein und verwenden dabei nur Buchstaben und Zahlen.");
 			    	nameTextBox.selectAll();
 			    	return;
 			
