@@ -148,18 +148,13 @@ public class BauteilFormular extends VerticalPanel {
 					fehlerLabelMaterial.setVisible(true);
 				} else if (beschreibung.getValue() == null) {
 					fehlerLabelBeschreibung.setVisible(true);
-				} else if (!bauteilname.matches("^[0-9A-Z]{0,30}$")) {
-					Window.alert("Es sind nur Buchstaben und Zahlen im Bauteilname erlaubt!");
+				} else if (!bauteilname.matches("^[0-9A-Z]{1,30}$")) {
+					Window.alert("Bitte geben Sie etwas in das Feld (Name) ein und verwenden dabei nur Buchstaben und Zahlen.");
 					nameTextBox.selectAll();
 					return;
 
-				} else if (!materialbezeichnung.matches("^[0-9A-Z]{0,30}$")) {
-					Window.alert("Es sind nur Buchstaben und Zahlen in der Materialbezeichnung erlaubt!");
-					nameTextBox.selectAll();
-					return;
-
-				} else if (!beschreibung1.matches("^[0-9A-Z]{0,30}$")) {
-					Window.alert("Es sind nur Buchstaben und Zahlen in der Beschreibung erlaubt!");
+				} else if (!materialbezeichnung.matches("^[0-9A-Z]{1,30}$")) {
+					Window.alert("Bitte geben Sie etwas in das Feld (Materialbezeichnung) ein und verwenden dabei nur Buchstaben und Zahlen.");
 					nameTextBox.selectAll();
 					return;
 
@@ -176,47 +171,6 @@ public class BauteilFormular extends VerticalPanel {
 			}
 		});
 
-		newButton.addClickHandler(new ClickHandler(){
-
-			@Override
-			public void onClick(ClickEvent event) {
-				final String bauteilname = nameTextBox.getText().toUpperCase().trim();
-				final String materialbezeichnung = materialTextBox.getText().toUpperCase().trim();
-				final String beschreibung1 = beschreibung.getText().toUpperCase().trim();
-				if (nameTextBox.getText() == null) {
-					fehlerLabelName.setVisible(true);
-				} else if (materialTextBox.getValue() == null) {
-					fehlerLabelMaterial.setVisible(true);
-				} else if (beschreibung.getValue() == null) {
-					fehlerLabelBeschreibung.setVisible(true);
-				} else if (!bauteilname.matches("^[0-9A-Z]{1,30}$")) {
-				    Window.alert("Bitte geben Sie etwas in das Feld (Name) ein und verwenden dabei nur Buchstaben und Zahlen.");
-				    nameTextBox.selectAll();
-				    return;
-				
-			    } else if (!materialbezeichnung.matches("^[0-9A-Z]{1,30}$")) {
-			    	Window.alert("Bitte geben Sie etwas in das Feld (Materialbezeichnung) ein und verwenden dabei nur Buchstaben und Zahlen.");
-			    	nameTextBox.selectAll();
-			    	return;
-			
-			    } else if (!beschreibung1.matches("^[0-9A-Z]{1,30}$")) {
-			    	Window.alert("Bitte geben Sie etwas in das Feld (Beschreibung) ein und verwenden dabei nur Buchstaben und Zahlen.");
-			    	nameTextBox.selectAll();
-			    	return;
-			
-			    } else{
-					bauteilDarstellung.setName(nameTextBox.getText());
-					bauteilDarstellung.setMaterialBezeichnung(materialTextBox
-							.getText());
-					bauteilDarstellung.setDescription(beschreibung.getText());
-//					bauteilDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
-					stuecklistenVerwaltung.erstelleBauteil(bauteilDarstellung,
-							new erstelleBauteilCallback(bauteilDarstellung));
-				}
-				
-			}
-			
-		});
 		boButtonsPanel.add(newButton);
 
 		deleteButton.addClickHandler(new DeleteClickHandler());

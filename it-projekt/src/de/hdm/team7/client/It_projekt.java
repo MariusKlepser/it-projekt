@@ -333,8 +333,7 @@ public class It_projekt implements EntryPoint {
 		ScrollPanel scrollPanelBenutzer = new ScrollPanel();
 		scrollPanelBenutzer.add(benutzerList);
 
-		final PopupPanel bauteilPopup = new PopupPanel(true, false);
-		final Button neuesBauteil = new Button("Neues Bauteil");
+		
 
 		neuButton.addClickHandler(new ClickHandler() {
 			@Override
@@ -351,10 +350,84 @@ public class It_projekt implements EntryPoint {
 				sf.setVisible(false);
 				bf.setVisible(false);
 				btf.setzeSelektiert(null);
-				bauteilPopup.hide();
+				
 			}
 		});
-		bauteilPopup.setWidget(neuesBauteil);
+		
+		neuBauteil.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				
+				neuStueckliste.setVisible(false);
+				neuBaugruppe.setVisible(false);
+				neuBauteil.setVisible(false);
+				neuEnderzeugnis.setVisible(false);
+				btf.setVisible(true);
+				bgf.setVisible(false);
+				ef.setVisible(false);
+				sf.setVisible(false);
+				bf.setVisible(false);
+				btf.setzeSelektiert(null);
+				
+			}
+		});
+		
+		neuStueckliste.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				
+				neuStueckliste.setVisible(false);
+				neuBaugruppe.setVisible(false);
+				neuBauteil.setVisible(false);
+				neuEnderzeugnis.setVisible(false);
+				btf.setVisible(false);
+				bgf.setVisible(false);
+				ef.setVisible(false);
+				sf.setVisible(true);
+				bf.setVisible(false);
+				btf.setzeSelektiert(null);
+				
+			}
+		});
+		
+		neuBaugruppe.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				
+				neuStueckliste.setVisible(false);
+				neuBaugruppe.setVisible(false);
+				neuBauteil.setVisible(false);
+				neuEnderzeugnis.setVisible(false);
+				btf.setVisible(false);
+				bgf.setVisible(true);
+				ef.setVisible(false);
+				sf.setVisible(false);
+				bf.setVisible(false);
+				btf.setzeSelektiert(null);
+				
+			}
+		});
+		neuEnderzeugnis.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				
+				neuStueckliste.setVisible(false);
+				neuBaugruppe.setVisible(false);
+				neuBauteil.setVisible(false);
+				neuEnderzeugnis.setVisible(false);
+				btf.setVisible(false);
+				bgf.setVisible(false);
+				ef.setVisible(true);
+				sf.setVisible(false);
+				bf.setVisible(false);
+				btf.setzeSelektiert(null);
+				
+			}
+		});
 		final Anchor bauteilLink = new Anchor("Bauteile");
 
 		// Open the contact info popup when the user clicks a contact
@@ -369,19 +442,11 @@ public class It_projekt implements EntryPoint {
 //			}
 //		});
 		
-		bauteilLink.addMouseDownHandler(new MouseDownHandler() {
-			@Override
-			public void onMouseDown(MouseDownEvent event) {
-				int button = event.getNativeEvent().getButton();
-				if (button == NativeEvent.BUTTON_RIGHT) {
-					int left = bauteilLink.getAbsoluteLeft() + 14;
-					int top = bauteilLink.getAbsoluteTop() + 14;
-					bauteilPopup.setPopupPosition(left, top);
-					bauteilPopup.show();
-				}
+	
+				
 
-			}
-		});
+			
+		
 
 		final PopupPanel baugruppePopup = new PopupPanel(true, false);
 		final Button neueBaugruppe = new Button("Neue Baugruppe");
