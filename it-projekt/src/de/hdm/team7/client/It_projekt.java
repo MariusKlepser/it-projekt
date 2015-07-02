@@ -30,6 +30,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
+
 import de.hdm.team7.client.gui.BaugruppeFormular;
 import de.hdm.team7.client.gui.BauteilFormular;
 import de.hdm.team7.client.gui.BenutzerFormular;
@@ -186,7 +187,12 @@ public class It_projekt implements EntryPoint {
 		// Set up sign out hyperlink.
 	    signOutLink.setHref(loginInfo.getLogoutUrl());
 		
-	    final Button neuButton = new Button("Neues Element +");   
+	    final Button neuButton = new Button("Neues Element +"); 
+	    final Button neuStueckliste = new Button("Neue Stueckliste");
+	    final Button neuBaugruppe = new Button("Neue Baugruppe");
+	    final Button neuBauteil = new Button("Neues Bauteil");
+	    final Button neuEnderzeugnis = new Button("Neues Enderzeugnis");
+	    
 		final EnderzeugnisFormular ef = new EnderzeugnisFormular();
 		final StuecklistenFormular sf = new StuecklistenFormular();
 		final BaugruppeFormular bgf = new BaugruppeFormular();
@@ -333,7 +339,13 @@ public class It_projekt implements EntryPoint {
 		neuButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				btf.setVisible(true);
+				
+				
+				neuStueckliste.setVisible(true);
+				neuBaugruppe.setVisible(true);
+				neuBauteil.setVisible(true);
+				neuEnderzeugnis.setVisible(true);
+				btf.setVisible(false);
 				bgf.setVisible(false);
 				ef.setVisible(false);
 				sf.setVisible(false);
@@ -726,6 +738,10 @@ public class It_projekt implements EntryPoint {
 		detailsPanel.add(sf);
 		detailsPanel.add(bf);
 		
+		neuStueckliste.setVisible(false);
+		neuBaugruppe.setVisible(false);
+		neuBauteil.setVisible(false);
+		neuEnderzeugnis.setVisible(false);
 		btf.setVisible(false);
 		bgf.setVisible(false);
 		ef.setVisible(false);
@@ -734,7 +750,10 @@ public class It_projekt implements EntryPoint {
 
 		HorizontalPanel bPanel = new HorizontalPanel();
 		bPanel.add(neuButton);
-		
+		bPanel.add(neuStueckliste);
+		bPanel.add(neuBaugruppe);
+		bPanel.add(neuBauteil);
+		bPanel.add(neuEnderzeugnis);
 		
 		HorizontalPanel hPanel = new HorizontalPanel();
 		hPanel.add(stackLayoutPanel);
