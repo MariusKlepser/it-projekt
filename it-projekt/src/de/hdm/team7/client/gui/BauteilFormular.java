@@ -10,7 +10,6 @@ import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.dom.client.Style.Unit;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
@@ -266,13 +265,18 @@ public class BauteilFormular extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			
+//			final String bauteilname = nameTextBox.getText().toUpperCase().trim();
+//			if (!bauteilname.matches("^[0-9A-Z]{1,30}$")) {
+//			    Window.alert("Bitte geben Sie etwas in das Feld (Name) ein und verwenden dabei nur Buchstaben und Zahlen.");
+//			    nameTextBox.selectAll();
+//			    return;
+//			} else {
 				bauteilDarstellung.setName(nameTextBox.getText());
-				bauteilDarstellung.setMaterialBezeichnung(materialTextBox
-						.getText());
+				bauteilDarstellung.setMaterialBezeichnung(materialTextBox.getText());
 				bauteilDarstellung.setDescription(beschreibung.getText());
-			
-		}
+				stuecklistenVerwaltung.erstelleBauteil(bauteilDarstellung, 
+						new erstelleBauteilCallback(bauteilDarstellung));
+						}
 				// bauteilDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
 	}
 
