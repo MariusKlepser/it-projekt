@@ -387,7 +387,7 @@ public class It_projekt implements EntryPoint {
 				ef.setVisible(false);
 				sf.setVisible(true);
 				bf.setVisible(false);
-				btf.setzeSelektiert(null);
+				sf.setzeSelektiert(null);
 				
 			}
 		});
@@ -406,7 +406,7 @@ public class It_projekt implements EntryPoint {
 				ef.setVisible(false);
 				sf.setVisible(false);
 				bf.setVisible(false);
-				btf.setzeSelektiert(null);
+				bgf.setzeSelektiert(null);
 				
 			}
 		});
@@ -424,7 +424,7 @@ public class It_projekt implements EntryPoint {
 				ef.setVisible(true);
 				sf.setVisible(false);
 				bf.setVisible(false);
-				btf.setzeSelektiert(null);
+				ef.setzeSelektiert(null);
 				
 			}
 		});
