@@ -65,9 +65,9 @@ public class BaugruppeFormular extends VerticalPanel {
 		HorizontalPanel boButtonsPanel = new HorizontalPanel();
 		this.add(boButtonsPanel);
 
-//		Button newButton = new Button("Neu");
-//		newButton.addClickHandler(new NewClickHandler());
-//		boButtonsPanel.add(newButton);
+		Button newButton = new Button("Neu");
+		newButton.addClickHandler(new NewClickHandler());
+		boButtonsPanel.add(newButton);
 
 		Button deleteButton = new Button("Loeschen");
 		deleteButton.addClickHandler(new DeleteClickHandler());
