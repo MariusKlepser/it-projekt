@@ -162,13 +162,29 @@ public class BaugruppeFormular extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			final String baugruppenname = nameTextBox.getText().toUpperCase().trim();
+			final String materialbezeichnung = materialTextBox.getText().toUpperCase().trim();
+			final String beschreibung1 = beschreibung.getText().toUpperCase().trim();
 			if (nameTextBox.getValue() == null) {
 				fehlerLabelName.setVisible(true);
 			} else if (materialTextBox.getValue() == null) {
 				fehlerLabelMaterial.setVisible(true);
 			} else if (beschreibung.getValue() == null) {
 				fehlerLabelBeschreibung.setVisible(true);
-			} else {
+				
+			} else if (!baugruppenname.matches("^[0-9A-Z]{1,30}$")) {
+			    Window.alert("Bitte geben Sie etwas in das Feld (Name) ein und verwenden dabei nur Buchstaben und Zahlen.");
+			    nameTextBox.selectAll();
+			    return;
+			}  else if (!materialbezeichnung.matches("^[0-9A-Z]{1,30}$")) {
+			    Window.alert("Bitte geben Sie etwas in das Feld (Materialbezeichnung) ein und verwenden dabei nur Buchstaben und Zahlen.");
+			    materialTextBox.selectAll();
+			    return;
+			}  else if (!beschreibung1.matches("^[0-9A-Z]{1,30}$")) {
+			    Window.alert("Bitte geben Sie etwas in das Feld (Beschreibung) ein und verwenden dabei nur Buchstaben und Zahlen.");
+			    beschreibung.selectAll();
+			    return; 
+			}  else {
 				baugruppeDarstellung.setName(nameTextBox.getText());
 				baugruppeDarstellung.setMaterialBezeichnung(materialTextBox
 						.getText());
@@ -198,6 +214,7 @@ public class BaugruppeFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
+		Window.alert("Die Baugruppe konnte nicht erstellt werden");
 		}
 
 		@Override
@@ -264,6 +281,7 @@ public class BaugruppeFormular extends VerticalPanel {
 			editButton.setVisible(true);
 			deleteButton.setVisible(true);
 			
+			
 		} else {
 			nameTextBox.setText("");
 			idValueLabel.setText("");
@@ -277,5 +295,5 @@ public class BaugruppeFormular extends VerticalPanel {
 			deleteButton.setVisible(false);
 		}
 	}
-
 }
+
