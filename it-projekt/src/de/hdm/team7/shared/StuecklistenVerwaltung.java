@@ -1,6 +1,7 @@
 package de.hdm.team7.shared;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -36,7 +37,7 @@ public interface StuecklistenVerwaltung extends RemoteService {
 	 **/
 
 
-	public String erstelleBauteil(Bauteil bauteil);
+	public String erstelleBauteil(Bauteil bauteil, ArrayList<Bauteil> kinderKomponenten);
 
 	public String erstelleBaugruppe(Baugruppe baugruppe,
 			ArrayList<Bauteil> kinderKomponenten);
@@ -134,6 +135,9 @@ public interface StuecklistenVerwaltung extends RemoteService {
 			throws IllegalArgumentException;
 
 	public ArrayList<Benutzer> holeAlleBenutzer() throws IllegalArgumentException;
+	
+	public ArrayList<Bauteil> holeKinderKomponentenVon(Bauteil bauteil)
+			throws IllegalArgumentException;
 
 	public ArrayList<Bauteil> holeKinderKomponentenVon(Baugruppe baugruppe)
 			throws IllegalArgumentException;

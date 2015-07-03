@@ -17,6 +17,16 @@
   </servlet-mapping>
   
   <servlet>
+    <servlet-name>Reportgenerator</servlet-name>
+    <servlet-class>de.hdm.team7.server.ReportGeneratorImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>Reportgenerator</servlet-name>
+    <url-pattern>/it_projekt/reportgenerator</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>LoginService</servlet-name>
     <servlet-class>de.hdm.team7.server.LoginServiceImpl</servlet-class>
   </servlet>
@@ -24,6 +34,11 @@
   <servlet-mapping>
     <servlet-name>LoginService</servlet-name>
     <url-pattern>/it_projekt/login</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>LoginService</servlet-name>
+    <url-pattern>/reportgenerator/login</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->

@@ -9,6 +9,7 @@ import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.TextCell;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -16,6 +17,8 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
+import com.google.gwt.user.cellview.client.SimplePager;
+import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -23,6 +26,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -33,10 +37,12 @@ import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.SelectionModel;
 
 import de.hdm.team7.client.ClientEinstellungen;
+import de.hdm.team7.client.LoginInfo;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
 import de.hdm.team7.shared.geschaeftsobjekte.Baugruppe;
 import de.hdm.team7.shared.geschaeftsobjekte.Bauteil;
 import de.hdm.team7.shared.geschaeftsobjekte.Enderzeugnis;
+import de.hdm.team7.shared.geschaeftsobjekte.Geschaeftsobjekt;
 
 /**
  * Formular für die Darstellung des selektierten Kunden Angelehnt an Thies &
@@ -47,8 +53,12 @@ public class BauteilFormular extends VerticalPanel {
 
 	StuecklistenVerwaltungAsync stuecklistenVerwaltung = ClientEinstellungen
 			.getStuecklistenVerwaltung();
+	
+	static CustomStackLayoutPanel cslp = null;
+	static Label statusLabel = null;
 
 	static Bauteil bauteilDarstellung = null;
+	static LoginInfo loginInfo = null;
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -56,6 +66,9 @@ public class BauteilFormular extends VerticalPanel {
 	static Label idValueLabel = new Label();
 	static Label aenderungsValueLabel = new Label();
 	static Label letzterBearbeiterLabel = new Label();
+	static Label aenderungsDatumLabel = new Label("Aenderungsdatum:");
+	static Label letzterBearbeiter = new Label("Letzter Bearbeiter:");
+	
 	Label fehlerLabelName = new Label("Bitte geben Sie einen Namen ein!");
 	Label fehlerLabelMaterial = new Label("Bitte geben Sie ein Material ein!");
 	Label fehlerLabelBeschreibung = new Label(
@@ -66,10 +79,10 @@ public class BauteilFormular extends VerticalPanel {
 	static TextArea beschreibung = new TextArea();
 
 	static Button newButton = new Button("Erstellen");
-	static Button editButton = new Button("Bearbeiten");
+	static Button editButton = new Button("Aktualisieren");
 	static Button deleteButton = new Button("Loeschen");
 	
-	
+	Set<Bauteil> selektierteObjekte = null;
 
 	private ListDataProvider<Bauteil> dataProvider = new ListDataProvider<Bauteil>();
 	// Create a CellTable.
@@ -78,8 +91,6 @@ public class BauteilFormular extends VerticalPanel {
 			dataProvider.getList());
 	// Add a selection model so we can select cells.
 	final SelectionModel selectionModel = new MultiSelectionModel<Bauteil>(bauteilDarstellung.KEY_PROVIDER);
-
-	List<Bauteil> zuordnungsListe = new ArrayList<Bauteil>();
 	
 	/*
 	 * Im Konstruktor werden die Widgets z.T. erzeugt. Alle werden in einem
@@ -92,8 +103,10 @@ public class BauteilFormular extends VerticalPanel {
 		 * Gitter.
 		 */
 
-		Grid boGrid = new Grid(10, 2);
-		this.add(boGrid);
+		HorizontalPanel hPanel = new HorizontalPanel();
+		
+		Grid boGrid = new Grid(10, 3);
+		hPanel.add(boGrid);
 
 		Label ueberschrift = new Label("Bauteil Info");
 		boGrid.setWidget(0, 0, ueberschrift);
@@ -120,53 +133,13 @@ public class BauteilFormular extends VerticalPanel {
 		boGrid.setWidget(7, 1, fehlerLabelBeschreibung);
 		fehlerLabelBeschreibung.setVisible(false);
 
-		Label aenderungsDatumLabel = new Label("Aenderungsdatum:");
 		boGrid.setWidget(8, 0, aenderungsDatumLabel);
 		boGrid.setWidget(8, 1, aenderungsValueLabel);
 
-		Label letzterBearbeiter = new Label("Letzter Bearbeiter:");
 		boGrid.setWidget(9, 0, letzterBearbeiter);
 		boGrid.setWidget(9, 1, letzterBearbeiterLabel);
 
 		HorizontalPanel boButtonsPanel = new HorizontalPanel();
-
-//		newButton.addClickHandler(new ClickHandler() {
-//
-//			@Override
-//			public void onCnlick(ClickEvent event) {
-//				final String bauteilname = nameTextBox.getText().toUpperCase()
-//						.trim();
-//				final String materialbezeichnung = materialTextBox.getText()
-//						.toUpperCase().trim();
-//				nameTextBox.setFocus(true);
-//				if (nameTextBox.getText() == null) {
-//					fehlerLabelName.setVisible(true);
-//				} else if (materialTextBox.getValue() == null) {
-//					fehlerLabelMaterial.setVisible(true);
-//				} else if (beschreibung.getValue() == null) {
-//					fehlerLabelBeschreibung.setVisible(true);
-//				} else if (!bauteilname.matches("^[0-9A-Z]{1,30}$")) {
-//					Window.alert("Bitte geben Sie etwas in das Feld (Name) ein und verwenden dabei nur Buchstaben und Zahlen.");
-//					nameTextBox.selectAll();
-//					return;
-//
-//				} else if (!materialbezeichnung.matches("^[0-9A-Z]{1,30}$")) {
-//					Window.alert("Bitte geben Sie etwas in das Feld (Materialbezeichnung) ein und verwenden dabei nur Buchstaben und Zahlen.");
-//					nameTextBox.selectAll();
-//					return;
-//
-//				} else {
-//					bauteilDarstellung.setName(nameTextBox.getText());
-//					bauteilDarstellung.setMaterialBezeichnung(materialTextBox
-//							.getText());
-//					bauteilDarstellung.setDescription(beschreibung.getText());
-//					// bauteilDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
-//					stuecklistenVerwaltung.erstelleBauteil(bauteilDarstellung,
-//							new erstelleBauteilCallback(bauteilDarstellung));
-//				}
-//
-//			}
-//		});
 
 		newButton.addClickHandler(new NewClickHandler());
 		boButtonsPanel.add(newButton);
@@ -176,16 +149,35 @@ public class BauteilFormular extends VerticalPanel {
 
 		editButton.addClickHandler(new EditClickHandler());
 		boButtonsPanel.add(editButton);
+		
+		Button zeigeObjekte = new Button();
+		zeigeObjekte.addClickHandler(new ZeigeObjekteClickHandler());
+		boButtonsPanel.add(zeigeObjekte);
 
-		this.add(boButtonsPanel);
-
-		cellTable.setWidth("100%", true);
+		cellTable.setWidth("55%", true);
 
 		// Do not refresh the headers and footers every time the data is
 		// updated.
 		cellTable.setAutoHeaderRefreshDisabled(true);
 		
-		stuecklistenVerwaltung.holeAlleBaugruppen(new AsyncCallback<ArrayList<Baugruppe>>() {
+//		stuecklistenVerwaltung.holeAlleBaugruppen(new AsyncCallback<ArrayList<Baugruppe>>() {
+//
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			@Override
+//			public void onSuccess(ArrayList<Baugruppe> result) {
+//				for (Baugruppe b : result){
+//					zuordnungsListe.add(b);
+//				}
+//				
+//			}
+//		});
+		
+		stuecklistenVerwaltung.holeAlleBauteile(new AsyncCallback<ArrayList<Bauteil>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -194,9 +186,9 @@ public class BauteilFormular extends VerticalPanel {
 			}
 
 			@Override
-			public void onSuccess(ArrayList<Baugruppe> result) {
-				for (Baugruppe b : result){
-					zuordnungsListe.add(b);
+			public void onSuccess(ArrayList<Bauteil> result) {
+				for (Bauteil b : result){
+					dataProvider.getList().add(b);
 				}
 				
 			}
@@ -214,28 +206,40 @@ public class BauteilFormular extends VerticalPanel {
 		// Add the CellList to the adapter in the database.
 		addDataDisplay(cellTable);
 		
-		stuecklistenVerwaltung.holeAlleEnderzeugnisse(new AsyncCallback<ArrayList<Enderzeugnis>>(){
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			public void onSuccess(ArrayList<Enderzeugnis> result) {
-				for (Enderzeugnis e : result){
-					zuordnungsListe.add(e);
-				}
-			}
-			
-		});
-		
-		sortHandler.setList(zuordnungsListe);
+//		stuecklistenVerwaltung.holeAlleEnderzeugnisse(new AsyncCallback<ArrayList<Enderzeugnis>>(){
+//
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			public void onSuccess(ArrayList<Enderzeugnis> result) {
+//				for (Enderzeugnis e : result){
+//					zuordnungsListe.add(e);
+//				}
+//			}
+//			
+//		});
 		
 		VerticalPanel vPanel = new VerticalPanel();
-		vPanel.add(new Label("Bitte waehlen Sie hier die Oberkomponenten aus, denen das aktuell selektierte Bauteil zugeordnet werden soll:"));
+		Label cellTableBeschreibung = new Label("Bitte waehlen Sie hier die Oberkomponenten aus, denen das aktuell selektierte Bauteil untergeordnet werden soll:");
+		cellTableBeschreibung.setWordWrap(true);
+		cellTableBeschreibung.setWidth("50%");
+		vPanel.add(cellTableBeschreibung);
+//		ScrollPanel sPanel = new ScrollPanel();
+//		sPanel.add(cellTable);
+		
+		// Create a Pager to control the table.
+	    SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
+	    SimplePager pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
+	    pager.setDisplay(cellTable);
+		
 		vPanel.add(cellTable);
-		this.add(vPanel);
+		vPanel.add(pager);
+		hPanel.add(vPanel);
+		this.add(hPanel);
+		this.add(boButtonsPanel);
 	}
 
 	/*
@@ -256,6 +260,17 @@ public class BauteilFormular extends VerticalPanel {
 					new loescheBauteilCallback(bauteilDarstellung));
 		}
 	}
+	
+	private class ZeigeObjekteClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			selektierteObjekte = ((MultiSelectionModel<Bauteil>) selectionModel).getSelectedSet();
+			for (Bauteil b : selektierteObjekte){
+				ClientEinstellungen.getLogger().info("Name: " + b.getName() + ", Menge: " + b.getMenge() + ", Objekt: " + b.getClass());
+			}
+		}
+	}
 
 	/**
 	 * Ein neues Objekt wird erzeugt.
@@ -265,19 +280,53 @@ public class BauteilFormular extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-//			final String bauteilname = nameTextBox.getText().toUpperCase().trim();
-//			if (!bauteilname.matches("^[0-9A-Z]{1,30}$")) {
-//			    Window.alert("Bitte geben Sie etwas in das Feld (Name) ein und verwenden dabei nur Buchstaben und Zahlen.");
-//			    nameTextBox.selectAll();
-//			    return;
-//			} else {
-				bauteilDarstellung.setName(nameTextBox.getText());
-				bauteilDarstellung.setMaterialBezeichnung(materialTextBox.getText());
-				bauteilDarstellung.setDescription(beschreibung.getText());
-				stuecklistenVerwaltung.erstelleBauteil(bauteilDarstellung, 
-						new erstelleBauteilCallback(bauteilDarstellung));
-						}
-				// bauteilDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
+			ClientEinstellungen.getLogger().info("BauteilFormular: onClick Anfang");
+			final Bauteil temp = new Bauteil();
+			final String bauteilname = nameTextBox.getText().toUpperCase()
+					.trim();
+			final String materialbezeichnung = materialTextBox.getText()
+					.toUpperCase().trim();
+			final String beschreibung1 = beschreibung.getText()
+					.toUpperCase().trim();
+			nameTextBox.setFocus(true);
+			if (!bauteilname.matches("^[0-9A-Z]{0,30}$")) {
+				Window.alert("Bitte geben Sie etwas in das Feld (Name) ein und verwenden dabei nur Buchstaben und Zahlen.");
+				    nameTextBox.selectAll();
+			}
+			if (!materialbezeichnung.matches("^[0-9A-Z]{0,30}$")) {
+				Window.alert("Bitte geben Sie etwas in das Feld (Materialbezeichnung) ein und verwenden dabei nur Buchstaben und Zahlen.");
+			    	materialTextBox.selectAll();
+			} 
+			if (!beschreibung1.matches("^[0-9A-Z]{0,30}$")) {
+				Window.alert("Bitte geben Sie etwas in das Feld (Beschreibung) ein und verwenden dabei nur Buchstaben und Zahlen.");
+			    	beschreibung.selectAll();
+			}
+			temp.setName(nameTextBox.getText());
+			ClientEinstellungen.getLogger().info("BauteilFormular: Name gesetzt");
+			ClientEinstellungen.getLogger().info("BauteilFormular: Temp: " + temp.getName() + ", " + temp.getClass());
+			ClientEinstellungen.getLogger().info(
+					"BauteilFormular: keine Namensdupletten gefunden");
+			temp.setMaterialBezeichnung(materialTextBox.getText());
+			ClientEinstellungen.getLogger().info(
+					"BauteilFormular: Material gesetzt");
+			temp.setDescription(beschreibung.getText());
+			ClientEinstellungen.getLogger().info(
+					"BauteilFormular: Beschreibung gesetzt");
+			temp.setLetzterBearbeiter(loginInfo.getEmailAddress());
+			ClientEinstellungen.getLogger().info(
+					"BauteilFormular: " + loginInfo.getEmailAddress());
+			ClientEinstellungen.getLogger().info(
+					"BauteilFormular: Felddaten setzen - abgeschlossen");
+			selektierteObjekte = ((MultiSelectionModel<Bauteil>) selectionModel).getSelectedSet();
+			bauteilDarstellung = temp;
+			ArrayList<Bauteil> tempList = new ArrayList<Bauteil>();
+			for (Bauteil b : selektierteObjekte){
+				tempList.add(b);
+			}
+			stuecklistenVerwaltung.erstelleBauteil(bauteilDarstellung, tempList,
+					new erstelleBauteilCallback(bauteilDarstellung));
+			cslp.ladeBauteilListNeu();
+		}
 	}
 
 	private class EditClickHandler implements ClickHandler {
@@ -295,7 +344,7 @@ public class BauteilFormular extends VerticalPanel {
 				bauteilDarstellung.setMaterialBezeichnung(materialTextBox
 						.getText());
 				bauteilDarstellung.setDescription(beschreibung.getText());
-				// bauteilDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());	
+				bauteilDarstellung.setLetzterBearbeiter(loginInfo.getEmailAddress());	
 				Set<Bauteil> selektierteObjekte = ((MultiSelectionModel<Bauteil>) selectionModel).getSelectedSet();
 				stuecklistenVerwaltung.aktualisiereBauteil(bauteilDarstellung,
 						new bearbeiteBauteilCallback(bauteilDarstellung));
@@ -321,13 +370,14 @@ public class BauteilFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Erstellen des Bauteils ist fehlgeschlagen!");
+			ClientEinstellungen.getLogger().severe("Fehler: " + caught);
+			statusLabel.setText("Das Erstellen des Bauteils ist fehlgeschlagen!");
 		}
 
 		@Override
 		public void onSuccess(String result) {
-			Window.alert("Das Bauteil wurde erstellt!");
-
+			ClientEinstellungen.getLogger().info(result);
+			statusLabel.setText("Das Bauteil wurde erstellt!");
 		}
 	}
 
@@ -341,12 +391,12 @@ public class BauteilFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Löschen des Bauteils ist fehlgeschlagen!");
+			statusLabel.setText("Das Löschen des Bauteils ist fehlgeschlagen!");
 		}
 
 		@Override
 		public void onSuccess(String result) {
-			Window.alert("Das Bauteil wurde geloescht");
+			statusLabel.setText("Das Bauteil wurde geloescht");
 
 		}
 	}
@@ -361,19 +411,19 @@ public class BauteilFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Bearbeiten des Bauteils ist fehlgeschlagen!");
+			statusLabel.setText("Das Bearbeiten des Bauteils ist fehlgeschlagen!");
 		}
 
 		@Override
 		public void onSuccess(String result) {
-			// TODO Auto-generated method stub
-
+			statusLabel.setText("Das Bauteil wurde geaendert");
 		}
 	}
 
-	public void setzeSelektiert(Bauteil comp) {
+	public void setzeSelektiert(Bauteil comp, LoginInfo loginInfo) {
 		if (comp != null) {
 			bauteilDarstellung = comp;
+			BauteilFormular.loginInfo = loginInfo;
 			nameTextBox.setText(bauteilDarstellung.getName());
 			idValueLabel.setText(Integer.toString(bauteilDarstellung.getId()));
 			materialTextBox
@@ -388,12 +438,15 @@ public class BauteilFormular extends VerticalPanel {
 			editButton.setVisible(true);
 			deleteButton.setVisible(true);
 		} else {
+			BauteilFormular.loginInfo = loginInfo;
 			nameTextBox.setText("");
 			idValueLabel.setText("");
 			materialTextBox.setText("");
 			beschreibung.setText("");
-			aenderungsValueLabel.setText("");
-			letzterBearbeiterLabel.setText("");
+			aenderungsValueLabel.setVisible(false);
+			aenderungsDatumLabel.setVisible(false);
+			letzterBearbeiterLabel.setVisible(false);
+			letzterBearbeiter.setVisible(false);
 
 			newButton.setVisible(true);
 			editButton.setVisible(false);
@@ -463,8 +516,8 @@ public class BauteilFormular extends VerticalPanel {
 	        new TextCell()) {
 	      @Override
 	      public String getValue(Bauteil object) {
-	    	  if (object instanceof Baugruppe){
-	    		  return "Baugruppe";
+	    	  if (object instanceof Bauteil){
+	    		  return "Bauteil";
 	    	  }
 	    	  else {
 	    		  return "Enderzeugnis";
@@ -473,22 +526,8 @@ public class BauteilFormular extends VerticalPanel {
 	      }
 	    };
 	    typeColumn.setSortable(false);
-//	    sortHandler.setComparator(typeColumn, new Comparator<Bauteil>() {
-//	      @Override
-//	      public int compare(ContactInfo o1, ContactInfo o2) {
-//	        return o1.getFirstName().compareTo(o2.getFirstName());
-//	      }
-//	    });
-	    cellTable.addColumn(typeColumn, "Komponententyp");
-//	    typeColumn.setFieldUpdater(new FieldUpdater<ContactInfo, String>() {
-//	      @Override
-//	      public void update(int index, ContactInfo object, String value) {
-//	        // Called when the user changes the value.
-//	        object.setFirstName(value);
-//	        ContactDatabase.get().refreshDisplays();
-//	      }
-//	    });
-	    cellTable.setColumnWidth(typeColumn, 20, Unit.PCT);
+	    cellTable.addColumn(typeColumn, "Typ");
+	    cellTable.setColumnWidth(typeColumn, 25, Unit.PCT);
 
 	    // Menge des Geschaeftsobjekts.
 	    Column<Bauteil, String> mengeColumn = new Column<Bauteil, String>(
@@ -499,12 +538,6 @@ public class BauteilFormular extends VerticalPanel {
 	      }
 	    };
 	    mengeColumn.setSortable(false);
-//	    sortHandler.setComparator(lastNameColumn, new Comparator<ContactInfo>() {
-//	      @Override
-//	      public int compare(ContactInfo o1, ContactInfo o2) {
-//	        return o1.getLastName().compareTo(o2.getLastName());
-//	      }
-//	    });
 	    cellTable.addColumn(mengeColumn, "Menge");
 	    mengeColumn.setFieldUpdater(new FieldUpdater<Bauteil, String>() {
 	      @Override
@@ -514,7 +547,15 @@ public class BauteilFormular extends VerticalPanel {
 	        refreshDisplays();
 	      }
 	    });
-	    cellTable.setColumnWidth(mengeColumn, 20, Unit.PCT);
+	    cellTable.setColumnWidth(mengeColumn, 15, Unit.PCT);
+	  }
+	  
+	  public void setzeCustomStackLayoutPanel(CustomStackLayoutPanel cslp){
+		  BauteilFormular.cslp = cslp;
+	  }
+	  
+	  public void setzeStatusLabel(Label statsLabel){
+		  BauteilFormular.statusLabel = statsLabel;
 	  }
 
 }

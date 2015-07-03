@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Set;
 
 import de.hdm.team7.shared.geschaeftsobjekte.Bauteil;
 
@@ -174,7 +175,7 @@ public class BauteilMapper {
 	 * @return das bereits Ã¼bergebene Objekt, jedoch mit ggf. korrigierter
 	 *         <code>id</code>.
 	 */
-	public Bauteil insert(Bauteil u) {
+	public Bauteil insert(Bauteil u, ArrayList<Bauteil> kinderKomponenten) {
 		log = "Opening DB Connection; ";
 		Connection con = DBVerbindung.connection();
 		log = log + "DB Connection established; ";
@@ -207,7 +208,7 @@ public class BauteilMapper {
 
 				// Jetzt erst erfolgt die tatsÃ¤chliche EinfÃ¼geoperation
 				log = log + "executing SQL query for Inserting; ";
-				stmt.executeUpdate("INSERT INTO bauteil (id, name, beschreibung, aenderungsdatum, materialbezeichnung) "
+				stmt.executeUpdate("INSERT INTO bauteil (id, name, beschreibung, aenderungsdatum, materialbezeichnung, LetzterBearbeiter) "
 						+ "VALUES ("
 						+ u.getId()
 						+ ",'"
@@ -216,8 +217,25 @@ public class BauteilMapper {
 						+ u.getDescription()
 						+ "','"
 						+ u.getAenderungsDatum()
-						+ "','" + u.getMaterialBezeichnung() + "')");
+						+ "','" 
+						+ u.getMaterialBezeichnung() 
+						+ "','" + u.getLetzterBearbeiter() + "')");
+				log = log + u.getLetzterBearbeiter() + "; ";
 				log = log + "SQL query executed; ";
+			}
+			
+			for (Bauteil b : kinderKomponenten){
+			stmt = con.createStatement();
+
+			// Jetzt erst erfolgt die tatsÃ¤chliche EinfÃ¼geoperation
+			log = log + "executing SQL query for Inserting; ";
+			stmt.executeUpdate("INSERT INTO Zuordnung (ElternID, KindID, Menge) "
+					+ "VALUES ("
+					+ u.getId()
+					+ ",'"
+					+ b.getId() 
+					+ "','" + b.getMenge() + "')");
+			log = log + "SQL query executed; ";
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -282,6 +300,48 @@ public class BauteilMapper {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public ArrayList<Bauteil> findeKinderKomponenten(Bauteil bauteil) {
+		Connection con = DBVerbindung.connection();
+		// Ergebnisvektor vorbereiten
+		ArrayList<Bauteil> result = new ArrayList<Bauteil>();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt
+					.executeQuery("SELECT KindID "
+							+ "FROM Zuordnung " + "WHERE ElternID=" + bauteil.getId() + "ORDER BY name");
+
+			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein
+			// Component-Objekt
+			// erstellt.
+			while (rs.next()) {
+				Bauteil u = new Bauteil();
+				if (rs.getString("KindTyp") == "Bauteil"){
+					
+					Statement stamt = con.createStatement();
+					ResultSet rse = stmt
+							.executeQuery("SELECT id, name, beschreibung, aenderungsdatum, materialbezeichnung "
+									+ "FROM bauteil " + "WHERE id=" + rs.getInt("id"));
+				u.setId(rse.getInt("id"));
+				u.setName(rse.getString("name"));
+				u.setDescription(rse.getString("beschreibung"));
+				u.setMaterialBezeichnung(rse.getString("materialbezeichnung"));
+				u.setDtAenderungsDatum(rse.getDate("aenderungsdatum"));
+				u.setLetzterBearbeiter(rse.getString("LetzterBearbeiter"));
+				}
+
+				// HinzufÃ¼gen des neuen Objekts zum Ergebnisvektor
+				result.add(u);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		// Ergebnisvektor zurÃ¼ckgeben
+		return result;
 	}
 
 }

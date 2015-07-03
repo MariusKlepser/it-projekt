@@ -3,6 +3,7 @@ package de.hdm.team7.server;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -16,6 +17,7 @@ import de.hdm.team7.shared.geschaeftsobjekte.Baugruppe;
 import de.hdm.team7.shared.geschaeftsobjekte.Bauteil;
 import de.hdm.team7.shared.geschaeftsobjekte.Benutzer;
 import de.hdm.team7.shared.geschaeftsobjekte.Enderzeugnis;
+import de.hdm.team7.shared.geschaeftsobjekte.Geschaeftsobjekt;
 import de.hdm.team7.shared.geschaeftsobjekte.Stueckliste;
 
 @SuppressWarnings("serial")
@@ -58,19 +60,20 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 		this.stuecklistenListe = stuecklistenListe;
 	}
 
-	public String erstelleBauteil(Bauteil bauteil) {
+	public String erstelleBauteil(Bauteil bauteil, ArrayList<Bauteil> kinderKomponenten) {
 		String message;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
-
+		
 		message = "Start createComponent(); ";
 		message = message + "creating Component; ";
 		bauteil.setAenderungsDatum(sdf.format(date));
 		message = message + sdf.format(new Date()) + "; ";
 		message = message + "Component created; ";
-		this.bauteilMapper.insert(bauteil);
+		this.bauteilMapper.insert(bauteil, kinderKomponenten);
 		message = message + this.bauteilMapper.getLog();
 		message = message + "Component sent to Mapper";
+		
 		return message;
 	}
 
@@ -338,6 +341,12 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException {
 		return this.benutzerMapper.findAll();
 	}
+	
+	@Override
+	public ArrayList<Bauteil> holeKinderKomponentenVon(Bauteil bauteil)
+			throws IllegalArgumentException {
+		return this.bauteilMapper.findeKinderKomponenten(bauteil);
+	}
 
 	@Override
 	public ArrayList<Bauteil> holeKinderKomponentenVon(Baugruppe compAss)
@@ -351,5 +360,130 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	private String hatNamensduplettenBauteil(Bauteil objekt)
+			throws IllegalArgumentException {
+		String errMessage = "Bitte geben Sie einen anderen Namen fuer dieses Bauteil ein, da der aktuell gewaehlte Name schon vorhanden ist!";
+		Boolean hatNamensdupletten;
+		ArrayList<Bauteil> namensduplettenBauteil = this.bauteilMapper.findByName(objekt.getName());
+		ArrayList<Baugruppe> namensduplettenBaugruppe = this.baugruppeMapper.findByName(objekt.getName());
+		ArrayList<Enderzeugnis> namensduplettenEnderzeugnis = this.enderzeugnisMapper.findByName(objekt.getName());
+		ArrayList<Stueckliste> namensduplettenStueckliste = this.stuecklisteMapper.findByName(objekt.getName());
+		
+		if(namensduplettenBauteil.size() != 0){
+			hatNamensdupletten = true;
+		}
+		else if (namensduplettenBaugruppe.size() != 0){
+			hatNamensdupletten = true;
+		}
+		else if (namensduplettenEnderzeugnis.size() != 0){
+			hatNamensdupletten = true;
+		}
+		else if (namensduplettenStueckliste.size() != 0){
+			hatNamensdupletten = true;
+		}
+		else {
+			hatNamensdupletten = false;
+		}
+		
+		if (hatNamensdupletten == true){
+			return errMessage;
+		} else {
+			return null;
+		}
+	}
+
+	private String hatNamensduplettenBaugruppe(Baugruppe objekt)
+			throws IllegalArgumentException {
+		String errMessage = "Bitte geben Sie einen anderen Namen fuer dieses Bauteil ein, da der aktuell gewaehlte Name schon vorhanden ist!";
+		Boolean hatNamensdupletten;
+		ArrayList<Bauteil> namensduplettenBauteil = this.bauteilMapper.findByName(objekt.getName());
+		ArrayList<Baugruppe> namensduplettenBaugruppe = this.baugruppeMapper.findByName(objekt.getName());
+		ArrayList<Enderzeugnis> namensduplettenEnderzeugnis = this.enderzeugnisMapper.findByName(objekt.getName());
+		ArrayList<Stueckliste> namensduplettenStueckliste = this.stuecklisteMapper.findByName(objekt.getName());
+		
+		if(namensduplettenBauteil.size() != 0){
+			hatNamensdupletten = true;
+		}
+		else if (namensduplettenBaugruppe.size() != 0){
+			hatNamensdupletten = true;
+		}
+		else if (namensduplettenEnderzeugnis.size() != 0){
+			hatNamensdupletten = true;
+		}
+		else if (namensduplettenStueckliste.size() != 0){
+			hatNamensdupletten = true;
+		}
+		else {
+			hatNamensdupletten = false;
+		}
+		if (hatNamensdupletten == true){
+			return errMessage;
+		} else {
+			return null;
+		}
+	}
+
+	private String hatNamensduplettenEnderzeugnis(Enderzeugnis objekt)
+			throws IllegalArgumentException {
+		String errMessage = "Bitte geben Sie einen anderen Namen fuer dieses Bauteil ein, da der aktuell gewaehlte Name schon vorhanden ist!";
+		Boolean hatNamensdupletten;
+		ArrayList<Bauteil> namensduplettenBauteil = this.bauteilMapper.findByName(objekt.getName());
+		ArrayList<Baugruppe> namensduplettenBaugruppe = this.baugruppeMapper.findByName(objekt.getName());
+		ArrayList<Enderzeugnis> namensduplettenEnderzeugnis = this.enderzeugnisMapper.findByName(objekt.getName());
+		ArrayList<Stueckliste> namensduplettenStueckliste = this.stuecklisteMapper.findByName(objekt.getName());
+		
+		if(namensduplettenBauteil.size() != 0){
+			hatNamensdupletten = true;
+		}
+		else if (namensduplettenBaugruppe.size() != 0){
+			hatNamensdupletten = true;
+		}
+		else if (namensduplettenEnderzeugnis.size() != 0){
+			hatNamensdupletten = true;
+		}
+		else if (namensduplettenStueckliste.size() != 0){
+			hatNamensdupletten = true;
+		}
+		else {
+			hatNamensdupletten = false;
+		}
+		if (hatNamensdupletten == true){
+			return errMessage;
+		} else {
+			return null;
+		}
+	}
+
+	private String hatNamensduplettenStueckliste(Stueckliste objekt)
+			throws IllegalArgumentException {
+		String errMessage = "Bitte geben Sie einen anderen Namen fuer dieses Bauteil ein, da der aktuell gewaehlte Name schon vorhanden ist!";
+		Boolean hatNamensdupletten;
+		ArrayList<Bauteil> namensduplettenBauteil = this.bauteilMapper.findByName(objekt.getName());
+		ArrayList<Baugruppe> namensduplettenBaugruppe = this.baugruppeMapper.findByName(objekt.getName());
+		ArrayList<Enderzeugnis> namensduplettenEnderzeugnis = this.enderzeugnisMapper.findByName(objekt.getName());
+		ArrayList<Stueckliste> namensduplettenStueckliste = this.stuecklisteMapper.findByName(objekt.getName());
+		
+		if(namensduplettenBauteil.size() != 0){
+			hatNamensdupletten = true;
+		}
+		else if (namensduplettenBaugruppe.size() != 0){
+			hatNamensdupletten = true;
+		}
+		else if (namensduplettenEnderzeugnis.size() != 0){
+			hatNamensdupletten = true;
+		}
+		else if (namensduplettenStueckliste.size() != 0){
+			hatNamensdupletten = true;
+		}
+		else {
+			hatNamensdupletten = false;
+		}
+		if (hatNamensdupletten == true){
+			return errMessage;
+		} else {
+			return null;
+		}
 	}
 }

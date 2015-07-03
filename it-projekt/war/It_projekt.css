@@ -11,6 +11,11 @@ h1 {
   text-align: center;
 }
 
+.statuslabel{
+	font-size: 16pt;
+	color: red;
+}
+
 .sendButton {
   display: block;
   font-size: 16pt;

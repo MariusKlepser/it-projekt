@@ -1,6 +1,7 @@
 package de.hdm.team7.shared;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -15,7 +16,7 @@ public interface StuecklistenVerwaltungAsync {
 	void setStuecklistenListe(ArrayList<Stueckliste> bomList,
 			AsyncCallback<Void> callback) throws IllegalArgumentException;
 
-	void erstelleBauteil(Bauteil component, AsyncCallback<String> callback);
+	void erstelleBauteil(Bauteil component, ArrayList<Bauteil> kinderKomponenten, AsyncCallback<String> callback);
 
 	void erstelleBaugruppe(Baugruppe compAssembly,
 			ArrayList<Bauteil> childrenComponents,
@@ -127,6 +128,10 @@ public interface StuecklistenVerwaltungAsync {
 			throws IllegalArgumentException;
 
 	void holeAlleBenutzer(AsyncCallback<ArrayList<Benutzer>> callback)
+			throws IllegalArgumentException;
+	
+	void holeKinderKomponentenVon(Bauteil bauteil,
+			AsyncCallback<ArrayList<Bauteil>> callback)
 			throws IllegalArgumentException;
 
 	void holeKinderKomponentenVon(Baugruppe compAss,
