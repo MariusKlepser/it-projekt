@@ -24,11 +24,11 @@ public class Baugruppe extends Bauteil {
 	/**
 	 * @return the childrenComponents
 	 */
-	public ArrayList<ZuordnungBGBG> getKinderKomponentenBG() {
+	public ArrayList<ZuordnungBGBG> getKinderKomponentenBGBG() {
 		return kinderKomponentenBG;
 	}
 
-	public ArrayList<ZuordnungBGBT> getKinderKomponentenBT() {
+	public ArrayList<ZuordnungBGBT> getKinderKomponentenBGBT() {
 		return kinderKomponentenBT;
 	}
 

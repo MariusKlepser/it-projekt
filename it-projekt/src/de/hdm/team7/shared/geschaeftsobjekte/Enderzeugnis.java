@@ -8,8 +8,8 @@ public class Enderzeugnis extends Baugruppe {
 
 	private static final long serialVersionUID = 1L;
 	
-	protected ArrayList<ZuordnungEEBG> kinderKomponentenBG;
-	protected ArrayList<ZuordnungEEBT> kinderKomponentenBT;
+	protected ArrayList<ZuordnungEEBG> kinderKomponentenEEBG;
+	protected ArrayList<ZuordnungEEBT> kinderKomponentenEEBT;
 	
 	
 	/**
@@ -26,24 +26,24 @@ public class Enderzeugnis extends Baugruppe {
 	/**
 	 * @return the childrenComponents
 	 */
-	public ArrayList<ZuordnungBGBG> getKinderKomponentenBG() {
-		return kinderKomponentenBG;
+	public ArrayList<ZuordnungEEBG> getKinderKomponentenEEBG() {
+		return kinderKomponentenEEBG;
 	}
 
-	public ArrayList<ZuordnungBGBT> getKinderKomponentenBT() {
-		return kinderKomponentenBT;
+	public ArrayList<ZuordnungEEBT> getKinderKomponentenEEBT() {
+		return kinderKomponentenEEBT;
 	}
 
 	
 	/**
 	 * @param kinderKomponenten the childrenComponents to set
 	 */
-	public void setKinderKomponentenBG(ArrayList<ZuordnungBGBG> kinderKomponentenBG) {
-		this.kinderKomponentenBG = kinderKomponentenBG;
+	public void setKinderKomponentenEEBG(ArrayList<ZuordnungEEBG> kinderKomponentenEEBG) {
+		this.kinderKomponentenEEBG = kinderKomponentenEEBG;
 	}
 	
-	public void setKinderKomponentenBT(ArrayList<ZuordnungBGBT> kinderKomponentenBT) {
-		this.kinderKomponentenBT = kinderKomponentenBT;
+	public void setKinderKomponentenEEBT(ArrayList<ZuordnungEEBT> kinderKomponentenEEBT) {
+		this.kinderKomponentenEEBT = kinderKomponentenEEBT;
 	}
 
 
