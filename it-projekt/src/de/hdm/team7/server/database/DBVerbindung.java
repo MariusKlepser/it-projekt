@@ -56,7 +56,7 @@ public class DBVerbindung {
         		
         			    // Load the class that provides the new "jdbc:google:mysql://" prefix.
         			    Class.forName("com.mysql.jdbc.Driver");
-        			    url = "jdbc:msql://213.165.82.134:3306/whatsgoes";
+        			    url = "jdbc:mysql://213.165.82.134:3306/whatsgoes";
         			  
 
                 /*
