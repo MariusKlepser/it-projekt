@@ -48,15 +48,15 @@ public class DBVerbindung {
     	String url = null;
         if (connection == null) {
         	
-        	String user = "ps091";
-        	String password = "getshitdone";
+        	String user = "root";
+        	String password = "";
         	
         	
         	try {
         		
         			    // Load the class that provides the new "jdbc:google:mysql://" prefix.
         			    Class.forName("com.mysql.jdbc.Driver");
-        			    url = "jdbc:mysql://173.194.107.87:3306/whatsgoes?user=root";
+        			    url = "jdbc:mysql://173.194.107.87:3306/whatsgoes";
         			  
 
                 /*
@@ -67,7 +67,7 @@ public class DBVerbindung {
                  * Diese Verbindung wird dann in der statischen Variable con
                  * abgespeichert und fortan verwendet.
                  */
-                connection = DriverManager.getConnection(url);
+                connection = DriverManager.getConnection(url, user, password);
                 
             }
         	catch (Exception e) {
