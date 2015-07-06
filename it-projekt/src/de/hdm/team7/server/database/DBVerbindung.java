@@ -56,7 +56,7 @@ public class DBVerbindung {
         		
         			    // Load the class that provides the new "jdbc:google:mysql://" prefix.
         			    Class.forName("com.mysql.jdbc.Driver");
-        			    url = "jdbc:mysql://213.165.82.134:3306/whatsgoes";
+        			    url = "jdbc:mysql://173.194.107.87:3306/whatsgoes?user=root";
         			  
 
                 /*
@@ -67,7 +67,7 @@ public class DBVerbindung {
                  * Diese Verbindung wird dann in der statischen Variable con
                  * abgespeichert und fortan verwendet.
                  */
-                connection = DriverManager.getConnection(url, user, password);
+                connection = DriverManager.getConnection(url);
                 
             }
         	catch (Exception e) {
