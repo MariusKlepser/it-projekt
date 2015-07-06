@@ -53,16 +53,12 @@ public class DBVerbindung {
         	
         	
         	try {
-        		if (SystemProperty.environment.value() ==
-        			      SystemProperty.Environment.Value.Production) {
+        		
         			    // Load the class that provides the new "jdbc:google:mysql://" prefix.
         			    Class.forName("com.mysql.jdbc.GoogleDriver");
         			    url = "jdbc:google:mysql://your-project-id:your-instance-name/guestbook?user=root";
-        			  } else {
-        			    // Local MySQL instance to use during development.
-        			    Class.forName("com.mysql.jdbc.Driver");
-        			    url = "jdbc:mysql://127.0.0.1:3306/guestbook?user=root";
-        			  }
+        			  
+
                 /*
                  * Dann erst kann uns der DriverManager eine Verbindung mit den
                  * oben in der Variable url angegebenen Verbindungsinformationen
