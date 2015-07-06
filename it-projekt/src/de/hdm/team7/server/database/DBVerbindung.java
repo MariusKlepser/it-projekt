@@ -60,8 +60,8 @@ public class DBVerbindung {
         	        url = "jdbc:google:rdbms://it-projekt:it-projekt/whatsgoes?user=root";
         	      } else {
         	        // Local MySQL instance to use during development.
-        	        Class.forName("com.mysql.jdbc.Driver");
-        	        url = "jdbc:google:mysql://it-projekt:it-projekt/whatsgoes?user=root";
+        	        Class.forName("com.mysql.jdbc.GoogleDriver");
+        	        url = "jdbc:google:rdbms://it-projekt:it-projekt/whatsgoes?user=root";
                 /*
                  * Dann erst kann uns der DriverManager eine Verbindung mit den
                  * oben in der Variable url angegebenen Verbindungsinformationen
