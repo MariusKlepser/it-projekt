@@ -14,7 +14,9 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.team7.client.ClientEinstellungen;
+import de.hdm.team7.client.LoginInfo;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
+import de.hdm.team7.shared.geschaeftsobjekte.Bauteil;
 import de.hdm.team7.shared.geschaeftsobjekte.Enderzeugnis;
 
 /**
@@ -28,7 +30,8 @@ public class EnderzeugnisFormular extends VerticalPanel {
 			.getStuecklistenVerwaltung();
 
 	static Enderzeugnis enderzeugnisDarstellung = null;
-
+	static LoginInfo loginInfo = null;
+	static CustomStackLayoutPanel cslp = null;
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 	 */
@@ -133,6 +136,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			final Enderzeugnis temp = new Enderzeugnis();
 			if (nameTextBox.getValue() == null) {
 				fehlerLabelName.setVisible(true);
 			} else if (materialTextBox.getValue() == null) {
@@ -140,13 +144,26 @@ public class EnderzeugnisFormular extends VerticalPanel {
 			} else if (beschreibung.getValue() == null) {
 				fehlerLabelBeschreibung.setVisible(true);
 			} else {
-				enderzeugnisDarstellung.setName(nameTextBox.getText());
-				enderzeugnisDarstellung.setMaterialBezeichnung(materialTextBox
-						.getText());
-				enderzeugnisDarstellung.setDescription(beschreibung.getText());
-//				enderzeugnisDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
+				temp.setName(nameTextBox.getText());
+				ClientEinstellungen.getLogger().info("BauteilFormular: Name gesetzt");
+				ClientEinstellungen.getLogger().info("BauteilFormular: Temp: " + temp.getName() + ", " + temp.getClass());
+				ClientEinstellungen.getLogger().info(
+						"BauteilFormular: keine Namensdupletten gefunden");
+				temp.setMaterialBezeichnung(materialTextBox.getText());
+				ClientEinstellungen.getLogger().info(
+						"BauteilFormular: Material gesetzt");
+				temp.setDescription(beschreibung.getText());
+				ClientEinstellungen.getLogger().info(
+						"BauteilFormular: Beschreibung gesetzt");
+				temp.setLetzterBearbeiter(loginInfo.getEmailAddress());
+				ClientEinstellungen.getLogger().info(
+						"BauteilFormular: " + loginInfo.getEmailAddress());
+				ClientEinstellungen.getLogger().info(
+						"BauteilFormular: Felddaten setzen - abgeschlossen");
 				stuecklistenVerwaltung.erstelleEnderzeugnis(enderzeugnisDarstellung, null,
 						new erstelleEnderzeugnisCallback(enderzeugnisDarstellung));
+				
+				cslp.ladeEnderzeugnisListNeu();
 			}
 		}
 	}
@@ -190,12 +207,12 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
+			Window.alert("Enderzeugnis konnte nicht angelegt werden.");
 		}
 
 		@Override
 		public void onSuccess(String result) {
-			// TODO Auto-generated method stub
-
+			Window.alert("Enderzeugnis wurde angelegt. ");
 		}
 	}
 
@@ -238,7 +255,9 @@ public class EnderzeugnisFormular extends VerticalPanel {
 
 		}
 	}
-
+	public void setzeCustomStackLayoutPanel(CustomStackLayoutPanel cslp){
+		  BauteilFormular.cslp = cslp;
+	}
 	public void setzeSelektiert(Enderzeugnis endProduct) {
 		if (endProduct != null) {
 			enderzeugnisDarstellung = endProduct;
@@ -267,6 +286,7 @@ public class EnderzeugnisFormular extends VerticalPanel {
 			editButton.setVisible(false);
 			deleteButton.setVisible(false);
 		}
+		
 	}
-
+	
 }
