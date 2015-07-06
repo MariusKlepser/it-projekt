@@ -94,7 +94,7 @@ public class BauteilMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, name, beschreibung, aenderungsdatum, materialbezeichnung"
+					.executeQuery("SELECT id, name, beschreibung, aenderungsdatum, materialbezeichnung "
 							+ "FROM bauteil " + "ORDER BY name");
 
 			// FÃ¼r jeden Eintrag im Suchergebnis wird nun ein

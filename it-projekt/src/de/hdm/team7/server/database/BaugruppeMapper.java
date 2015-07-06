@@ -80,7 +80,7 @@ public class BaugruppeMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, name, beschreibung, aenderungsdatum, materialbezeichnung"
+					.executeQuery("SELECT id, name, beschreibung, aenderungsdatum, materialbezeichnung "
 							+ "FROM baugruppe " + "ORDER BY name");
 
 			// Für jeden Eintrag im Suchergebnis wird nun ein User-Objekt
