@@ -4,12 +4,15 @@ import java.util.ArrayList;
 
 import com.google.gwt.view.client.ProvidesKey;
 
+//import de.hdm.team7.server.ZuordnungEEBG;
+//import de.hdm.team7.server.ZuordnungEEBT;
+
 public class Enderzeugnis extends Baugruppe {
 
 	private static final long serialVersionUID = 1L;
 	
-	protected ArrayList<ZuordnungEEBG> kinderKomponentenEEBG;
-	protected ArrayList<ZuordnungEEBT> kinderKomponentenEEBT;
+	//protected ArrayList<ZuordnungEEBG> kinderKomponentenEEBG;
+	//protected ArrayList<ZuordnungEEBT> kinderKomponentenEEBT;
 	
 	
 	/**
@@ -26,25 +29,25 @@ public class Enderzeugnis extends Baugruppe {
 	/**
 	 * @return the childrenComponents
 	 */
-	public ArrayList<ZuordnungEEBG> getKinderKomponentenEEBG() {
-		return kinderKomponentenEEBG;
-	}
+    //public ArrayList<ZuordnungEEBG> getKinderKomponentenEEBG() {
+    //return kinderKomponentenEEBG;
+    //}
 
-	public ArrayList<ZuordnungEEBT> getKinderKomponentenEEBT() {
-		return kinderKomponentenEEBT;
-	}
+    //public ArrayList<ZuordnungEEBT> getKinderKomponentenEEBT() {
+    //return kinderKomponentenEEBT;
+    //}
 
 	
 	/**
 	 * @param kinderKomponenten the childrenComponents to set
 	 */
-	public void setKinderKomponentenEEBG(ArrayList<ZuordnungEEBG> kinderKomponentenEEBG) {
-		this.kinderKomponentenEEBG = kinderKomponentenEEBG;
-	}
+    //public void setKinderKomponentenEEBG(ArrayList<ZuordnungEEBG> kinderKomponentenEEBG) {
+    //this.kinderKomponentenEEBG = kinderKomponentenEEBG;
+    //}
 	
-	public void setKinderKomponentenEEBT(ArrayList<ZuordnungEEBT> kinderKomponentenEEBT) {
-		this.kinderKomponentenEEBT = kinderKomponentenEEBT;
-	}
+    //public void setKinderKomponentenEEBT(ArrayList<ZuordnungEEBT> kinderKomponentenEEBT) {
+    //this.kinderKomponentenEEBT = kinderKomponentenEEBT;
+    //}
 
 
     

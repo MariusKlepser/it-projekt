@@ -17,7 +17,6 @@ public class DBVerbindung {
      * Software neu komilieren zu mÃ¼ssen.
      */
 //  private static String googleUrl = "jdbc:google:mysql://prof-thies.de:thies-bankproject:thies-bankproject/bankproject?user=demo&password=demo";
-    private static String testUrl = "jdbc:mysql://213.165.82.134:3306/whatsgoes";
 
     /**
      * Diese statische Methode kann aufgrufen werden durch
@@ -45,23 +44,24 @@ public class DBVerbindung {
      */
     public static Connection connection() {
         // Wenn es bisher keine Conncetion zur DB gab, ...
+    	
+    	String url = null;
         if (connection == null) {
-            String url = null;
-            String user = "ps091";
-            String password = "getshitdone";
-            
-            try {
-                if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
-                    // Load the class that provides the new
-                    // "jdbc:google:mysql://" prefix.
-//                    Class.forName("com.mysql.jdbc.GoogleDriver");
-//                    url = googleUrl;
-                } else {
-                    // Local MySQL instance to use during development.
-                    Class.forName("com.mysql.jdbc.Driver");
-                    url = testUrl;
-                    
-                }
+        	
+        	String user = "root";
+        	String password = "";
+        	
+        	
+        	try {
+        	      if (SystemProperty.environment.value() ==
+        	          SystemProperty.Environment.Value.Production) {
+        	        // Load the class that provides the new "jdbc:google:mysql://" prefix.
+        	        Class.forName("com.mysql.jdbc.GoogleDriver");
+        	        url = "jdbc:google:mysql://it-projekt:it-projekt/whatsgoes";
+        	      } else {
+        	        // Local MySQL instance to use during development.
+        	        Class.forName("com.mysql.jdbc.Driver");
+        	        url = "jdbc:google:mysql://it-projekt:it-projekt/whatsgoes";
                 /*
                  * Dann erst kann uns der DriverManager eine Verbindung mit den
                  * oben in der Variable url angegebenen Verbindungsinformationen
@@ -71,7 +71,9 @@ public class DBVerbindung {
                  * abgespeichert und fortan verwendet.
                  */
                 connection = DriverManager.getConnection(url, user, password);
-            } catch (Exception e) {
+                
+            }
+        	}catch (Exception e) {
                 connection = null;
                 e.printStackTrace();
             }

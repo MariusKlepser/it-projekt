@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
+	<use-google-connector-j>true</use-google-connector-j>
   <application></application>
   <version>1</version>
 
@@ -37,6 +38,10 @@
     With this feature enabled, there is a very small chance your app will see
     stale session data. For details, see
     http://code.google.com/appengine/docs/java/config/appconfig.html#Enabling_Sessions
+    
+    Google Connector Go
   -->
+
+<use-google-connector-j>true</use-google-connector-j>
 
 </appengine-web-app>
