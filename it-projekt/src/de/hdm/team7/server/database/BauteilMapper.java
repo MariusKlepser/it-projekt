@@ -203,7 +203,7 @@ public class BauteilMapper {
 				log = log + "increment current ID by 1; ";
 				u.setId(rs.getInt("maxid") + 1);
 				log = log + "ID incremented; ";
-
+			
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsÃ¤chliche EinfÃ¼geoperation

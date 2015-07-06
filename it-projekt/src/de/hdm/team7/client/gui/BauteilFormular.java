@@ -67,6 +67,7 @@ public class BauteilFormular extends VerticalPanel {
 	static Label aenderungsValueLabel = new Label();
 	static Label letzterBearbeiterLabel = new Label();
 	static Label aenderungsDatumLabel = new Label("Aenderungsdatum:");
+	static Label mengeLabel = new Label ("Menge");
 	static Label letzterBearbeiter = new Label("Letzter Bearbeiter:");
 	
 	Label fehlerLabelName = new Label("Bitte geben Sie einen Namen ein!");
@@ -76,6 +77,7 @@ public class BauteilFormular extends VerticalPanel {
 
 	static TextBox nameTextBox = new TextBox();
 	static TextBox materialTextBox = new TextBox();
+	static TextBox mengeTextBox = new TextBox();
 	static TextArea beschreibung = new TextArea();
 
 	static Button newButton = new Button("Erstellen");
@@ -105,7 +107,7 @@ public class BauteilFormular extends VerticalPanel {
 
 		HorizontalPanel hPanel = new HorizontalPanel();
 		
-		Grid boGrid = new Grid(10, 3);
+		Grid boGrid = new Grid(12, 3);
 		hPanel.add(boGrid);
 
 		Label ueberschrift = new Label("Bauteil Info");
@@ -133,11 +135,14 @@ public class BauteilFormular extends VerticalPanel {
 		boGrid.setWidget(7, 1, fehlerLabelBeschreibung);
 		fehlerLabelBeschreibung.setVisible(false);
 
-		boGrid.setWidget(8, 0, aenderungsDatumLabel);
-		boGrid.setWidget(8, 1, aenderungsValueLabel);
+		boGrid.setWidget(10, 0, aenderungsDatumLabel);
+		boGrid.setWidget(10, 1, aenderungsValueLabel);
 
 		boGrid.setWidget(9, 0, letzterBearbeiter);
 		boGrid.setWidget(9, 1, letzterBearbeiterLabel);
+		
+		boGrid.setWidget(8, 0, mengeLabel);
+		boGrid.setWidget(8, 1, mengeTextBox);
 
 		HorizontalPanel boButtonsPanel = new HorizontalPanel();
 
@@ -312,6 +317,7 @@ public class BauteilFormular extends VerticalPanel {
 			temp.setDescription(beschreibung.getText());
 			ClientEinstellungen.getLogger().info(
 					"BauteilFormular: Beschreibung gesetzt");
+			temp.setMenge(mengeTextBox.getText());
 			temp.setLetzterBearbeiter(loginInfo.getEmailAddress());
 			ClientEinstellungen.getLogger().info(
 					"BauteilFormular: " + loginInfo.getEmailAddress());
@@ -333,6 +339,7 @@ public class BauteilFormular extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			final Bauteil temp = new Bauteil();
 			if (nameTextBox.getValue() == null) {
 				fehlerLabelName.setVisible(true);
 			} else if (materialTextBox.getValue() == null) {
@@ -340,14 +347,27 @@ public class BauteilFormular extends VerticalPanel {
 			} else if (beschreibung.getValue() == null) {
 				fehlerLabelBeschreibung.setVisible(true);
 			} else {
-				bauteilDarstellung.setName(nameTextBox.getText());
-				bauteilDarstellung.setMaterialBezeichnung(materialTextBox
-						.getText());
-				bauteilDarstellung.setDescription(beschreibung.getText());
-				bauteilDarstellung.setLetzterBearbeiter(loginInfo.getEmailAddress());	
+				temp.setName(nameTextBox.getText());
+				ClientEinstellungen.getLogger().info("BauteilFormular: Name gesetzt");
+				ClientEinstellungen.getLogger().info("BauteilFormular: Temp: " + temp.getName() + ", " + temp.getClass());
+				ClientEinstellungen.getLogger().info(
+						"BauteilFormular: keine Namensdupletten gefunden");
+				temp.setMaterialBezeichnung(materialTextBox.getText());
+				ClientEinstellungen.getLogger().info(
+						"BauteilFormular: Material gesetzt");
+				temp.setDescription(beschreibung.getText());
+				ClientEinstellungen.getLogger().info(
+						"BauteilFormular: Beschreibung gesetzt");
+				temp.setMenge(mengeTextBox.getValue());
+				temp.setLetzterBearbeiter(loginInfo.getEmailAddress());
+				ClientEinstellungen.getLogger().info(
+						"BauteilFormular: " + loginInfo.getEmailAddress());
+				ClientEinstellungen.getLogger().info(
+						"BauteilFormular: Felddaten setzen - abgeschlossen");	
 				Set<Bauteil> selektierteObjekte = ((MultiSelectionModel<Bauteil>) selectionModel).getSelectedSet();
 				stuecklistenVerwaltung.aktualisiereBauteil(bauteilDarstellung,
 						new bearbeiteBauteilCallback(bauteilDarstellung));
+				cslp.ladeBauteilListNeu();
 			}
 		}
 	}
