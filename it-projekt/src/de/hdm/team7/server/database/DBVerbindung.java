@@ -48,15 +48,15 @@ public class DBVerbindung {
     	String url = null;
         if (connection == null) {
         	
-        	String user = "root";
-        	String password = "";
+        	String user = "ps091";
+        	String password = "getshitdone";
         	
         	
         	try {
         		
         			    // Load the class that provides the new "jdbc:google:mysql://" prefix.
         			    Class.forName("com.mysql.jdbc.GoogleDriver");
-        			    url = "jdbc:google:mysql://your-project-id:your-instance-name/guestbook?user=root";
+        			    url = "jdbc:google:mysql://it-projekt:it-projekt/whatsgoes?user=root";
         			  
 
                 /*
