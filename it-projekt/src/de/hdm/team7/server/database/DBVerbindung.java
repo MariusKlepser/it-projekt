@@ -57,11 +57,11 @@ public class DBVerbindung {
         	          SystemProperty.Environment.Value.Production) {
         	        // Load the class that provides the new "jdbc:google:mysql://" prefix.
         	        Class.forName("com.mysql.jdbc.GoogleDriver");
-        	        url = "jdbc:google:mysql://it-projekt:it-projekt/whatsgoes";
+        	        url = "jdbc:google:mysql://it-projekt:it-projekt/whatsgoes?user=root";
         	      } else {
         	        // Local MySQL instance to use during development.
         	        Class.forName("com.mysql.jdbc.Driver");
-        	        url = "jdbc:google:mysql://it-projekt:it-projekt/whatsgoes";
+        	        url = "jdbc:google:mysql://it-projekt:it-projekt/whatsgoes?user=root";
                 /*
                  * Dann erst kann uns der DriverManager eine Verbindung mit den
                  * oben in der Variable url angegebenen Verbindungsinformationen
@@ -70,7 +70,7 @@ public class DBVerbindung {
                  * Diese Verbindung wird dann in der statischen Variable con
                  * abgespeichert und fortan verwendet.
                  */
-                connection = DriverManager.getConnection(url, user, password);
+                connection = DriverManager.getConnection(url);
                 
             }
         	}catch (Exception e) {
