@@ -87,7 +87,7 @@ public class It_projekt implements EntryPoint {
 		// Set up sign out hyperlink.
 	    signOutLink.setHref(loginInfo.getLogoutUrl());
 		
-	    final Button neuButton = new Button("Neues Element +"); 
+	    // final Button neuButton = new Button("Neues Element +"); 
 	    final Button neuStueckliste = new Button("Neue Stueckliste");
 	    final Button neuBaugruppe = new Button("Neue Baugruppe");
 	    final Button neuBauteil = new Button("Neues Bauteil");
@@ -214,7 +214,7 @@ public class It_projekt implements EntryPoint {
 		bf.setVisible(false);
 
 		HorizontalPanel bPanel = new HorizontalPanel();
-		bPanel.add(neuButton);
+		//bPanel.add(neuButton);
 		bPanel.add(neuStueckliste);
 		bPanel.add(neuBaugruppe);
 		bPanel.add(neuBauteil);
