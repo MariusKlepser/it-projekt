@@ -1,5 +1,12 @@
 package de.hdm.team7.client.gui;
 
+import java.util.ArrayList;
+import java.util.Set;
+
+import de.hdm.team7.client.LoginInfo;
+
+import com.google.gwt.view.client.SelectionModel;
+import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -12,10 +19,13 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.MultiSelectionModel;
 
 import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
 import de.hdm.team7.shared.geschaeftsobjekte.Baugruppe;
+import de.hdm.team7.shared.geschaeftsobjekte.Bauteil;
+
 
 /**
  * Formular für die Darstellung des selektierten Kunden Angelehnt an Thies &
@@ -27,8 +37,14 @@ public class BaugruppeFormular extends VerticalPanel {
 	StuecklistenVerwaltungAsync stuecklistenVerwaltung = ClientEinstellungen
 			.getStuecklistenVerwaltung();
 
+	static CustomStackLayoutPanel cslp = null;
 	static Baugruppe baugruppeDarstellung = null;
-
+	static LoginInfo loginInfo = null;
+	final SelectionModel selectionModel = new MultiSelectionModel<Baugruppe>(baugruppeDarstellung.KEY_PROVIDER);
+	static Label letzterBearbeiter = new Label("Letzter Bearbeiter:");
+	static Label aenderungsDatumLabel = new Label("Aenderungsdatum:");
+	
+	Set<Baugruppe> selektierteObjekte = null;
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 	 */
@@ -136,28 +152,80 @@ public class BaugruppeFormular extends VerticalPanel {
 	 * Ein neues Objekt wird erzeugt.
 	 * 
 	 */
+//	private class NewClickHandler implements ClickHandler {
+//
+//		@Override
+//		public void onClick(ClickEvent event) {
+//			if (nameTextBox.getValue() == null) {
+//				fehlerLabelName.setVisible(true);
+//			} else if (materialTextBox.getValue() == null) {
+//				fehlerLabelMaterial.setVisible(true);
+//			} else if (beschreibung.getValue() == null) {
+//				fehlerLabelBeschreibung.setVisible(true);
+//			} else {
+//				baugruppeDarstellung.setName(nameTextBox.getText());
+//				baugruppeDarstellung.setMaterialBezeichnung(materialTextBox
+//						.getText());
+//				baugruppeDarstellung.setDescription(beschreibung.getText());
+////				baugruppeDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
+//				stuecklistenVerwaltung.erstelleBaugruppe(baugruppeDarstellung, null,
+//						new erstelleBaugruppeCallback(baugruppeDarstellung));
+//			}
+//		}
+//	}
+	
 	private class NewClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (nameTextBox.getValue() == null) {
-				fehlerLabelName.setVisible(true);
-			} else if (materialTextBox.getValue() == null) {
-				fehlerLabelMaterial.setVisible(true);
-			} else if (beschreibung.getValue() == null) {
-				fehlerLabelBeschreibung.setVisible(true);
-			} else {
-				baugruppeDarstellung.setName(nameTextBox.getText());
-				baugruppeDarstellung.setMaterialBezeichnung(materialTextBox
-						.getText());
-				baugruppeDarstellung.setDescription(beschreibung.getText());
-//				baugruppeDarstellung.setLetzterBearbeiter(UserServiceFactory.getUserService().getCurrentUser().getEmail());
-				stuecklistenVerwaltung.erstelleBaugruppe(baugruppeDarstellung, null,
-						new erstelleBaugruppeCallback(baugruppeDarstellung));
+			ClientEinstellungen.getLogger().info("BaugruppeFormular: onClick Anfang");
+			final Baugruppe temp = new Baugruppe();
+			final String baugruppenname = nameTextBox.getText().toUpperCase()
+					.trim();
+			final String materialbezeichnung = materialTextBox.getText()
+					.toUpperCase().trim();
+			final String beschreibung1 = beschreibung.getText()
+					.toUpperCase().trim();
+			nameTextBox.setFocus(true);
+			if (!baugruppenname.matches("^[0-9A-Z]{0,30}$")) {
+				Window.alert("Bitte geben Sie etwas in das Feld (Name) ein und verwenden dabei nur Buchstaben und Zahlen.");
+				    nameTextBox.selectAll();
 			}
+			if (!materialbezeichnung.matches("^[0-9A-Z]{0,30}$")) {
+				Window.alert("Bitte geben Sie etwas in das Feld (Materialbezeichnung) ein und verwenden dabei nur Buchstaben und Zahlen.");
+			    	materialTextBox.selectAll();
+			} 
+			if (!beschreibung1.matches("^[0-9A-Z]{0,30}$")) {
+				Window.alert("Bitte geben Sie etwas in das Feld (Beschreibung) ein und verwenden dabei nur Buchstaben und Zahlen.");
+			    	beschreibung.selectAll();
+			}
+			temp.setName(nameTextBox.getText());
+			ClientEinstellungen.getLogger().info("BaugruppeFormular: Name gesetzt");
+			ClientEinstellungen.getLogger().info("BaugruppeFormular: Temp: " + temp.getName() + ", " + temp.getClass());
+			ClientEinstellungen.getLogger().info(
+					"BaugruppenFormular: keine Namensdupletten gefunden");
+			temp.setMaterialBezeichnung(materialTextBox.getText());
+			ClientEinstellungen.getLogger().info(
+					"BaugruppenFormular: Material gesetzt");
+			temp.setDescription(beschreibung.getText());
+			ClientEinstellungen.getLogger().info(
+					"BaugruppenFormular: Beschreibung gesetzt");
+//			temp.setLetzterBearbeiter(loginInfo.getEmailAddress());
+//			ClientEinstellungen.getLogger().info(
+//					"BaugruppeFormular: " + loginInfo.getEmailAddress());
+			ClientEinstellungen.getLogger().info(
+					"BaugruppeFormular: Felddaten setzen - abgeschlossen");
+			selektierteObjekte = ((MultiSelectionModel<Baugruppe>) selectionModel).getSelectedSet();
+			baugruppeDarstellung = temp;
+			ArrayList<Baugruppe> tempList = new ArrayList<Baugruppe>();
+			for (Baugruppe b : selektierteObjekte){
+				tempList.add(b);
+			}
+			stuecklistenVerwaltung.erstelleBaugruppe(baugruppeDarstellung, null,
+					new erstelleBaugruppeCallback(baugruppeDarstellung));
+			cslp.ladeBaugruppeListNeu();
 		}
 	}
-	
 	private class EditClickHandler implements ClickHandler {
 
 		@Override
@@ -219,7 +287,7 @@ public class BaugruppeFormular extends VerticalPanel {
 
 		@Override
 		public void onSuccess(String result) {
-			// TODO Auto-generated method stub
+		Window.alert("Die Baugruppe wurde angelegt!");
 
 		}
 	}
@@ -264,9 +332,41 @@ public class BaugruppeFormular extends VerticalPanel {
 		}
 	}
 
-	public void setzeSelektiert(Baugruppe compAss) {
-		if (compAss != null) {
-			baugruppeDarstellung = compAss;
+//	public void setzeSelektiert(Baugruppe compAss) {
+//		if (compAss != null) {
+//			baugruppeDarstellung = compAss;
+//			nameTextBox.setText(baugruppeDarstellung.getName());
+//			idValueLabel.setText(Integer.toString(baugruppeDarstellung.getId()));
+//			materialTextBox
+//					.setText(baugruppeDarstellung.getMaterialBezeichnung());
+//			beschreibung.setText(baugruppeDarstellung.getDescription());
+//			aenderungsValueLabel.setText(baugruppeDarstellung
+//					.getAenderungsDatum());
+//			letzterBearbeiterLabel.setText(baugruppeDarstellung
+//					.getLetzterBearbeiter());
+//			
+//			newButton.setVisible(false);
+//			editButton.setVisible(true);
+//			deleteButton.setVisible(true);
+//			
+//			
+//		} else {
+//			nameTextBox.setText("");
+//			idValueLabel.setText("");
+//			materialTextBox.setText("");
+//			beschreibung.setText("");
+//			aenderungsValueLabel.setText("");
+//			letzterBearbeiterLabel.setText("");
+//
+//			newButton.setVisible(true);
+//			editButton.setVisible(false);
+//			deleteButton.setVisible(false);
+//		}
+//	}
+	public void setzeSelektiert(Baugruppe comp, LoginInfo loginInfo) {
+		if (comp != null) {
+			baugruppeDarstellung = comp;
+			BaugruppeFormular.loginInfo = loginInfo;
 			nameTextBox.setText(baugruppeDarstellung.getName());
 			idValueLabel.setText(Integer.toString(baugruppeDarstellung.getId()));
 			materialTextBox
@@ -276,24 +376,28 @@ public class BaugruppeFormular extends VerticalPanel {
 					.getAenderungsDatum());
 			letzterBearbeiterLabel.setText(baugruppeDarstellung
 					.getLetzterBearbeiter());
-			
+
 			newButton.setVisible(false);
 			editButton.setVisible(true);
 			deleteButton.setVisible(true);
-			
-			
 		} else {
+			BaugruppeFormular.loginInfo = loginInfo;
 			nameTextBox.setText("");
 			idValueLabel.setText("");
 			materialTextBox.setText("");
 			beschreibung.setText("");
-			aenderungsValueLabel.setText("");
-			letzterBearbeiterLabel.setText("");
+			aenderungsValueLabel.setVisible(false);
+			aenderungsDatumLabel.setVisible(false);
+			letzterBearbeiterLabel.setVisible(false);
+			letzterBearbeiter.setVisible(false);
 
 			newButton.setVisible(true);
 			editButton.setVisible(false);
 			deleteButton.setVisible(false);
 		}
 	}
+	public void setzeCustomStackLayoutPanel(CustomStackLayoutPanel cslp){
+		  BaugruppeFormular.cslp = cslp;
+	  }
 }
 

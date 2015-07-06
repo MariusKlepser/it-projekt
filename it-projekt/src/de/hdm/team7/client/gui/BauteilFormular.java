@@ -289,15 +289,15 @@ public class BauteilFormular extends VerticalPanel {
 			final String beschreibung1 = beschreibung.getText()
 					.toUpperCase().trim();
 			nameTextBox.setFocus(true);
-			if (!bauteilname.matches("^[0-9A-Z]{0,30}$")) {
+			if (!bauteilname.matches("^[0-9A-Z ]{0,30}$")) {
 				Window.alert("Bitte geben Sie etwas in das Feld (Name) ein und verwenden dabei nur Buchstaben und Zahlen.");
 				    nameTextBox.selectAll();
 			}
-			if (!materialbezeichnung.matches("^[0-9A-Z]{0,30}$")) {
+			if (!materialbezeichnung.matches("^[0-9A-Z ]{0,30}$")) {
 				Window.alert("Bitte geben Sie etwas in das Feld (Materialbezeichnung) ein und verwenden dabei nur Buchstaben und Zahlen.");
 			    	materialTextBox.selectAll();
 			} 
-			if (!beschreibung1.matches("^[0-9A-Z]{0,30}$")) {
+			if (!beschreibung1.matches("^[0-9A-Z ]{0,30}$")) {
 				Window.alert("Bitte geben Sie etwas in das Feld (Beschreibung) ein und verwenden dabei nur Buchstaben und Zahlen.");
 			    	beschreibung.selectAll();
 			}

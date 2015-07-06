@@ -36,8 +36,7 @@ public class CustomStackLayoutPanel extends StackLayoutPanel {
 
 	// Create a CellList that uses the cell.
 	final CellList<Bauteil> bauteilList = new CellList<Bauteil>(bauteilCell);
-	final CellList<Baugruppe> baugruppeList = new CellList<Baugruppe>(
-			baugruppeCell);
+	final CellList<Baugruppe> baugruppeList = new CellList<Baugruppe>(baugruppeCell);
 	final CellList<Enderzeugnis> enderzeugnisList = new CellList<Enderzeugnis>(
 			enderzeugnisCell);
 	final CellList<Stueckliste> stuecklisteList = new CellList<Stueckliste>(
