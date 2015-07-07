@@ -258,6 +258,7 @@ public class BauteilFormular extends VerticalPanel {
 		public void onClick(ClickEvent event) {
 			stuecklistenVerwaltung.loescheBauteil(bauteilDarstellung,
 					new loescheBauteilCallback(bauteilDarstellung));
+			Window.alert("Vermutlich hast du das Bauteil sowieso nichtmehr gebraucht..");
 		}
 	}
 	
@@ -325,6 +326,7 @@ public class BauteilFormular extends VerticalPanel {
 			}
 			stuecklistenVerwaltung.erstelleBauteil(bauteilDarstellung,
 					new erstelleBauteilCallback(bauteilDarstellung));
+			Window.alert("Das Bauteil wurde erstellt");
 			cslp.ladeBauteilListNeu();
 		}
 	}
@@ -348,6 +350,7 @@ public class BauteilFormular extends VerticalPanel {
 				Set<Bauteil> selektierteObjekte = ((MultiSelectionModel<Bauteil>) selectionModel).getSelectedSet();
 				stuecklistenVerwaltung.aktualisiereBauteil(bauteilDarstellung,
 						new bearbeiteBauteilCallback(bauteilDarstellung));
+				Window.alert("Das Bauteil wurde geupdated! Nice job!");
 			}
 		}
 	}

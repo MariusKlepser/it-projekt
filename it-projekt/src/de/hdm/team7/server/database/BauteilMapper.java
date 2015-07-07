@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Set;
 
 import de.hdm.team7.shared.geschaeftsobjekte.Bauteil;
@@ -264,7 +266,12 @@ public class BauteilMapper {
 	 */
 	public Bauteil update(Bauteil u) {
 		Connection con = DBVerbindung.connection();
-
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		u.setAenderungsDatum(sdf.format(date));
+		
+		
 		try {
 			Statement stmt = con.createStatement();
 

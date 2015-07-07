@@ -61,6 +61,8 @@ public class ZuordnungsMapper {
 				ResultSet rslt = statement.executeQuery("SELECT id, name, beschreibung,aenderungsdatum,materialbezeichnung FROM baugruppe "
 								+ "WHERE id=" + rs.getInt("baugruppe2ID"));
 					// Ergebnis-Tupel in Objekt umwandeln
+				
+				if (rslt.next())	{
 					Baugruppe ca = new Baugruppe();
 					ca.setId(rslt.getInt("id"));
 					ca.setName(rslt.getString("name"));
@@ -69,6 +71,7 @@ public class ZuordnungsMapper {
 					ca.setMaterialBezeichnung(rslt.getString("materialbezeichnung"));
 
 					result.add(ca);
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -102,6 +105,7 @@ public class ZuordnungsMapper {
 				ResultSet rslt = statement.executeQuery("SELECT id, name, beschreibung,aenderungsdatum,materialbezeichnung FROM bauteil "
 								+ "WHERE id=" + rs.getInt("bauteilID"));
 					// Ergebnis-Tupel in Objekt umwandeln
+				if (rslt.next())	{
 					Bauteil ca = new Bauteil();
 					ca.setId(rslt.getInt("id"));
 					ca.setName(rslt.getString("name"));
@@ -110,6 +114,7 @@ public class ZuordnungsMapper {
 					ca.setMaterialBezeichnung(rslt.getString("materialbezeichnung"));
 
 					result.add(ca);
+				}
 				
 			}
 		} catch (SQLException e) {
@@ -141,9 +146,10 @@ public class ZuordnungsMapper {
 			while (rs.next()) {
 				Statement statement = con.createStatement();
 				
-			ResultSet rslt = statement.executeQuery("SELECT id, name, beschreibung,aenderungsdatum,materialbezeichnung FROM baugruppe "
+			ResultSet rslt = statement.executeQuery("SELECT id, name, beschreibung, aenderungsdatum, materialbezeichnung FROM baugruppe "
 							+ "WHERE id=" + rs.getInt("baugruppeID"));
 				// Ergebnis-Tupel in Objekt umwandeln
+			if (rslt.next())	{
 				Baugruppe ca = new Baugruppe();
 				ca.setId(rslt.getInt("id"));
 				ca.setName(rslt.getString("name"));
@@ -152,6 +158,7 @@ public class ZuordnungsMapper {
 				ca.setMaterialBezeichnung(rslt.getString("materialbezeichnung"));
 
 				result.add(ca);
+			}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
