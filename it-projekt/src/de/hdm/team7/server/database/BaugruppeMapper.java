@@ -168,7 +168,7 @@ public class BaugruppeMapper {
 			 * Primärschlüsselwert ist.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid "
-					+ "FROM benutzer ");
+					+ "FROM baugruppe ");
 
 			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
