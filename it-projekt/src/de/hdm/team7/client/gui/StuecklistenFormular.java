@@ -8,6 +8,9 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.i18n.shared.DefaultDateTimeFormatInfo;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.CellTree;
+import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -17,15 +20,20 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.MultiSelectionModel;
+import com.google.gwt.view.client.SelectionModel;
+import com.google.gwt.view.client.TreeViewModel;
 
 import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
 import de.hdm.team7.shared.geschaeftsobjekte.Baugruppe;
+import de.hdm.team7.shared.geschaeftsobjekte.Bauteil;
 import de.hdm.team7.shared.geschaeftsobjekte.Enderzeugnis;
 import de.hdm.team7.shared.geschaeftsobjekte.Stueckliste;
 
 /**
- * Formular für die Darstellung des selektierten Kunden Angelehnt an Thies &
+ * Formular fï¿½r die Darstellung des selektierten Kunden Angelehnt an Thies &
  * Rathke
  */
 
@@ -57,9 +65,24 @@ public class StuecklistenFormular extends VerticalPanel {
 	DefaultDateTimeFormatInfo info = new DefaultDateTimeFormatInfo();
 	DateTimeFormat dtf = new DateTimeFormat(pattern, info) {};  // <= trick here
 
+	
+//	private ListDataProvider<Bauteil> dataProvider = new ListDataProvider<Bauteil>();
+//	// Create a CellTable.
+//	CellTable<Bauteil> cellTable = new CellTable<Bauteil>();
+//	ListHandler<Bauteil> sortHandler = new ListHandler<Bauteil>(
+//			dataProvider.getList());
+//	// Add a selection model so we can select cells.
+//	final SelectionModel selectionModel = new MultiSelectionModel<Bauteil>(bauteilDarstellung.KEY_PROVIDER);
+//	
+	
+    // Create a model for the tree.
+    TreeViewModel model = new CustomTreeModel();
+    CellTree tree = new CellTree(model, "Item 1");
+	
+	
 	/*
 	 * Im Konstruktor werden die Widgets z.T. erzeugt. Alle werden in einem
-	 * Raster angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen
+	 * Raster angeordnet, dessen Grï¿½ï¿½e sich aus dem Platzbedarf der enthaltenen
 	 * Widgets bestimmt.
 	 */
 	public StuecklistenFormular() {
@@ -67,8 +90,12 @@ public class StuecklistenFormular extends VerticalPanel {
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem
 		 * Gitter.
 		 */
+		
+		HorizontalPanel hPanel = new HorizontalPanel();
+		
 		Grid boGrid = new Grid(8, 2);
-		this.add(boGrid);
+		hPanel.add(boGrid);
+//		this.add(hPanel);
 
 		Label ueberschrift = new Label("Stueckliste Info");
 		boGrid.setWidget(0, 0, ueberschrift);
@@ -100,7 +127,6 @@ public class StuecklistenFormular extends VerticalPanel {
 		boGrid.setWidget(7, 1, letzterBearbeiterLabel);
 
 		HorizontalPanel boButtonsPanel = new HorizontalPanel();
-		this.add(boButtonsPanel);
 
 		newButton.addClickHandler(new NewClickHandler());
 		boButtonsPanel.add(newButton);
@@ -112,15 +138,32 @@ public class StuecklistenFormular extends VerticalPanel {
 		boButtonsPanel.add(editButton);
 		
 		ladeEnderzeugnisInKomponenteListBox();
+		
+
+		VerticalPanel vPanel = new VerticalPanel();
+		
+		Label cellTableBeschreibung = new Label("Bitte waehlen Sie hier die Oberkomponenten aus, denen das aktuell selektierte Bauteil untergeordnet werden soll:");
+		cellTableBeschreibung.setWordWrap(true);
+		cellTableBeschreibung.setWidth("50%");
+		vPanel.add(cellTableBeschreibung);
+		
+	    // Create a model for the tree.
+	    TreeViewModel model = new CustomTreeModel();
+	    CellTree cellTree = new CellTree(model, null);
+		
+		vPanel.add(cellTree);
+		hPanel.add(vPanel);
+		this.add(hPanel);
+		this.add(boButtonsPanel);
 	}
 
 	/*
-	 * Click handlers und abhängige AsyncCallback Klassen.
+	 * Click handlers und abhï¿½ngige AsyncCallback Klassen.
 	 */
 
 	/**
-	 * Zum Löschen eines Kontos wird zunächst der Eigentümer abgefragt, bevor im
-	 * Callback eine Löschung durchgeführt wird.
+	 * Zum Lï¿½schen eines Kontos wird zunï¿½chst der Eigentï¿½mer abgefragt, bevor im
+	 * Callback eine Lï¿½schung durchgefï¿½hrt wird.
 	 * 
 	 */
 	private class DeleteClickHandler implements ClickHandler {
@@ -169,10 +212,10 @@ public class StuecklistenFormular extends VerticalPanel {
 
 	/*
 	 * Auch hier muss nach erfolgreicher Kontoerzeugung der Kunden- und
-	 * Kontobaum aktualisiert werden. Dafür dient ein privates Attribut und der
+	 * Kontobaum aktualisiert werden. Dafï¿½r dient ein privates Attribut und der
 	 * Konstruktor.
 	 * 
-	 * Wir benötigen hier nur einen Parameter für den Kunden, da das Konto als
+	 * Wir benï¿½tigen hier nur einen Parameter fï¿½r den Kunden, da das Konto als
 	 * ergebnis des asynchronen Aufrufs geliefert wird.
 	 */
 	public class ErstelleStuecklistenCallback implements AsyncCallback<String> {
@@ -204,7 +247,7 @@ public class StuecklistenFormular extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Das Löschen der Stückliste ist fehlgeschlagen!");
+			Window.alert("Das Lï¿½schen der Stï¿½ckliste ist fehlgeschlagen!");
 		}
 
 		@Override
