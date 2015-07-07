@@ -187,11 +187,11 @@ public class BaugruppeMapper {
 						+ ",'"
 						+ ca.getName()
 						+ "','"
-						+ ca.getAenderungsDatum()
+						+ ca.getDescription()
+						+ "','"
+						+ ca.getDtAenderungsDatum()
 						+ "','"
 						+ ca.getMaterialBezeichnung()
-						+ "','"
-						+ ca.getName()
 						+ "')");
 			}
 		} catch (SQLException e) {
