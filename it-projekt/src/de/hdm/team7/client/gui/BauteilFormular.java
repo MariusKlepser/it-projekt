@@ -323,7 +323,7 @@ public class BauteilFormular extends VerticalPanel {
 			for (Bauteil b : selektierteObjekte){
 				tempList.add(b);
 			}
-			stuecklistenVerwaltung.erstelleBauteil(bauteilDarstellung, tempList,
+			stuecklistenVerwaltung.erstelleBauteil(bauteilDarstellung,
 					new erstelleBauteilCallback(bauteilDarstellung));
 			cslp.ladeBauteilListNeu();
 		}

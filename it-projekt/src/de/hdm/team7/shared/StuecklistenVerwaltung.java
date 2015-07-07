@@ -37,10 +37,9 @@ public interface StuecklistenVerwaltung extends RemoteService {
 	 **/
 
 
-	public String erstelleBauteil(Bauteil bauteil, ArrayList<Bauteil> kinderKomponenten);
+	public String erstelleBauteil(Bauteil bauteil);
 
-	public String erstelleBaugruppe(Baugruppe baugruppe,
-			ArrayList<Bauteil> kinderKomponenten);
+	public String erstelleBaugruppe(Baugruppe baugruppe);
 
 	public String erstelleEnderzeugnis(Enderzeugnis enderzeugnis,
 			ArrayList<Bauteil> kinderKomponenten);

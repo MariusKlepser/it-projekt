@@ -60,7 +60,7 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 		this.stuecklistenListe = stuecklistenListe;
 	}
 
-	public String erstelleBauteil(Bauteil bauteil, ArrayList<Bauteil> kinderKomponenten) {
+	public String erstelleBauteil(Bauteil bauteil) {
 		String message;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
@@ -70,7 +70,7 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 		bauteil.setAenderungsDatum(sdf.format(date));
 		message = message + sdf.format(new Date()) + "; ";
 		message = message + "Component created; ";
-		this.bauteilMapper.insert(bauteil, kinderKomponenten);
+		this.bauteilMapper.insert(bauteil);
 		message = message + this.bauteilMapper.getLog();
 		message = message + "Component sent to Mapper";
 		
@@ -78,8 +78,7 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public String erstelleBaugruppe(Baugruppe baugruppe,
-			ArrayList<Bauteil> kinderKomponenten) {
+	public String erstelleBaugruppe(Baugruppe baugruppe) {
 		String message;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();

@@ -16,10 +16,9 @@ public interface StuecklistenVerwaltungAsync {
 	void setStuecklistenListe(ArrayList<Stueckliste> bomList,
 			AsyncCallback<Void> callback) throws IllegalArgumentException;
 
-	void erstelleBauteil(Bauteil component, ArrayList<Bauteil> kinderKomponenten, AsyncCallback<String> callback);
+	void erstelleBauteil(Bauteil component, AsyncCallback<String> callback);
 
 	void erstelleBaugruppe(Baugruppe compAssembly,
-			ArrayList<Bauteil> childrenComponents,
 			AsyncCallback<String> callback);
 
 	void erstelleEnderzeugnis(Enderzeugnis endproduct,

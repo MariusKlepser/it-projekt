@@ -175,7 +175,7 @@ public class BauteilMapper {
 	 * @return das bereits Ã¼bergebene Objekt, jedoch mit ggf. korrigierter
 	 *         <code>id</code>.
 	 */
-	public Bauteil insert(Bauteil u, ArrayList<Bauteil> kinderKomponenten) {
+	public Bauteil insert(Bauteil u) {
 		log = "Opening DB Connection; ";
 		Connection con = DBVerbindung.connection();
 		log = log + "DB Connection established; ";
@@ -224,19 +224,19 @@ public class BauteilMapper {
 				log = log + "SQL query executed; ";
 			}
 			
-			for (Bauteil b : kinderKomponenten){
-			stmt = con.createStatement();
+			//for (Bauteil b : kinderKomponenten){
+			//stmt = con.createStatement();
 
 			// Jetzt erst erfolgt die tatsÃ¤chliche EinfÃ¼geoperation
-			log = log + "executing SQL query for Inserting; ";
-			stmt.executeUpdate("INSERT INTO Zuordnung (ElternID, KindID, Menge) "
-					+ "VALUES ("
-					+ u.getId()
-					+ ",'"
-					+ b.getId() 
-					+ "','" + b.getMenge() + "')");
-			log = log + "SQL query executed; ";
-			}
+			//log = log + "executing SQL query for Inserting; ";
+			//stmt.executeUpdate("INSERT INTO Zuordnung (ElternID, KindID, Menge) "
+			//		+ "VALUES ("
+			//		+ u.getId()
+			//		+ ",'"
+			//		+ b.getId() 
+			//		+ "','" + b.getMenge() + "')");
+			//log = log + "SQL query executed; ";
+			//}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
