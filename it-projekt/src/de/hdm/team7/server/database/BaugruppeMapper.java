@@ -181,7 +181,7 @@ public class BaugruppeMapper {
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsächliche Einfügeoperation
-				stmt.executeUpdate("INSERT INTO baugruppe (id, name, beschreibung,aenderungsdatum,materialbezeichnung) "
+				stmt.executeUpdate("INSERT INTO baugruppe (id, name, beschreibung, aenderungsdatum, materialbezeichnung) "
 						+ "VALUES ("
 						+ ca.getId()
 						+ ",'"
