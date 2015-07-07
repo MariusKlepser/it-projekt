@@ -59,7 +59,7 @@ public class DBVerbindung {
         			  //  url = "jdbc:mysql://173.194.107.87:3306/whatsgoes";
         		
   			  Class.forName("com.mysql.jdbc.Driver");
-  			  url = "jdbc:mysql://213.165.82.134//whatsgoes";
+  			  url = "jdbc:mysql://213.165.82.134/whatsgoes";
 
         			  
 
