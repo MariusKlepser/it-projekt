@@ -182,9 +182,9 @@ public class BaugruppeMapper {
 
 				// Jetzt erst erfolgt die tatsächliche Einfügeoperation
 				stmt.executeUpdate("INSERT INTO baugruppe (id, name, beschreibung, aenderungsdatum, materialbezeichnung) "
-						+ "VALUES ('"
+						+ "VALUES ("
 						+ ca.getId()
-						+ "','"
+						+ ",'"
 						+ ca.getName()
 						+ "','"
 						+ ca.getAenderungsDatum()
