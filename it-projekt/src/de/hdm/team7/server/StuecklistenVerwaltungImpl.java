@@ -355,7 +355,7 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public ArrayList<ZuordnungBGBG> holeKinderBaugruppenVonBaugruppe(Baugruppe elternBaugruppe)
+	public ArrayList<Baugruppe> holeKinderBaugruppenVonBaugruppe(Baugruppe elternBaugruppe)
 			throws IllegalArgumentException {
 		
 		return this.zuordnungsMapper.findBGBGByKey(elternBaugruppe.getId());
@@ -363,19 +363,19 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public ArrayList<ZuordnungEEBG> holeKinderBaugruppenVonEnderzeugnis(Enderzeugnis elternEnderzeugnis)
+	public ArrayList<Baugruppe> holeKinderBaugruppenVonEnderzeugnis(Enderzeugnis elternEnderzeugnis)
 			throws IllegalArgumentException {
 		// TODO shit
 		return this.zuordnungsMapper.findEEBGByKey(elternEnderzeugnis.getId());
 	}
 	
-	public ArrayList<ZuordnungBGBT> holeKinderBauteileVonBaugruppe(Baugruppe elternBaugruppe)
+	public ArrayList<Bauteil> holeKinderBauteileVonBaugruppe(Baugruppe elternBaugruppe)
 			throws IllegalArgumentException {
 		// TODO shit
 		return this.zuordnungsMapper.findBGBTByKey(elternBaugruppe.getId());
 	}
 	
-	public ArrayList<ZuordnungEEBT> holeKinderBauteileVonEnderzeugnis(Enderzeugnis elternEnderzeugnis)
+	public ArrayList<Bauteil> holeKinderBauteileVonEnderzeugnis(Enderzeugnis elternEnderzeugnis)
 			throws IllegalArgumentException {
 		// TODO shit
 		return this.zuordnungsMapper.findEEBTByKey(elternEnderzeugnis.getId());

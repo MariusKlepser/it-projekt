@@ -138,14 +138,14 @@ public interface StuecklistenVerwaltung extends RemoteService {
 	public ArrayList<Bauteil> holeKinderKomponentenVon(Bauteil bauteil)
 			throws IllegalArgumentException;
 
-	public ArrayList<ZuordnungBGBG> holeKinderBaugruppenVonBaugruppe(Baugruppe baugruppe)
+	public ArrayList<Baugruppe> holeKinderBaugruppenVonBaugruppe(Baugruppe baugruppe)
 			throws IllegalArgumentException;
 
-	public ArrayList<ZuordnungEEBG> holeKinderBaugruppenVonEnderzeugnis(Enderzeugnis elternEnderzeugnis);
+	public ArrayList<Baugruppe> holeKinderBaugruppenVonEnderzeugnis(Enderzeugnis elternEnderzeugnis);
 	
-	public ArrayList<ZuordnungBGBT> holeKinderBauteileVonBaugruppe(Baugruppe baugruppe)
+	public ArrayList<Bauteil> holeKinderBauteileVonBaugruppe(Baugruppe baugruppe)
 			throws IllegalArgumentException;
 	
-	public ArrayList<ZuordnungEEBT> holeKinderBauteileVonEnderzeugnis(Enderzeugnis enderzeugnis)
+	public ArrayList<Bauteil> holeKinderBauteileVonEnderzeugnis(Enderzeugnis enderzeugnis)
 			throws IllegalArgumentException;
 }
