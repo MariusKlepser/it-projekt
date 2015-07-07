@@ -100,7 +100,7 @@ public class ZuordnungsMapper {
 				Statement statement = con.createStatement();
 				
 				ResultSet rslt = statement.executeQuery("SELECT id, name, beschreibung,aenderungsdatum,materialbezeichnung FROM bauteil "
-								+ "WHERE id=" + rs.getInt("baugruppeID"));
+								+ "WHERE id=" + rs.getInt("bauteilID"));
 					// Ergebnis-Tupel in Objekt umwandeln
 					Bauteil ca = new Bauteil();
 					ca.setId(rslt.getInt("id"));
@@ -179,7 +179,7 @@ public class ZuordnungsMapper {
 			while (rs.next()) {
 				Statement statement = con.createStatement();
 				ResultSet rslt = statement.executeQuery("SELECT id, name, beschreibung,aenderungsdatum,materialbezeichnung FROM bauteil "
-						+ "WHERE id=" + rs.getInt("baugruppeID"));
+						+ "WHERE id=" + rs.getInt("bauteilID"));
 			// Ergebnis-Tupel in Objekt umwandeln
 			Bauteil ca = new Bauteil();
 			ca.setId(rslt.getInt("id"));
