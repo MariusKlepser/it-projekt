@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import de.hdm.team7.shared.geschaeftsobjekte.Baugruppe;
 import de.hdm.team7.shared.geschaeftsobjekte.Bauteil;
 import de.hdm.team7.shared.geschaeftsobjekte.ZuordnungBGBG;
 import de.hdm.team7.shared.geschaeftsobjekte.ZuordnungBGBT;
@@ -36,106 +37,119 @@ public class ZuordnungsMapper {
 		return ZuordnungsMapper;
 	}
 
-	public ArrayList<ZuordnungBGBG> findBGBGByKey(int elternBaugruppenId) {
+	public ArrayList<Baugruppe> findBGBGByKey(int elternBaugruppenId) {
 		// DB-Verbindung holen
 		Connection con = DBVerbindung.connection();
+		ArrayList<Baugruppe> result = new ArrayList<Baugruppe>();
 
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ArrayList<ZuordnungBGBG> result = new ArrayList<ZuordnungBGBG>();
 
 			// Statement ausfüllen und als Query an die DB schicken
 			ResultSet rs = stmt
 					.executeQuery("SELECT zuordnungsID, baugruppeID, baugruppe2ID, menge, aenderungsdatum FROM z_baugruppeBaugruppe "
-							+ "WHERE id=" + elternBaugruppenId + " ORDER BY name");
+							+ "WHERE baugruppeID=" + elternBaugruppenId + " ORDER BY name");
 
 			/*
 			 * Da id Primärschlüssel ist, kann max. nur ein Tupel
 			 * zurückgegeben werden. Prüfe, ob ein Ergebnis vorliegt.
 			 */
 			while (rs.next()) {
-				// Ergebnis-Tupel in Objekt umwandeln
-				ZuordnungBGBG ca = new ZuordnungBGBG();
-				ca.setId(rs.getInt("zuordnungsID"));
-				ca.setElternteilId(rs.getInt("baugruppeID"));
-				ca.setKinderteilId(rs.getInt("baugruppe2ID"));
-				ca.setMenge(rs.getInt("menge"));
-				ca.setAenderungsdatum(rs.getDate("aenderungsdatum"));
+				Statement statement = con.createStatement();
+				
+				ResultSet rslt = statement.executeQuery("SELECT id, name, beschreibung,aenderungsdatum,materialbezeichnung FROM baugruppe "
+								+ "WHERE id=" + rs.getInt("baugruppe2ID") + " ORDER BY name");
+					// Ergebnis-Tupel in Objekt umwandeln
+					Baugruppe ca = new Baugruppe();
+					ca.setId(rslt.getInt("id"));
+					ca.setName(rslt.getString("name"));
+					ca.setDescription(rslt.getString("beschreibung"));
+					ca.setDtAenderungsDatum(rslt.getDate("aenderungsdatum"));
+					ca.setMaterialBezeichnung(rslt.getString("materialbezeichnung"));
 
-				result.add(ca);
+					result.add(ca);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 
-		return null;
+		return result;
 	}
 	
-	public ArrayList<ZuordnungBGBT> findBGBTByKey(int elternBaugruppenId) {
+	public ArrayList<Bauteil> findBGBTByKey(int elternBaugruppenId) {
 		// DB-Verbindung holen
 		Connection con = DBVerbindung.connection();
+		ArrayList<Bauteil> result = new ArrayList<Bauteil>();
 
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ArrayList<ZuordnungBGBT> result = new ArrayList<ZuordnungBGBT>();
 
 			// Statement ausfüllen und als Query an die DB schicken
 			ResultSet rs = stmt
 					.executeQuery("SELECT zuordnungsID, baugruppeID, bauteilID, menge, aenderungsdatum FROM z_baugruppeBauteil "
-							+ "WHERE id=" + elternBaugruppenId + " ORDER BY name");
+							+ "WHERE baugruppeID=" + elternBaugruppenId + " ORDER BY name");
 
 			/*
 			 * Da id Primärschlüssel ist, kann max. nur ein Tupel
 			 * zurückgegeben werden. Prüfe, ob ein Ergebnis vorliegt.
 			 */
 			while (rs.next()) {
-				// Ergebnis-Tupel in Objekt umwandeln
-				ZuordnungBGBT ca = new ZuordnungBGBT();
-				ca.setId(rs.getInt("zuordnungsID"));
-				ca.setElternteilId(rs.getInt("baugruppeID"));
-				ca.setKinderteilId(rs.getInt("bauteilID"));
-				ca.setMenge(rs.getInt("menge"));
-				ca.setAenderungsdatum(rs.getDate("aenderungsdatum"));
+				Statement statement = con.createStatement();
+				
+				ResultSet rslt = statement.executeQuery("SELECT id, name, beschreibung,aenderungsdatum,materialbezeichnung FROM bauteil "
+								+ "WHERE id=" + rs.getInt("baugruppeID") + " ORDER BY name");
+					// Ergebnis-Tupel in Objekt umwandeln
+					Bauteil ca = new Bauteil();
+					ca.setId(rslt.getInt("id"));
+					ca.setName(rslt.getString("name"));
+					ca.setDescription(rslt.getString("beschreibung"));
+					ca.setDtAenderungsDatum(rslt.getDate("aenderungsdatum"));
+					ca.setMaterialBezeichnung(rslt.getString("materialbezeichnung"));
 
-				result.add(ca);
+					result.add(ca);
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 
-		return null;
+		return result;
 	}
 	
-	public ArrayList<ZuordnungEEBG> findEEBGByKey(int elternEnderzeugnisId) {
+	public ArrayList<Baugruppe> findEEBGByKey(int elternEnderzeugnisId) {
 		// DB-Verbindung holen
 		Connection con = DBVerbindung.connection();
+		ArrayList<Baugruppe> result = new ArrayList<Baugruppe>();
 
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ArrayList<ZuordnungEEBG> result = new ArrayList<ZuordnungEEBG>();
 
 			// Statement ausfüllen und als Query an die DB schicken
 			ResultSet rs = stmt
 					.executeQuery("SELECT zuordnungsID, enderzeugnisID, baugruppeID, menge, aenderungsdatum FROM z_enderzeugnisBaugruppe "
-							+ "WHERE id=" + elternEnderzeugnisId + " ORDER BY name");
+							+ "WHERE enderzeugnisID=" + elternEnderzeugnisId + " ORDER BY name");
 
 			/*
 			 * Da id Primärschlüssel ist, kann max. nur ein Tupel
 			 * zurückgegeben werden. Prüfe, ob ein Ergebnis vorliegt.
 			 */
 			while (rs.next()) {
+				Statement statement = con.createStatement();
+				
+			ResultSet rslt = statement.executeQuery("SELECT id, name, beschreibung,aenderungsdatum,materialbezeichnung FROM baugruppe "
+							+ "WHERE id=" + rs.getInt("baugruppeID") + " ORDER BY name");
 				// Ergebnis-Tupel in Objekt umwandeln
-				ZuordnungEEBG ca = new ZuordnungEEBG();
-				ca.setId(rs.getInt("zuordnungsID"));
-				ca.setElternteilId(rs.getInt("enderzeugnisID"));
-				ca.setKinderteilId(rs.getInt("baugruppeID"));
-				ca.setMenge(rs.getInt("menge"));
-				ca.setAenderungsdatum(rs.getDate("aenderungsdatum"));
+				Baugruppe ca = new Baugruppe();
+				ca.setId(rslt.getInt("id"));
+				ca.setName(rslt.getString("name"));
+				ca.setDescription(rslt.getString("beschreibung"));
+				ca.setDtAenderungsDatum(rslt.getDate("aenderungsdatum"));
+				ca.setMaterialBezeichnung(rslt.getString("materialbezeichnung"));
 
 				result.add(ca);
 			}
@@ -144,44 +158,44 @@ public class ZuordnungsMapper {
 			return null;
 		}
 
-		return null;
+		return result;
 	}
 	
-	public ArrayList<ZuordnungEEBT> findEEBTByKey(int elternEnderzeugnisId) {
+	public ArrayList<Bauteil> findEEBTByKey(int elternEnderzeugnisId) {
 		// DB-Verbindung holen
 		Connection con = DBVerbindung.connection();
-
+		ArrayList<Bauteil> result = new ArrayList<Bauteil>();
+		
 		try {
 			// Leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
-			ArrayList<ZuordnungEEBT> result = new ArrayList<ZuordnungEEBT>();
 
 			// Statement ausfüllen und als Query an die DB schicken
 			ResultSet rs = stmt
 					.executeQuery("SELECT zuordnungsID, enderzeugnisID, bauteilID, menge, aenderungsdatum FROM z_enderzeugnisBauteil "
-							+ "WHERE id=" + elternEnderzeugnisId + " ORDER BY name");
+							+ "WHERE enderzeugnisID=" + elternEnderzeugnisId + " ORDER BY name");
 
-			/*
-			 * Da id Primärschlüssel ist, kann max. nur ein Tupel
-			 * zurückgegeben werden. Prüfe, ob ein Ergebnis vorliegt.
-			 */
+
 			while (rs.next()) {
-				// Ergebnis-Tupel in Objekt umwandeln
-				ZuordnungEEBT ca = new ZuordnungEEBT();
-				ca.setId(rs.getInt("zuordnungsID"));
-				ca.setElternteilId(rs.getInt("enderzeugnisID"));
-				ca.setKinderteilId(rs.getInt("bauteilID"));
-				ca.setMenge(rs.getInt("menge"));
-				ca.setAenderungsdatum(rs.getDate("aenderungsdatum"));
+				Statement statement = con.createStatement();
+				ResultSet rslt = statement.executeQuery("SELECT id, name, beschreibung,aenderungsdatum,materialbezeichnung FROM bauteil "
+						+ "WHERE id=" + rs.getInt("baugruppeID") + " ORDER BY name");
+			// Ergebnis-Tupel in Objekt umwandeln
+			Bauteil ca = new Bauteil();
+			ca.setId(rslt.getInt("id"));
+			ca.setName(rslt.getString("name"));
+			ca.setDescription(rslt.getString("beschreibung"));
+			ca.setDtAenderungsDatum(rslt.getDate("aenderungsdatum"));
+			ca.setMaterialBezeichnung(rslt.getString("materialbezeichnung"));
 
-				result.add(ca);
+			result.add(ca);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 
-		return null;
+		return result;
 	}
 
 	/**
