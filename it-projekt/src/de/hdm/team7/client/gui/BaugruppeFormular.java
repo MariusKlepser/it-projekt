@@ -2,6 +2,8 @@ package de.hdm.team7.client.gui;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.text.*;
+import java.sql.Timestamp;
 
 import de.hdm.team7.client.LoginInfo;
 
@@ -186,6 +188,11 @@ public class BaugruppeFormular extends VerticalPanel {
 					.toUpperCase().trim();
 			final String beschreibung1 = beschreibung.getText()
 					.toUpperCase().trim();
+			DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+			final String aenderungsdatum = dateFormat.format(new Timestamp(System.currentTimeMillis()));
+
+
+			System.out.println(aenderungsdatum);
 			nameTextBox.setFocus(true);
 			if (!baugruppenname.matches("^[0-9A-Z]{0,30}$")) {
 				Window.alert("Bitte geben Sie etwas in das Feld (Name) ein und verwenden dabei nur Buchstaben und Zahlen.");

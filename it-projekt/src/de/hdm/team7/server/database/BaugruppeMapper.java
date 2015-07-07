@@ -83,7 +83,7 @@ public class BaugruppeMapper {
 					.executeQuery("SELECT id, name, beschreibung, aenderungsdatum, materialbezeichnung "
 							+ "FROM baugruppe " + "ORDER BY name");
 
-			// Für jeden Eintrag im Suchergebnis wird nun ein User-Objekt
+			// Für jeden Eintrag im Suchergebnis wird nun ein Baugruppen-Objekt
 			// erstellt.
 			while (rs.next()) {
 				Baugruppe ca = new Baugruppe();
