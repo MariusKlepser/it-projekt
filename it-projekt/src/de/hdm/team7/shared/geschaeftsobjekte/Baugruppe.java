@@ -11,8 +11,8 @@ public class Baugruppe extends Bauteil {
 
 	private static final long serialVersionUID = 1L;
 	
-//	protected ArrayList<ZuordnungBGBG> kinderKomponentenBG;
-//	protected ArrayList<ZuordnungBGBT> kinderKomponentenBT;
+	protected ArrayList<ZuordnungBGBG> kinderKomponentenBGBG;
+	protected ArrayList<ZuordnungBGBT> kinderKomponentenBGBT;
 	
 	/**
      * The key provider that provides the unique ID of a contact.
@@ -27,25 +27,25 @@ public class Baugruppe extends Bauteil {
 	/**
 	 * @return the childrenComponents
 	 */
-    //	public ArrayList<ZuordnungBGBG> getKinderKomponentenBGBG() {
-    //return kinderKomponentenBG;
-    //}
+    	public ArrayList<ZuordnungBGBG> getKinderKomponentenBGBG() {
+    		return kinderKomponentenBGBG;
+    }
 
-    //public ArrayList<ZuordnungBGBT> getKinderKomponentenBGBT() {
-    //return kinderKomponentenBT;
-    //}
+    	public ArrayList<ZuordnungBGBT> getKinderKomponentenBGBT() {
+    		return kinderKomponentenBGBT;
+    }
 
 	
 	/**
 	 * @param kinderKomponenten the childrenComponents to set
 	 */
-    //public void setKinderKomponentenBG(ArrayList<ZuordnungBGBG> kinderKomponentenBG) {
-    //this.kinderKomponentenBG = kinderKomponentenBG;
-    //}
+    public void setKinderKomponentenBG(ArrayList<ZuordnungBGBG> kinderKomponentenBGBG) {
+    	this.kinderKomponentenBGBG = kinderKomponentenBGBG;
+    }
 	
-    //public void setKinderKomponentenBT(ArrayList<ZuordnungBGBT> kinderKomponentenBT) {
-    //this.kinderKomponentenBT = kinderKomponentenBT;
-    //}
+    public void setKinderKomponentenBT(ArrayList<ZuordnungBGBT> kinderKomponentenBGBT) {
+    	this.kinderKomponentenBGBT = kinderKomponentenBGBT;
+    }
 
 
 	public String toStringList(){
