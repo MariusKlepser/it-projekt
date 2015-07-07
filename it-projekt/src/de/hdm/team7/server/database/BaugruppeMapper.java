@@ -189,7 +189,7 @@ public class BaugruppeMapper {
 						+ "','"
 						+ ca.getDescription()
 						+ "','"
-						+ ca.getDtAenderungsDatum()
+						+ ca.getAenderungsDatum()
 						+ "','"
 						+ ca.getMaterialBezeichnung()
 						+ "')");
