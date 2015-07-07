@@ -49,7 +49,7 @@ public class ZuordnungsMapper {
 			// Statement ausfüllen und als Query an die DB schicken
 			ResultSet rs = stmt
 					.executeQuery("SELECT zuordnungsID, baugruppeID, baugruppe2ID, menge, aenderungsdatum FROM z_baugruppeBaugruppe "
-							+ "WHERE baugruppeID=" + elternBaugruppenId + " ORDER BY name");
+							+ "WHERE baugruppeID=" + elternBaugruppenId);
 
 			/*
 			 * Da id Primärschlüssel ist, kann max. nur ein Tupel
@@ -59,7 +59,7 @@ public class ZuordnungsMapper {
 				Statement statement = con.createStatement();
 				
 				ResultSet rslt = statement.executeQuery("SELECT id, name, beschreibung,aenderungsdatum,materialbezeichnung FROM baugruppe "
-								+ "WHERE id=" + rs.getInt("baugruppe2ID") + " ORDER BY name");
+								+ "WHERE id=" + rs.getInt("baugruppe2ID"));
 					// Ergebnis-Tupel in Objekt umwandeln
 					Baugruppe ca = new Baugruppe();
 					ca.setId(rslt.getInt("id"));
@@ -90,7 +90,7 @@ public class ZuordnungsMapper {
 			// Statement ausfüllen und als Query an die DB schicken
 			ResultSet rs = stmt
 					.executeQuery("SELECT zuordnungsID, baugruppeID, bauteilID, menge, aenderungsdatum FROM z_baugruppeBauteil "
-							+ "WHERE baugruppeID=" + elternBaugruppenId + " ORDER BY name");
+							+ "WHERE baugruppeID=" + elternBaugruppenId);
 
 			/*
 			 * Da id Primärschlüssel ist, kann max. nur ein Tupel
@@ -100,7 +100,7 @@ public class ZuordnungsMapper {
 				Statement statement = con.createStatement();
 				
 				ResultSet rslt = statement.executeQuery("SELECT id, name, beschreibung,aenderungsdatum,materialbezeichnung FROM bauteil "
-								+ "WHERE id=" + rs.getInt("baugruppeID") + " ORDER BY name");
+								+ "WHERE id=" + rs.getInt("baugruppeID"));
 					// Ergebnis-Tupel in Objekt umwandeln
 					Bauteil ca = new Bauteil();
 					ca.setId(rslt.getInt("id"));
@@ -132,7 +132,7 @@ public class ZuordnungsMapper {
 			// Statement ausfüllen und als Query an die DB schicken
 			ResultSet rs = stmt
 					.executeQuery("SELECT zuordnungsID, enderzeugnisID, baugruppeID, menge, aenderungsdatum FROM z_enderzeugnisBaugruppe "
-							+ "WHERE enderzeugnisID=" + elternEnderzeugnisId + " ORDER BY name");
+							+ "WHERE enderzeugnisID=" + elternEnderzeugnisId);
 
 			/*
 			 * Da id Primärschlüssel ist, kann max. nur ein Tupel
@@ -142,7 +142,7 @@ public class ZuordnungsMapper {
 				Statement statement = con.createStatement();
 				
 			ResultSet rslt = statement.executeQuery("SELECT id, name, beschreibung,aenderungsdatum,materialbezeichnung FROM baugruppe "
-							+ "WHERE id=" + rs.getInt("baugruppeID") + " ORDER BY name");
+							+ "WHERE id=" + rs.getInt("baugruppeID"));
 				// Ergebnis-Tupel in Objekt umwandeln
 				Baugruppe ca = new Baugruppe();
 				ca.setId(rslt.getInt("id"));
@@ -173,13 +173,13 @@ public class ZuordnungsMapper {
 			// Statement ausfüllen und als Query an die DB schicken
 			ResultSet rs = stmt
 					.executeQuery("SELECT zuordnungsID, enderzeugnisID, bauteilID, menge, aenderungsdatum FROM z_enderzeugnisBauteil "
-							+ "WHERE enderzeugnisID=" + elternEnderzeugnisId + " ORDER BY name");
+							+ "WHERE enderzeugnisID=" + elternEnderzeugnisId);
 
 
 			while (rs.next()) {
 				Statement statement = con.createStatement();
 				ResultSet rslt = statement.executeQuery("SELECT id, name, beschreibung,aenderungsdatum,materialbezeichnung FROM bauteil "
-						+ "WHERE id=" + rs.getInt("baugruppeID") + " ORDER BY name");
+						+ "WHERE id=" + rs.getInt("baugruppeID"));
 			// Ergebnis-Tupel in Objekt umwandeln
 			Bauteil ca = new Bauteil();
 			ca.setId(rslt.getInt("id"));
