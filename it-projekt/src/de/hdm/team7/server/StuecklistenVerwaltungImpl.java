@@ -348,16 +348,28 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public ArrayList<Bauteil> holeKinderKomponentenVon(Baugruppe compAss)
+	public ArrayList<Baugruppe> holeKinderBaugruppenVonBaugruppe(Baugruppe elternBaugruppe)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		// TODO shit
 		return null;
 	}
 
 	@Override
-	public ArrayList<Bauteil> holeKinderKomponentenVon(Enderzeugnis endproduct)
+	public ArrayList<Baugruppe> holeKinderBaugruppenVonEnderzeugnis(Enderzeugnis elternEnderzeugnis)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		// TODO shit
+		return null;
+	}
+	
+	public ArrayList<Bauteil> holeKinderBauteileVonBaugruppe(Baugruppe elternBaugruppe)
+			throws IllegalArgumentException {
+		// TODO shit
+		return null;
+	}
+	
+	public ArrayList<Bauteil> holeKinderBauteileVonEnderzeugnis(Enderzeugnis elternEnderzeugnis)
+			throws IllegalArgumentException {
+		// TODO shit
 		return null;
 	}
 

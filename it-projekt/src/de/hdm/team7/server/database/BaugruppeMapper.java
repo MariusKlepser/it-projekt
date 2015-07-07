@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import de.hdm.team7.shared.geschaeftsobjekte.Baugruppe;
 
@@ -177,11 +179,15 @@ public class BaugruppeMapper {
 				 * Primärschlüssel.
 				 */
 				ca.setId(rs.getInt("maxid") + 1);
-
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = new Date();
+				ca.setAenderungsDatum(sdf.format(date));
+				
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsächliche Einfügeoperation
-				stmt.executeUpdate("INSERT INTO baugruppe (id, name, beschreibung, aenderungsdatum, materialbezeichnung) "
+				stmt.executeUpdate("INSERT INTO baugruppe (id, name, beschreibung, aenderungsdatum, materialbezeichnung, LetzterBearbeiter) "
 						+ "VALUES ("
 						+ ca.getId()
 						+ ",'"
@@ -192,6 +198,8 @@ public class BaugruppeMapper {
 						+ ca.getAenderungsDatum()
 						+ "','"
 						+ ca.getMaterialBezeichnung()
+						+ "','"
+						+ ca.getLetzterBearbeiter()
 						+ "')");
 			}
 		} catch (SQLException e) {

@@ -1,6 +1,8 @@
 package de.hdm.team7.client.gui;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Set;
 
 import de.hdm.team7.client.LoginInfo;
@@ -20,6 +22,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.MultiSelectionModel;
+import com.google.gwt.i18n.client.DateTimeFormat;
 
 import de.hdm.team7.client.ClientEinstellungen;
 import de.hdm.team7.shared.StuecklistenVerwaltungAsync;
@@ -211,9 +214,9 @@ public class BaugruppeFormular extends VerticalPanel {
 			temp.setDescription(beschreibung.getText());
 			ClientEinstellungen.getLogger().info(
 					"BaugruppenFormular: Beschreibung gesetzt");
-//			temp.setLetzterBearbeiter(loginInfo.getEmailAddress());
-//			ClientEinstellungen.getLogger().info(
-//					"BaugruppeFormular: " + loginInfo.getEmailAddress());
+			temp.setLetzterBearbeiter(loginInfo.getEmailAddress());
+			ClientEinstellungen.getLogger().info(
+					"BaugruppeFormular: " + loginInfo.getEmailAddress());
 			ClientEinstellungen.getLogger().info(
 					"BaugruppeFormular: Felddaten setzen - abgeschlossen");
 			selektierteObjekte = ((MultiSelectionModel<Baugruppe>) selectionModel).getSelectedSet();

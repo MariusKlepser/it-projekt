@@ -133,11 +133,18 @@ public interface StuecklistenVerwaltungAsync {
 			AsyncCallback<ArrayList<Bauteil>> callback)
 			throws IllegalArgumentException;
 
-	void holeKinderKomponentenVon(Baugruppe compAss,
-			AsyncCallback<ArrayList<Bauteil>> callback)
+	void holeKinderBaugruppenVonBaugruppe(Baugruppe elternBaugruppe,
+			AsyncCallback<ArrayList<Baugruppe>> callback)
+			throws IllegalArgumentException;
+	
+	void holeKinderBauteileVonBaugruppe(Baugruppe baugruppe,
+			AsyncCallback<ArrayList<Bauteil>> callback);
+	
+	void holeKinderBaugruppenVonEnderzeugnis(Enderzeugnis elternEnderzeugnis,
+			AsyncCallback<ArrayList<Baugruppe>> callback)
 			throws IllegalArgumentException;
 
-	void holeKinderKomponentenVon(Enderzeugnis endproduct,
+	void holeKinderBauteileVonEnderzeugnis(Enderzeugnis elternEnderzeugnis,
 			AsyncCallback<ArrayList<Bauteil>> callback)
 			throws IllegalArgumentException;
 }

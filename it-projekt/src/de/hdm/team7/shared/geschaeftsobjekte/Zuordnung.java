@@ -10,11 +10,18 @@ public class Zuordnung {
 		// TODO Auto-generated constructor stub
 	}
 	
+	private int zuordnungsID;
 	private int menge;
 	private Date aenderungsdatum;
 	private int benutzerId;
 	
+	public int getId()	{
+		return zuordnungsID;
+	}
 	
+	public void setId(int id)	{
+		this.zuordnungsID = id;
+	}
 	
 	public int getMenge()	{
 		return menge;
