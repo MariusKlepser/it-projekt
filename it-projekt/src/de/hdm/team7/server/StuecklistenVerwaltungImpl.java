@@ -12,6 +12,7 @@ import de.hdm.team7.server.database.BauteilMapper;
 import de.hdm.team7.server.database.BenutzerMapper;
 import de.hdm.team7.server.database.EnderzeugnisMapper;
 import de.hdm.team7.server.database.StuecklisteMapper;
+import de.hdm.team7.server.database.ZuordnungsMapper;
 import de.hdm.team7.shared.StuecklistenVerwaltung;
 import de.hdm.team7.shared.geschaeftsobjekte.Baugruppe;
 import de.hdm.team7.shared.geschaeftsobjekte.Bauteil;
@@ -19,6 +20,10 @@ import de.hdm.team7.shared.geschaeftsobjekte.Benutzer;
 import de.hdm.team7.shared.geschaeftsobjekte.Enderzeugnis;
 import de.hdm.team7.shared.geschaeftsobjekte.Geschaeftsobjekt;
 import de.hdm.team7.shared.geschaeftsobjekte.Stueckliste;
+import de.hdm.team7.shared.geschaeftsobjekte.ZuordnungBGBG;
+import de.hdm.team7.shared.geschaeftsobjekte.ZuordnungBGBT;
+import de.hdm.team7.shared.geschaeftsobjekte.ZuordnungEEBG;
+import de.hdm.team7.shared.geschaeftsobjekte.ZuordnungEEBT;
 
 @SuppressWarnings("serial")
 public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
@@ -30,6 +35,7 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 	private BauteilMapper bauteilMapper = null;
 	private EnderzeugnisMapper enderzeugnisMapper = null;
 	private BenutzerMapper benutzerMapper = null;
+	private ZuordnungsMapper zuordnungsMapper = null;
 
 	public StuecklistenVerwaltungImpl() throws IllegalArgumentException {
 		/*
@@ -50,6 +56,7 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 		this.bauteilMapper = BauteilMapper.bauteilMapper();
 		this.enderzeugnisMapper = EnderzeugnisMapper.enderzeugnisMapper();
 		this.benutzerMapper = BenutzerMapper.benutzerMapper();
+		this.zuordnungsMapper = ZuordnungsMapper.ZuordnungsMapper();
 	}
 
 	public ArrayList<Stueckliste> getStuecklistenListe() {
@@ -348,29 +355,30 @@ public class StuecklistenVerwaltungImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public ArrayList<Baugruppe> holeKinderBaugruppenVonBaugruppe(Baugruppe elternBaugruppe)
+	public ArrayList<ZuordnungBGBG> holeKinderBaugruppenVonBaugruppe(Baugruppe elternBaugruppe)
 			throws IllegalArgumentException {
-		// TODO shit
-		return null;
+		
+		return this.zuordnungsMapper.findBGBGByKey(elternBaugruppe.getId());
+			
 	}
 
 	@Override
-	public ArrayList<Baugruppe> holeKinderBaugruppenVonEnderzeugnis(Enderzeugnis elternEnderzeugnis)
+	public ArrayList<ZuordnungEEBG> holeKinderBaugruppenVonEnderzeugnis(Enderzeugnis elternEnderzeugnis)
 			throws IllegalArgumentException {
 		// TODO shit
-		return null;
+		return this.zuordnungsMapper.findEEBGByKey(elternEnderzeugnis.getId());
 	}
 	
-	public ArrayList<Bauteil> holeKinderBauteileVonBaugruppe(Baugruppe elternBaugruppe)
+	public ArrayList<ZuordnungBGBT> holeKinderBauteileVonBaugruppe(Baugruppe elternBaugruppe)
 			throws IllegalArgumentException {
 		// TODO shit
-		return null;
+		return this.zuordnungsMapper.findBGBTByKey(elternBaugruppe.getId());
 	}
 	
-	public ArrayList<Bauteil> holeKinderBauteileVonEnderzeugnis(Enderzeugnis elternEnderzeugnis)
+	public ArrayList<ZuordnungEEBT> holeKinderBauteileVonEnderzeugnis(Enderzeugnis elternEnderzeugnis)
 			throws IllegalArgumentException {
 		// TODO shit
-		return null;
+		return this.zuordnungsMapper.findEEBTByKey(elternEnderzeugnis.getId());
 	}
 
 	private String hatNamensduplettenBauteil(Bauteil objekt)
